@@ -1,24 +1,45 @@
-import logo from './logo.svg';
+import React from "react";
+import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
 import './App.css';
+import Routes from "./routes";
+import store from "./store/store";
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 function App() {
+
+  const THEME = createTheme({
+    typography: {
+     "fontFamily": `"Nunito", "Arial", sans-serif`,
+     "fontSize": 16,
+     "fontWeightLight": 300,
+     "fontWeightRegular": 400,
+     "fontWeightMedium": 500
+    },
+    palette: {
+      primary: {
+        light: '#f75daf',
+        main: '#ec0883',
+        dark: '#b60563',
+        contrastText: '#fff',
+      },
+      secondary: {
+        light: '#a474f1',
+        main: '#7620FF',
+        dark: '#4807af',
+        contrastText: '#fff',
+      },
+    },
+ });
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={THEME}>
+      <Provider store={store}>
+        <BrowserRouter>
+          <Routes />
+        </BrowserRouter>
+      </Provider>
+    </ThemeProvider>
   );
 }
 
