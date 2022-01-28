@@ -11,7 +11,7 @@ function App() {
   const THEME = createTheme({
     typography: {
      "fontFamily": `"Nunito", "Arial", sans-serif`,
-     "fontSize": 16,
+     "fontSize": 13,
      "fontWeightLight": 300,
      "fontWeightRegular": 400,
      "fontWeightMedium": 500

@@ -4,6 +4,7 @@ import {
     Route,
   } from "react-router-dom";
 import Layout from '../layouts';
+import Dashboard from '../pages/Customer/Dashboard';
 import Landing from '../pages/Landing';
 import Login from '../pages/Login';
 
@@ -12,7 +13,8 @@ const Routes = () => {
         <Layout>
             <Switch>
                 <Route path="/" exact element={<Landing />} />
-                <Route path="/account/login" exact element={<Login />} />
+                <Route path="/login" exact element={<Login />} />
+                <Route path="/account/dashboard" element={<Dashboard />} />
                 {/* <Route path="/product/:id" element={<ProductDetails />} />
                 <Route path="/product/cart" exact element={<Cart />} /> */}
             </Switch>

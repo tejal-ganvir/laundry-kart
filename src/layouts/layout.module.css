@@ -1,0 +1,15 @@
+/* .sidebar_container{
+    
+}
+
+@media (max-width: 760px) {
+    .sidebar_container{
+    }
+} */
+
+.sidebar_menu_item{
+    /* padding: 10px; */
+    /* border-bottom: 2px solid #ec0883; */
+}
+
+.sidebar_menu_icon:hover{}

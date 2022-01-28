@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-scroll";
-import LogoIcon from "../LogoIcon";
+import LogoIcon from "../components/LogoIcon";
 // Assets
 
 export default function Contact() {

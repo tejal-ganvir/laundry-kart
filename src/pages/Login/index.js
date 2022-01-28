@@ -4,8 +4,10 @@ import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import { TextField } from '@mui/material';
 import Button from '@mui/material/Button';
+import { useNavigate } from 'react-router-dom';
 
 const Login = (props) => {
+  const navigate = useNavigate();
   return (
     <React.Fragment>
       <Container maxWidth="sm">
@@ -38,6 +40,7 @@ const Login = (props) => {
                 align="center" 
                 variant='contained'
                 sx={{borderRadius: 4, px: 3}}
+                onClick={() => navigate('/account/dashboard')}
               >Login</Button>
             </div>
           </Box>

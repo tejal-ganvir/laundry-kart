@@ -1,18 +1,53 @@
-import { Box } from '@mui/material';
-import React from 'react';
-import TopNavbar from '../components/Nav/TopNavbar';
-import Footer from "../components/Sections/Footer"
+import { Box, Grid } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import TopNavbar from './TopNavbar';
+import Footer from "./Footer"
+import Sidebar from './Sidebar';
+import { useLocation } from 'react-router-dom';
+import { setOpenSidebar } from '../store/actions/layoutActions';
+import { useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
 
-const Layout = ({children}) => {
+const Layout = ({children, openSidebar}) => {
+
+  const location = useLocation();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    let locationArray = location.pathname.split("/");
+
+    if(locationArray[1] === 'account')
+      dispatch(setOpenSidebar(true));
+    else
+      dispatch(setOpenSidebar(false));
+
+    return(() => dispatch(setOpenSidebar(false)))
+
+  },[location.pathname])
+
   return (
     <>
         <TopNavbar />
-          <Box component="div" mt={12}>
-            {children}
+          <Box className={openSidebar ? 'lightBg' : 'whiteBg'} component="div" pt={12}>
+            <Grid container direction="row">
+              { openSidebar &&
+                <Grid item xs={12} md={3} sx={{pl:3}}>
+                  <Sidebar />
+                </Grid>
+              }
+              <Grid item xs={12} md={openSidebar ? 9 : 12} >
+                {children}
+              </Grid>
+            </Grid>
           </Box>
         <Footer />
     </>
   );
 };
 
-export default Layout;
+const mapStateToProps = state => {
+  const {openSidebar} = state.Layout;
+  return {openSidebar};
+};
+
+export default connect(mapStateToProps,null)(Layout);

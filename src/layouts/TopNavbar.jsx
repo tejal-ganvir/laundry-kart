@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Link as SlideLink } from "react-scroll";
 // Components
-import Sidebar from "../Nav/Sidebar";
-import Backdrop from "../Elements/Backdrop";
+import Sidebar from "../components/Nav/Sidebar";
+import Backdrop from "../components/Elements/Backdrop";
 // Assets
-import BurgerIcon from "../../assets/svg/BurgerIcon";
-import LogoIcon from "../LogoIcon";
+import BurgerIcon from "../assets/svg/BurgerIcon";
+import LogoIcon from "../components/LogoIcon";
 import { Link } from "react-router-dom";
 
 export default function TopNavbar() {
@@ -70,7 +70,7 @@ export default function TopNavbar() {
           </UlWrapper>
           <UlWrapperRight className="flexNullCenter">
             <li className="semiBold font15 pointer">
-              <Link to="/account/login" style={{ padding: "10px 30px 10px 0" }}>
+              <Link to="/login" style={{ padding: "10px 30px 10px 0" }}>
                 Log in
               </Link>
             </li>
