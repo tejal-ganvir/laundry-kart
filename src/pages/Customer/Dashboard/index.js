@@ -4,7 +4,7 @@ import React from 'react';
 const Dashboard = () => {
   return (
     <React.Fragment>
-        <Container>
+        <Container maxWidth="sm">
             one two three
         </Container>
     </React.Fragment>

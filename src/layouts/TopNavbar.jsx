@@ -27,7 +27,7 @@ export default function TopNavbar() {
       {sidebarOpen && <Backdrop toggleSidebar={toggleSidebar} />}
       <Wrapper className="flexCenter animate whiteBg" style={y > 100 ? { height: "60px" } : { height: "80px" }}>
         <NavInner className="container flexSpaceCenter">
-          <Link to="/" className="pointer flexNullCenter"  smooth={true}>
+          <Link to="/" className="pointer flexNullCenter">
             <LogoIcon width={50} height={50} />
             <h1 style={{ marginLeft: "15px" }} className="font20 extraBold">
               LaundryKart

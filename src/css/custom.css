@@ -8,3 +8,7 @@
 .form-control-area input{
     width: 100%;
 }
+
+.rounded_circle{
+    border-radius: 50%;
+}
