@@ -8,7 +8,7 @@ import { setOpenSidebar } from '../store/actions/layoutActions';
 import { useDispatch } from 'react-redux';
 import { connect } from 'react-redux';
 
-const Layout = ({children, openSidebar}) => {
+const Layout = ({children, openSidebar, isAuthLayout}) => {
 
   const location = useLocation();
   const dispatch = useDispatch();
@@ -28,7 +28,11 @@ const Layout = ({children, openSidebar}) => {
   return (
     <>
         <TopNavbar />
-          <Box className={openSidebar ? 'lightBg' : 'whiteBg'} component="div" pt={12}>
+          <Box 
+            className={`${openSidebar ? 'lightBg' : 'whiteBg'} ${isAuthLayout && 'authentication-bg'}` } 
+            component="div" 
+            pt={12}
+          >
             <Grid container direction="row">
               { openSidebar &&
                 <Grid item xs={12} md={3} sx={{pl:3}}>
@@ -46,8 +50,8 @@ const Layout = ({children, openSidebar}) => {
 };
 
 const mapStateToProps = state => {
-  const {openSidebar} = state.Layout;
-  return {openSidebar};
+  const {openSidebar, isAuthLayout} = state.Layout;
+  return {openSidebar, isAuthLayout};
 };
 
 export default connect(mapStateToProps,null)(Layout);

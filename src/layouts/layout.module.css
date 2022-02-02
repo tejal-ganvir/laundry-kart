@@ -9,7 +9,7 @@
 
 .sidebar_menu_item{
     /* padding: 10px; */
-    /* border-bottom: 2px solid #ec0883; */
+    border-bottom: 2px solid #ec0883;
 }
 
 .sidebar_menu_icon:hover{}

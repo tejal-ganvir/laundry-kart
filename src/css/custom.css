@@ -1,5 +1,14 @@
+.authentication-bg {
+    background-image: url('../assets/img/bg-pattern-light.svg');
+    background-size: cover;
+    background-position: center;
+}
+
 .text-center{
     text-align: center;
+}
+.text-right{
+    text-align: right;
 }
 .form-control-area{
     padding: 12px;
@@ -11,4 +20,40 @@
 
 .rounded_circle{
     border-radius: 50%;
+}
+
+.purpleLink{
+    color: #7620FF;
+}
+
+.purpleLink:hover{
+    color: #4a00c2;
+}
+
+.MuiMenuItem-root.Mui-selected{
+    color: #ec0883;
+    border-bottom: 2px solid #ec0883;
+}
+
+.cust_edit_icon{
+    position: absolute;
+    color: #525252;
+    right: 40px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.cust_card_table{
+    border-spacing: 10px;
+    border-collapse: separate;
+}
+
+.cust_card_table tr td:first-child{
+    font-weight: bold;
+    color: #707070;
+    padding-right: 15px;
+}
+
+.cust_card_table tr td:last-child{
+    font-weight: bold;
 }

@@ -1,0 +1,192 @@
+.order_card_table{
+    border-spacing: 10px;
+    border-collapse: separate;
+}
+
+.order_card_table tr td:first-child{
+    font-weight: bold;
+    color: #707070;
+    padding-right: 15px;
+}
+
+.order_card_table tr td:last-child{
+    font-weight: bold;
+}
+
+.feed_container{
+    padding: 10px 0px;
+    overflow: hidden;
+  }
+  
+  .infinite-scroll-component{
+    overflow: hidden !important;
+  }
+  
+  .grid{
+    width: 100% !important;
+  }
+  
+  .grid-image{
+    margin-bottom: 20px !important;
+  }
+  
+  .tiles .tile {
+    display: block;
+    text-align: left;
+    opacity: .99;
+    overflow: hidden;
+    position: relative;
+    /* border-radius: 5px; */
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+  }
+  .tiles .tile:before {
+    content: '';
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 10%, rgba(0, 0, 0, 0.9) 100%);
+    width: 100%;
+    height: 50%;
+    opacity: 0;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 2;
+    transition-property: top, opacity;
+    transition-duration: 0.3s;
+  }
+  .tiles .tile img {
+    display: block;
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    backface-visibility: hidden;
+    /*******for radius******/
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+
+  
+    /* height: 200px;
+    width: 100%;
+    object-fit: cover; */
+  }
+  
+  .tiles .tile .details {
+    font-size: 16px;
+    padding: 15px;
+    color: #fff;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 3;
+  }
+  .tiles .tile .details span {
+    display: block;
+    opacity: 0;
+    position: relative;
+    top: 100px;
+    transition-property: top, opacity;
+    transition-duration: 0.3s;
+    transition-delay: 0s;
+  }
+  .tiles .tile .details .title {
+    line-height: 1;
+    font-weight: 600;
+    font-size: 16px;
+  }
+  .tiles .tile .details .info {
+    line-height: 1.2;
+    margin-top: 5px;
+    font-size: 12px;
+  }
+  .tiles .tile:focus:before,
+  .tiles .tile:focus span, 
+  .tiles .tile:hover:before,
+  .tiles .tile:hover span {
+    opacity: 1;
+  }
+  .tiles .tile:focus:before, 
+  .tiles .tile:hover:before {
+    top: 50%;
+  }
+  .tiles .tile:focus span, 
+  .tiles .tile:hover span {
+    top: 0;
+  }
+  .tiles .tile:focus .title, 
+  .tiles .tile:hover .title {
+            transition-delay: 0.15s;
+  }
+  .tiles .tile:focus .info, 
+  .tiles .tile:hover .info {
+            transition-delay: 0.25s;
+  }
+  
+  .profile_container{
+    margin: 0;
+    padding: 7px 10px;
+  }
+  
+  .profile_container td{
+    margin: 0;
+    padding: 0;
+    color: #696969;
+    font-size: 12.5px;
+    font-weight: 700;
+    padding-left: 3px;
+  }
+  
+  .profile_container table {
+    width: 100%;
+  }
+  
+  .profile_container .pro_pic {
+    width: 10%;
+  }
+  .profile_container .pro_pic img{
+    width: 25px;
+  }
+  .profile_container .pro_name {
+    width: 70%;
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .profile_container .pro_name a {
+    color: #696969;
+  }
+  .profile_container .pro_name a:hover {
+    color: #4a4848;
+  }
+  .profile_container .pro_like {
+    width: 17.5%;
+  }
+  .profile_container .pro_view {
+    float: right;
+  }
+  
+  .profile_container .pro_like i {
+    color: #0b3fb8;
+  }
+  .profile_container .pro_view i {
+    color: #0b3fb8;
+  }
+  
+  @media screen and (max-width: 780px) {
+    .feed_container{
+      padding: 10px;
+    }
+  }
+  
+  .image-style {
+    height: 200px;
+    margin: 0;
+    padding: 0;
+  }
+  
+  
+  .image_element_class
+  {
+    border-radius: 10px;
+    /* box-shadow: 15px 15px 15px -15px rgba(0, 0, 0, 0.45); */
+    /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19); */
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+    margin: 3px;
+  }

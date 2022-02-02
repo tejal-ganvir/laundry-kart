@@ -6,18 +6,22 @@ import FullButton from "../Buttons/FullButton";
 import HeaderImage from "../../assets/img/header-img.jpg";
 import QuotesIcon from "../../assets/svg/Quotes";
 import Dots from "../../assets/svg/Dots";
+import { useNavigate } from "react-router-dom";
 
-export default function Header() {
+const Header = () => {
+
+  const navigate = useNavigate();
+
   return (
     <Wrapper id="home" className="container flexSpaceCenter">
       <LeftSide className="flexCenter">
         <div>
-          <h1 className="extraBold font60">Your Laundry Day Reimagined.</h1>
+          <h1 className="extraBold font60">Say Goodbye to Laundry Day.</h1>
           <HeaderP className="font15 semiBold">
           We pick up your clothes, clean them according to your preferences & bring them back so fast you’ll hardly notice they ever left.
           </HeaderP>
           <BtnWrapper>
-            <FullButton title="Get Started" />
+            <FullButton title="Get Started" action={() => navigate('/register')} />
           </BtnWrapper>
         </div>
       </LeftSide>
@@ -45,11 +49,10 @@ export default function Header() {
   );
 }
 
+export default Header;
 
 const Wrapper = styled.section`
-  padding-top: 80px;
   width: 100%;
-  min-height: 840px;
   @media (max-width: 960px) {
     flex-direction: column;
   }

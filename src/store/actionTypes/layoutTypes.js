@@ -1,1 +1,2 @@
 export const SET_SIDEBAR_STATUS = 'SET_SIDEBAR_STATUS'
+export const IS_AUTH_LAYOUT = 'IS_AUTH_LAYOUT'

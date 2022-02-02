@@ -23,7 +23,7 @@ const customerMenu = [
     },
     {
         label: 'Orders',
-        link: '/account/order',
+        link: '/account/orders',
         icon: <ReorderIcon fontSize="small" />
     },
     {
