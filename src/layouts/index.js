@@ -16,14 +16,16 @@ const Layout = ({children, openSidebar, isAuthLayout}) => {
   useEffect(() => {
     let locationArray = location.pathname.split("/");
 
-    if(locationArray[1] === 'account')
+    if (
+      locationArray[1] === "account" ||
+      locationArray[1] === "vendor" ||
+      locationArray[1] === "rider"
+    )
       dispatch(setOpenSidebar(true));
-    else
-      dispatch(setOpenSidebar(false));
+    else dispatch(setOpenSidebar(false));
 
-    return(() => dispatch(setOpenSidebar(false)))
-
-  },[location.pathname])
+    return () => dispatch(setOpenSidebar(false));
+  }, [location.pathname]);
 
   return (
     <>
@@ -44,7 +46,7 @@ const Layout = ({children, openSidebar, isAuthLayout}) => {
               </Grid>
             </Grid>
           </Box>
-        <Footer />
+      <Footer />
     </>
   );
 };
@@ -54,4 +56,4 @@ const mapStateToProps = state => {
   return {openSidebar, isAuthLayout};
 };
 
-export default connect(mapStateToProps,null)(Layout);
+export default connect(mapStateToProps, null)(Layout);

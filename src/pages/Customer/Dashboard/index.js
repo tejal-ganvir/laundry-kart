@@ -5,6 +5,7 @@ import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import LocalMallIcon from '@mui/icons-material/LocalMall';
 import IronIcon from '@mui/icons-material/Iron';
 import StatsCard from './StatsCard';
+import { Container } from "@mui/material";
 
 const Dashboard = () => {
   return (

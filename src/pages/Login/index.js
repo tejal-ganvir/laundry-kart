@@ -55,7 +55,7 @@ const Login = (props) => {
                 align="center" 
                 variant='contained'
                 sx={{borderRadius: 4, px: 3}}
-                onClick={() => navigate('/account/dashboard')}
+                onClick={() => navigate('/vendor/dashboard')}
               >Login</Button>
             </div>
             <div className='form-control-area'>
