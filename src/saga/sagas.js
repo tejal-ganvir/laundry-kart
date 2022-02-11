@@ -1,8 +1,8 @@
-import { all } from 'redux-saga/effects';
+import { all, call } from "redux-saga/effects";
+import { LoginSaga } from "./login.saga";
+import { RegisterSaga } from "./register.saga";
 //import productsSaga from './products/saga';
 
 export default function* rootSaga(getState) {
-    yield all([
-        //productsSaga(),
-    ]);
+  yield all([call(LoginSaga), call(RegisterSaga)]);
 }

@@ -5,6 +5,7 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
 import { Stack } from "@mui/material";
+import AssignService from "../../../components/Vendor/AssignService";
 
 const style = {
   position: "absolute",
@@ -19,7 +20,6 @@ const style = {
 };
 
 const ServiceModal = (props) => {
-    
   return (
     <div>
       <Modal
@@ -39,20 +39,25 @@ const ServiceModal = (props) => {
             <TextField
               fullWidth
               id='service-name'
-              label='Service Name'
+              label='Item Name'
               variant='outlined'
             />
 
+            <AssignService />
+
             <TextField fullWidth id='price' label='Price' variant='outlined' />
 
-            <TextField fullWidth id='unit' label='Unit' variant='outlined' />
             <Stack
               direction='row'
               justifyContent='flex-end'
               alignItems='flex-start'
               spacing={2}>
-              <Button variant='text' onClick={props.close}>Cancel</Button>
-              <Button variant='contained' onClick={props.close}>Save</Button>
+              <Button variant='text' onClick={props.close}>
+                Cancel
+              </Button>
+              <Button variant='contained' onClick={props.close}>
+                Save
+              </Button>
             </Stack>
           </Stack>
         </Box>

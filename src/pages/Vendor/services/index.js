@@ -25,7 +25,8 @@ const VendorServices = () => {
             variant='outlined'
             color='primary'
             margin='normal'
-            onClick={handleOpen}>
+            onClick={handleOpen}
+            sx={{ borderRadius: 4 }}>
             Add Service
           </Button>
         </Stack>

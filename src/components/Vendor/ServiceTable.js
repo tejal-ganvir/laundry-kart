@@ -11,7 +11,7 @@ import TablePagination from "@mui/material/TablePagination";
 import Chip from "@mui/material/Chip";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from '@mui/icons-material/Edit';
+import EditIcon from "@mui/icons-material/Edit";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -38,10 +38,10 @@ function createData(name, price, unit, date, status) {
 }
 
 const rows = [
-  createData("Washing", 20, 1, "27-01-2022", "Active"),
-  createData("Dry cleaning", 25, 1, "27-01-2022", "Active"),
-  createData("Ironing", 8, 1, "27-01-2022", "Active"),
-  createData("Wash & Fold", 10, 1, "27-01-2022", "Active"),
+  createData("shirt", 20, "Dry cleaning", "27-01-2022", "Active"),
+  createData("t-shirt", 25, "Laundry service", "27-01-2022", "Active"),
+  createData("shirt", 8, "Laundry service", "27-01-2022", "Active"),
+  createData("t-shirt", 10, "Dry cleaning", "27-01-2022", "Active"),
 ];
 
 const ServiceTable = () => {
@@ -63,9 +63,9 @@ const ServiceTable = () => {
         <Table sx={{ minWidth: 700 }} aria-label='customized table'>
           <TableHead>
             <TableRow>
-              <StyledTableCell>Service Name</StyledTableCell>
+              <StyledTableCell>Item Name</StyledTableCell>
+              <StyledTableCell align='right'>Service Type</StyledTableCell>
               <StyledTableCell align='right'>Price</StyledTableCell>
-              <StyledTableCell align='right'>Unit</StyledTableCell>
               <StyledTableCell align='right'>Date</StyledTableCell>
               <StyledTableCell align='right'>Status</StyledTableCell>
               <StyledTableCell align='center'>Action</StyledTableCell>
@@ -79,8 +79,8 @@ const ServiceTable = () => {
                   <StyledTableCell component='th' scope='row'>
                     {row.name}
                   </StyledTableCell>
-                  <StyledTableCell align='right'>{row.price}</StyledTableCell>
                   <StyledTableCell align='right'>{row.unit}</StyledTableCell>
+                  <StyledTableCell align='right'>{row.price}</StyledTableCell>
                   <StyledTableCell align='right'>{row.date}</StyledTableCell>
                   <StyledTableCell align='right'>
                     <Chip label={row.status} color='success' />
