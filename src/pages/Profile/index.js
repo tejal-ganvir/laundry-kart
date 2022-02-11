@@ -14,7 +14,7 @@ const Profile = () => {
     return (
         <React.Fragment>
             <Container maxWidth="lg">
-                <Box component="div" className='whiteBg' sx={{boxShadow: 2, p:2, textAlign:'center' }}>
+                <Box component="div" className='whiteBg' sx={{boxShadow: 2, p:2, textAlign:'center', position: 'relative' }}>
                     <EditIcon action={() => {setDialogOpen(true); setDialogType(1)}} />
                     <Avatar
                         alt="Angelina Jolie"
@@ -24,7 +24,7 @@ const Profile = () => {
                     <Typography variant='h5' sx={{fontWeight:'bold', my: 1}} >Angelina Jolie</Typography>
                     <Typography variant='p' sx={{fontWeight:'bold', mt: 3}} >angelina.jolie@gmail.com</Typography>
                 </Box>
-                <Box component="div" className='whiteBg' sx={{boxShadow: 2, p:2, my: 3 }}>
+                <Box component="div" className='whiteBg' sx={{boxShadow: 2, p:2, my: 3, position: 'relative' }}>
                     <EditIcon action={() => {setDialogOpen(true); setDialogType(2)}} />
                     <table className='cust_card_table'>
                         <tbody>

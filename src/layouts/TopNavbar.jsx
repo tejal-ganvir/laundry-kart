@@ -45,8 +45,8 @@ export default function TopNavbar() {
               </NavLink>
             </li>
             <li className="semiBold font15 pointer">
-              <NavLink style={{ padding: "10px 15px" }} to="/search-laundry">
-                Search
+              <NavLink style={{ padding: "10px 15px" }} to="/laundry">
+                Laundry
               </NavLink>
             </li>
             {/* <li className="semiBold font15 pointer">

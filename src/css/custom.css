@@ -38,9 +38,10 @@
 .cust_edit_icon{
     position: absolute;
     color: #525252;
-    right: 40px;
+    right: 0;
     font-weight: bold;
     cursor: pointer;
+    margin-right: 12px;
 }
 
 .cust_card_table{

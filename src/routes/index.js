@@ -21,22 +21,24 @@ import HistoryDetails from "../pages/Vendor/history";
 import OrderDetails from "../pages/Vendor/orders";
 import RiderDetails from "../pages/Vendor/riders";
 import VendorServices from "../pages/Vendor/services";
+import LaundryDetails from '../pages/LaundryDetails';
 
 const Routes = () => {
   return (
     <Layout>
       <Switch>
-        <Route path='/' exact element={<Landing />} />
-        <Route path='/search-laundry' exact element={<SearchLaundry />} />
-        <Route path='/login' exact element={<Login />} />
-        <Route path='/register' exact element={<Register />} />
-        <Route path='/forgot-password' exact element={<ForgotPassword />} />
-        <Route path='/account/logout' exact element={<Logout />} />
-        <Route path='/account/dashboard' element={<Dashboard />} />
-        <Route path='/account/nearest-laundry' element={<NearestLaundry />} />
-        <Route path='/account/orders' element={<Orders />} />
-        <Route path='/account/history' element={<OrdersHistory />} />
-        <Route path='/account/profile' element={<Profile />} />
+        <Route path="/" exact element={<Landing />} />
+        <Route path="/laundry" exact element={<SearchLaundry />} />
+        <Route path="/login" exact element={<Login />} />
+        <Route path="/register" exact element={<Register />} />
+        <Route path="/forgot-password" exact element={<ForgotPassword />} />
+        <Route path="/account/logout" exact element={<Logout />} />
+        <Route path="/account/dashboard" element={<Dashboard />} />
+        <Route path="/account/nearest-laundry" element={<NearestLaundry />} />
+        <Route path="/account/orders" element={<Orders />} />
+        <Route path="/account/history" element={<OrdersHistory />} />
+        <Route path="/account/profile" element={<Profile />} />
+        <Route path="/laundry/details" element={<LaundryDetails />} />
 
         <Route path='/vendor/dashboard' element={<VendorDashboard />} />
         <Route path='/vendor/services' element={<VendorServices />} />

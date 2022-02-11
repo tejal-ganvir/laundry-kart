@@ -8,7 +8,7 @@ const LaundryCard = () => {
   return (
     <div className={styles.image_element_class}>
         <div className={styles.tiles}>
-            <Link to="/" className={styles.tile}>
+            <Link to="/laundry/details" className={styles.tile}>
                 <span>
                     <img src={firstImg} alt="Super Laundry" className={styles.image} />
                 </span>

@@ -4,7 +4,7 @@ import OrdersCard from '../../../components/OrdersCard/OrdersCard';
 
 const Orders = () => {
   return (
-      <Box mx={2}>
+      <Box mx={2} sx={{minHeight: 400}}>
         <OrdersCard />
       </Box>
   );

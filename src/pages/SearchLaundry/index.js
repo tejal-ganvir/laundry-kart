@@ -5,6 +5,7 @@ import InputBase from '@mui/material/InputBase';
 import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
 import LaundryCard from '../../components/LaundryCard/LaundryCard';
+import MapboxModal from '../../components/Mapbox/MapboxModal';
 
 const SearchLaundry = () => {
   return (
@@ -26,13 +27,13 @@ const SearchLaundry = () => {
                     </Paper>
                 </Container>
             </Box>
-            <Container maxWidth="xl" sx={{py: 3}}>
+            <Box className='container flexSpaceCenter' sx={{py: 3}}>
                 <Grid container direction="row" spacing={2}>
                     <Grid item xs={12} sm={6} md={3}>
                         <LaundryCard />
                     </Grid>
                 </Grid>
-            </Container>
+            </Box>
       </React.Fragment>
   );
 };

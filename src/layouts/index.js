@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import TopNavbar from './TopNavbar';
 import Footer from "./Footer"
 import Sidebar from './Sidebar';
+import LocationSetter from './LocationSetter';
 import { useLocation } from 'react-router-dom';
 import { setOpenSidebar } from '../store/actions/layoutActions';
 import { useDispatch } from 'react-redux';
@@ -17,7 +18,7 @@ const Layout = ({children, openSidebar, isAuthLayout}) => {
     let locationArray = location.pathname.split("/");
 
     if (
-      locationArray[1] === "account" ||
+      //locationArray[1] === "account" ||
       locationArray[1] === "vendor" ||
       locationArray[1] === "rider"
     )
@@ -33,8 +34,9 @@ const Layout = ({children, openSidebar, isAuthLayout}) => {
           <Box 
             className={`${openSidebar ? 'lightBg' : 'whiteBg'} ${isAuthLayout && 'authentication-bg'}` } 
             component="div" 
-            pt={12}
+            pt={10}
           >
+            {!isAuthLayout && <LocationSetter />}
             <Grid container direction="row">
               { openSidebar &&
                 <Grid item xs={12} md={3} sx={{pl:3}}>

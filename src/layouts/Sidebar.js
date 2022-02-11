@@ -6,7 +6,6 @@ import MenuList from "@mui/material/MenuList";
 import MenuItem from "@mui/material/MenuItem";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemIcon from "@mui/material/ListItemIcon";
-import Typography from "@mui/material/Typography";
 import { customerMenu, riderMenu, vendorMenu } from "../utilis/sidebarMenu";
 import { Link } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";

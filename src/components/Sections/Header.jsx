@@ -43,7 +43,7 @@ const Header = () => {
             <Dots />
           </DotsWrapper>
         </ImageWrapper>
-        <GreyDiv className="lightBg"></GreyDiv>
+        {/* <GreyDiv className="lightBg"></GreyDiv> */}
       </RightSide>
     </Wrapper>
   );
