@@ -4,7 +4,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import SearchAutocomplete from '../SearchAutocomplete/SearchAutocomplete';
-import { fetchJSON } from '../../services/api';
+import { fetchJSON } from '../../services/axiosConfig/api';
 import { MAPBOX_TOKEN } from '../../constants/constant';
 
 const MapboxModal = (props) => {
@@ -22,7 +22,7 @@ const MapboxModal = (props) => {
         setCurrLong(lng);
         mapRef.current.flyTo({center: [lng, lat], zoom: 10, duration: 2000});
         //console.log(mapRef.current.flyTo);
-        const response = fetchJSON(`https://api.mapbox.com/geocoding/v5/mapbox.places/${lng},${lat}.json?access_token=${MAPBOX_TOKEN}`)
+        const response = fetchJSON(`https://api.mapbox.com/geocoding/v5/mapbox.places/${lng},${lat}.json?access_token=${MAPBOX_TOKEN}`, 'map')
         response.then((data) => {
             let newOption = data.features.map((item, idx) => ({ label: item.place_name, id: idx }));
             setFeatureData(data.features);

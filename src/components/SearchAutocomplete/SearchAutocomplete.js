@@ -3,7 +3,7 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import { Box } from '@mui/system';
 import { Button } from '@mui/material';
-import { fetchJSON } from '../../services/api';
+import { fetchJSON } from '../../services/axiosConfig/api';
 import { MAPBOX_TOKEN } from '../../constants/constant';
 
 const SearchAutocomplete = (props) => {
@@ -15,7 +15,7 @@ const SearchAutocomplete = (props) => {
 
     const fetchLocation = (value) => {
         let string = encodeURIComponent(value.trim())
-        const response = fetchJSON(`https://api.mapbox.com/geocoding/v5/mapbox.places/${string}.json?access_token=${MAPBOX_TOKEN}`)
+        const response = fetchJSON(`https://api.mapbox.com/geocoding/v5/mapbox.places/${string}.json?access_token=${MAPBOX_TOKEN}`, 'map')
         response.then((data) => {
             setFeatureData(data.features);
             let newOption = data.features.map((item, idx) => ({ label: item.place_name, id: idx }));

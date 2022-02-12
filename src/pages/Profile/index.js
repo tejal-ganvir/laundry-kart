@@ -7,6 +7,7 @@ import EditIcon from '../../components/EditIcon/EditIcon';
 import EditDailouge from './EditDialog';
 import EditProfile from './EditProfile';
 import EditProfileDetails from './EditProfileDetails';
+import LocationAutocomplete from '../../components/SearchAutocomplete/LocationAutocomplete';
 
 const Profile = () => {
     const [dialogOpen, setDialogOpen] = useState(false);

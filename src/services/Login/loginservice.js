@@ -1,11 +1,6 @@
-import axios from "axios";
-import {baseURL,headers} from "./constants";
+import { fetchJSON } from "../axiosConfig/api";
 
 export const getLoginUser = async (data) => {
-  const response = await axios.get(`${baseURL}login?username=${data.username}&password=${data.password}`,
-    {
-      headers,
-    }
-  );
+  const response = await fetchJSON(`login?username=${data.username}&password=${data.password}`);
   return response;
 };
