@@ -4,6 +4,7 @@ import { TextField } from '@mui/material';
 import Button from '@mui/material/Button';
 import AvatarEditor from 'react-avatar-editor';
 import userImg from '../../assets/img/user-1.jpg'
+import { postJSON } from '../../services/axiosConfig/api';
 
 const EditProfile = () => {
 
@@ -28,6 +29,11 @@ const EditProfile = () => {
             }
         }
     };
+
+    const handleSubmit = () => {
+        const res = postJSON('functions/saveProfileDetails', {name: 'tejal'})
+        console.log(res);
+    }
 
   return (
     <React.Fragment>
@@ -82,7 +88,7 @@ const EditProfile = () => {
                     align="center" 
                     variant='contained'
                     sx={{borderRadius: 4, px: 3}}
-                    //onClick={() => navigate('/account/dashboard')}
+                    onClick={() => handleSubmit()}
                 >Save</Button>
             </div>
         </Box>

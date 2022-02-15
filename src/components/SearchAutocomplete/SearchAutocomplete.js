@@ -2,13 +2,17 @@ import React, { useState } from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import { Box } from '@mui/system';
-import { Button } from '@mui/material';
-import { fetchJSON } from '../../services/axiosConfig/api';
+import LoadingButton from '@mui/lab/LoadingButton';
+import { fetchJSON, postJSON } from '../../services/axiosConfig/api';
 import { MAPBOX_TOKEN } from '../../constants/constant';
+import { useDispatch } from 'react-redux';
+import { setLocationData } from '../../store/actions/locationActions';
 
 const SearchAutocomplete = (props) => {
     
+    const dispatch = useDispatch();
     const [value, setValue] = useState();
+    const [loading, setLoading] = useState(false);
     const [isValueSelected, setIsValueSelected] = useState(false);
     const {featureData, setFeatureData} = props.featureFunc;
     const {setCurrLat,setCurrLong} = props.latLng;
@@ -30,16 +34,34 @@ const SearchAutocomplete = (props) => {
 
     const onValueChange = (value) => {
         setValue(value.id);
-        props.setLocationText(value.label)
+        props.setOpen(false);
         props.currMapRef.current.flyTo({center: featureData[value.id].center, zoom: 10, duration: 2000});
         setCurrLong(featureData[value.id].center[0]);
         setCurrLat(featureData[value.id].center[1]);
-        props.setOpen(false);
         setIsValueSelected(true);
     }
 
     const handelSubmit = () =>{
-        console.log(featureData[value]);
+        setLoading(true);
+        const location = featureData[value];
+        const options = {
+            long: location.center[0],
+            lat: location.center[1],
+            name: location.place_name,
+            address: location.place_name,
+            city: location.context[0].text,
+            pin: location.context[1].short_code,
+            state: location.context[1].text,
+            country: location.context[2].text,
+            userId: '6jq76obiZM',
+        };
+        let response = postJSON('functions/saveLocationDetails', options);
+        response.then(data => {
+            setLoading(false);
+            props.setLocationText(location.place_name);
+            props.hideModal();
+            dispatch(setLocationData(options));
+        })
     }
 
   return (
@@ -61,12 +83,13 @@ const SearchAutocomplete = (props) => {
             renderInput={(params) => <TextField {...params} size='small' label="Enter Location" />}
         />
         <div className='form-control-area text-center'>
-            <Button
+            <LoadingButton
+                loading={loading}
                 align="center" 
                 variant='contained'
                 sx={{borderRadius: 4, px: 3}}
                 onClick={() => handelSubmit()}
-            >Save</Button>
+            >Save</LoadingButton>
         </div>
     </Box>
   );
