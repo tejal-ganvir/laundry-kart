@@ -5,9 +5,8 @@ export const RegisterStart = (data) => ({
   payload: data,
 });
 
-export const RegisterSuccess = (user) => ({
+export const RegisterSuccess = () => ({
   type: RegisterActionTypes.REGISTER_SUCCESS,
-  payload: user,
 });
 
 export const RegisterFailed = (errorMessage) => ({

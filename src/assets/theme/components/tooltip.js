@@ -17,12 +17,12 @@ Coded by www.creative-tim.com
 import Fade from "@mui/material/Fade";
 
 // Material Dashboard 2 PRO React base styles
-import colors from "assets/theme/base/colors";
-import typography from "assets/theme/base/typography";
-import borders from "assets/theme/base/borders";
+import colors from "../base/colors";
+import typography from "../base/typography";
+import borders from "../base/borders";
 
 // Material Dashboard 2 PRO React helper functions
-import pxToRem from "assets/theme/functions/pxToRem";
+import pxToRem from "../functions/pxToRem";
 
 const { black, light } = colors;
 const { size, fontWeightRegular } = typography;
@@ -37,8 +37,8 @@ export default {
   styleOverrides: {
     tooltip: {
       maxWidth: pxToRem(200),
-      backgroundColor: black.main,
-      color: light.main,
+      backgroundColor: "#000000",
+      color: "#ffffff",
       fontSize: size.sm,
       fontWeight: fontWeightRegular,
       textAlign: "center",
@@ -48,7 +48,7 @@ export default {
     },
 
     arrow: {
-      color: black.main,
+      color: "#000000",
     },
   },
 };

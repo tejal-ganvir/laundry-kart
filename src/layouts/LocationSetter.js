@@ -27,7 +27,7 @@ const LocationSetter = (props) => {
             <div className="container flexSpaceCenter">
                 <div>
                     <Button 
-                        sx={{color: 'white', fontWeight:'bold', fontSize: 15}} 
+                        sx={{color: '#ffffff', fontWeight:'bold', fontSize: 15}} 
                         startIcon={<AddLocationAltIcon />}
                         onClick={() => setDialogOpen(true)}
                     >
@@ -36,12 +36,12 @@ const LocationSetter = (props) => {
                 </div>
                 <div>
                     <Button sx={{
-                        color: 'white', 
+                        color: '#ffffff', 
                         fontWeight:'bold', 
                         fontSize: 15, 
-                        borderColor: 'white',
+                        borderColor: '#ffffff',
                         '&:hover': {
-                            borderColor: 'white'
+                            borderColor: '#ffffff'
                          },
                     }} variant='outlined' endIcon={<SearchIcon />}>
                         Search

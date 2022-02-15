@@ -20,15 +20,13 @@ Coded by www.creative-tim.com
  */
 
 // Material Dashboard 2 PRO React Base Styles
-import colors from "assets/theme/base/colors";
+import colors from "./colors";
 
 // Material Dashboard 2 PRO React Helper Functions
-import pxToRem from "assets/theme/functions/pxToRem";
-
-const { grey } = colors;
+import pxToRem from "../functions/pxToRem";
 
 export default {
-  borderColor: grey[300],
+  borderColor: "#dee2e6",
 
   borderWidth: {
     0: 0,

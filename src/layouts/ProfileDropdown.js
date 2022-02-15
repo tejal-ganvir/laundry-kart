@@ -22,8 +22,8 @@ const ProfileDropdown = () => {
         setAnchorEl(null);
     };
   return (
-      <React.Fragment>
-        <IconButton
+    <React.Fragment>
+      <IconButton
         onClick={handleClick}
         size="small"
         sx={{ ml: 2, borderRadius: 0 }}

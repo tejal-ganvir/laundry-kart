@@ -16,7 +16,7 @@ const LaundryDetails = () => {
     setLoading(true);
     const response = postJSON(`functions/getLaundryById?laundryId=${laundryId}`, {laundryId: laundryId})
     response.then(data => {
-      console.log(data);
+      //console.log(data);
       setDetails(data.result);
     })
   },[laundryId])

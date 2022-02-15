@@ -1,9 +1,11 @@
 import LoginActionTypes from "../actionTypes/loginTypes";
 
 const intialState = {
-  user: null,
+  currentUser: null,
   isLoading: false,
   isLogin: false,
+  role: null,
+  sessionToken: null,
   loginDetails: null,
   errorMessage: null,
 };
@@ -13,9 +15,26 @@ export const LoginReducer = (state = intialState, { type, payload }) => {
     case LoginActionTypes.LOGIN_START:
       return { ...state, isLoading: true, loginDetails: payload };
     case LoginActionTypes.LOGIN_SUCCESS:
-      return { ...state, isLoading: false, isLogin: true, user: payload };
+      return {
+        ...state,
+        isLoading: false,
+        isLogin: true,
+        currentUser: payload,
+        role: payload.role,
+        sessionToken: payload.sessionToken,
+      };
     case LoginActionTypes.LOGIN_FAILED:
       return { ...state, isLoading: false, errorMessage: payload };
+    case LoginActionTypes.LOGOUT_START:
+      return {
+        ...state,
+        isLoading: false,
+        isLogin: false,
+        currentUser: null,
+        role: null,
+        sessionToken: null,
+        loginDetails: null,
+      };
     default:
       return state;
   }

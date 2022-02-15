@@ -14,11 +14,11 @@ Coded by www.creative-tim.com
 */
 
 // Material Dashboard 2 PRO React base styles
-import borders from "assets/theme/base/borders";
-import colors from "assets/theme/base/colors";
+import borders from "../base/borders";
+import colors from "../base/colors";
 
 // Material Dashboard 2 PRO React helper functions
-import pxToRem from "assets/theme/functions/pxToRem";
+import pxToRem from "../functions/pxToRem";
 
 const { borderRadius } = borders;
 const { light } = colors;
@@ -33,11 +33,11 @@ export default {
     },
 
     colorPrimary: {
-      backgroundColor: light.main,
+      backgroundColor: "#ffffff",
     },
 
     colorSecondary: {
-      backgroundColor: light.main,
+      backgroundColor: "#ffffff",
     },
 
     bar: {
