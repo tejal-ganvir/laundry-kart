@@ -14,12 +14,12 @@ Coded by www.creative-tim.com
 */
 
 // Material Dashboard 2 PRO React base styles
-import colors from "assets/theme/base/colors";
-import borders from "assets/theme/base/borders";
-import boxShadows from "assets/theme/base/boxShadows";
+import colors from "../base/colors";
+import borders from "../base/borders";
+import boxShadows from "../base/boxShadows";
 
 // Material Dashboard 2 PRO React helper functions
-import pxToRem from "assets/theme/functions/pxToRem";
+import pxToRem from "../functions/pxToRem";
 
 const { grey, white, black, info } = colors;
 const { borderRadius, borderWidth } = borders;
@@ -35,19 +35,19 @@ export default {
       },
 
       "& .MuiSlider-valueLabel": {
-        color: black.main,
+        color: "#000000",
       },
     },
 
     rail: {
       height: pxToRem(2),
-      background: grey[200],
+      background: "#f0f2f5",
       borderRadius: borderRadius.sm,
       opacity: 1,
     },
 
     track: {
-      background: info.main,
+      background: "#49a3f1",
       height: pxToRem(2),
       position: "relative",
       border: "none",
@@ -58,10 +58,10 @@ export default {
     thumb: {
       width: pxToRem(14),
       height: pxToRem(14),
-      backgroundColor: white.main,
+      backgroundColor: "#ffffff",
       zIndex: 10,
       boxShadow: sliderBoxShadow.thumb,
-      border: `${borderWidth[1]} solid ${info.main}`,
+      border: `${borderWidth[1]} solid #49a3f1`,
 
       "&:hover": {
         boxShadow: "none",

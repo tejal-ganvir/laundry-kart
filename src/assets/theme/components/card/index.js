@@ -14,12 +14,12 @@ Coded by www.creative-tim.com
 */
 
 // Material Dashboard 2 PRO React Base Styles
-import colors from "assets/theme/base/colors";
-import borders from "assets/theme/base/borders";
-import boxShadows from "assets/theme/base/boxShadows";
+import colors from "../../base/colors";
+import borders from "../../base/borders";
+import boxShadows from "../../base/boxShadows";
 
 // Material Dashboard 2 PRO React Helper Function
-import rgba from "assets/theme/functions/rgba";
+import rgba from "../../functions/rgba";
 
 const { black, white } = colors;
 const { borderWidth, borderRadius } = borders;
@@ -33,9 +33,9 @@ export default {
       position: "relative",
       minWidth: 0,
       wordWrap: "break-word",
-      backgroundColor: white.main,
+      backgroundColor: "#ffffff",
       backgroundClip: "border-box",
-      border: `${borderWidth[0]} solid ${rgba(black.main, 0.125)}`,
+      border: `${borderWidth[0]} solid ${rgba("#000000", 0.125)}`,
       borderRadius: borderRadius.xl,
       boxShadow: md,
       overflow: "visible",

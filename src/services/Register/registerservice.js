@@ -1,12 +1,9 @@
 import axios from "axios";
-import RegisterConstants from "./constants";
+import { baseURL, headers } from "../constants";
 
 export const setUserRegistration = async (data) => {
-  const response = await axios.post(
-    RegisterConstants.URL,
-    data,
-    RegisterConstants.HEADERS,
-  );
-  console.log(response);
+  const response = await axios.post(`${baseURL}users`, data, {
+    headers,
+  });
   return response;
 };

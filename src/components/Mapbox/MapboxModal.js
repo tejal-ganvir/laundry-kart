@@ -6,6 +6,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import SearchAutocomplete from '../SearchAutocomplete/SearchAutocomplete';
 import { fetchJSON } from '../../services/axiosConfig/api';
 import { MAPBOX_TOKEN } from '../../constants/constant';
+import { connect } from 'react-redux';
 
 const MapboxModal = (props) => {
 
@@ -71,10 +72,16 @@ const MapboxModal = (props) => {
                     featureFunc={{featureData, setFeatureData}}
                     latLng={{setCurrLat,setCurrLong}}
                     setLocationText={props.setText}
+                    hideModal={props.hide}
                 />
             </DialogContent>
         </Dialog>
     )
 };
 
-export default MapboxModal
+const mapStateToProps = state => {
+    const {data} = state.Location;
+    return {data};
+};
+  
+export default connect(mapStateToProps, null)(MapboxModal);

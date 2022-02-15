@@ -10,8 +10,6 @@ const setHeader = (type) =>{
 
 const fetchJSON = (url, type = '') => {
 
-    setHeader(type);
-
     return axiosConfig.get(url)
         .then(response => response.data)
         .then(data => {
@@ -24,9 +22,7 @@ const fetchJSON = (url, type = '') => {
 };
 
 const postJSON = (url, options = {}, type = '') => {
-
-    setHeader(type);
-
+    
     return axiosConfig.post(url, options)
         .then(response => response.data)
         .then(data => {

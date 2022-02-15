@@ -1,16 +1,22 @@
-import { Container, Grid, Paper } from '@mui/material';
+import { Grid } from '@mui/material';
 import { Box } from '@mui/system';
-import React from 'react';
-import InputBase from '@mui/material/InputBase';
-import IconButton from '@mui/material/IconButton';
-import SearchIcon from '@mui/icons-material/Search';
+import React, { useEffect } from 'react';
+import { connect, useDispatch } from 'react-redux';
 import LaundryCard from '../../components/LaundryCard/LaundryCard';
-import MapboxModal from '../../components/Mapbox/MapboxModal';
+import { postJSON } from '../../services/axiosConfig/api';
+import { getLaundryList } from '../../store/actions/laundryActions';
 
-const SearchLaundry = () => {
+const SearchLaundry = ({data, loading, error}) => {
+
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(getLaundryList());
+    },[])
+
   return (
       <React.Fragment>
-            <Box sx={{py: 5, backgroundColor: '#f5f5f5'}}>
+            {/* <Box sx={{py: 5, backgroundColor: '#f5f5f5'}}>
                 <Container maxWidth="md">
                     <Paper
                         component="form"
@@ -26,16 +32,28 @@ const SearchLaundry = () => {
                         </IconButton>
                     </Paper>
                 </Container>
-            </Box>
-            <Box className='container flexSpaceCenter' sx={{py: 3}}>
+            </Box> */}
+            <Box className='container' sx={{minHeight: 400}}>
                 <Grid container direction="row" spacing={2}>
-                    <Grid item xs={12} sm={6} md={3}>
-                        <LaundryCard />
-                    </Grid>
+                    { loading ? 'loading...' :
+                        data.length > 0 ? 
+                        data.map((item, idx) => (
+                            <Grid key={`laundry-list-item-${idx}`} item xs={12} sm={6} md={3}>
+                                <LaundryCard {...item} />
+                            </Grid>
+                        ))
+                        :
+                        'No laundries found'
+                    }
                 </Grid>
             </Box>
       </React.Fragment>
   );
 };
 
-export default SearchLaundry;
+const mapStateToProps = state => {
+    const {data, loading, error} = state.Laundry;
+    return {data, loading, error};
+};
+  
+export default connect(mapStateToProps, null)(SearchLaundry);

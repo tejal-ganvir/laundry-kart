@@ -14,3 +14,7 @@ export const LoginFailed = (errorMessage) => ({
   type: LoginActionTypes.LOGIN_FAILED,
   payload: errorMessage,
 });
+
+export const LogoutStart = () => ({
+  type: LoginActionTypes.LOGOUT_START,
+});

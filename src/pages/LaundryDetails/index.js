@@ -1,11 +1,29 @@
 import { Box, Container, Grid, Typography } from '@mui/material';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import Carousel from '../../components/Carousel/Carousel';
+import { postJSON } from '../../services/axiosConfig/api';
 import BookingTable from './BookingTable';
 
 const LaundryDetails = () => {
+
+  const [details, setDetails] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const laundryId = searchParams.get("laundryId");
+
+  useEffect(() => {
+    setLoading(true);
+    const response = postJSON(`functions/getLaundryById?laundryId=${laundryId}`, {laundryId: laundryId})
+    response.then(data => {
+      //console.log(data);
+      setDetails(data.result);
+    })
+  },[laundryId])
+
   return (
     <React.Fragment>
+      {JSON.stringify(details)}
       <Container maxWidth="xl">
         <Box component="div" className='whiteBg' sx={{boxShadow: 2, p:4, mb: 4}}>
           <Grid container direction="row" spacing={2}>

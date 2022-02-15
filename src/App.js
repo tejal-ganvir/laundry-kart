@@ -6,39 +6,15 @@ import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
 import Routes from "./routes";
 import store from "./store/store";
+import theme from "./assets/theme";
 
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/material/styles';
 import { ToastContainer } from 'react-toastify';
-import lightBlue from "@material-ui/core/colors/lightBlue";
 
 function App() {
 
-  const THEME = createTheme({
-    typography: {
-     "fontFamily": `"Nunito", "Arial", sans-serif`,
-     "fontSize": 13,
-     "fontWeightLight": 300,
-     "fontWeightRegular": 400,
-     "fontWeightMedium": 500
-    },
-    palette: {
-      primary: {
-        light: '#f75daf',
-        main: '#ec0883',
-        dark: '#b60563',
-        contrastText: '#fff',
-      },
-      secondary: {
-        light: '#a474f1',
-        main: '#7620FF',
-        dark: '#4807af',
-        contrastText: '#fff',
-      },
-    },
- });
-
   return (
-    <ThemeProvider theme={THEME}>
+    <ThemeProvider theme={theme}>
       <Provider store={store}>
         <BrowserRouter>
           <Routes />

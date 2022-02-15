@@ -37,7 +37,6 @@ export default styled(Box)(({ theme, ownerState }) => {
     "success",
     "warning",
     "error",
-    "dark",
     "light",
   ];
 
@@ -52,7 +51,6 @@ export default styled(Box)(({ theme, ownerState }) => {
     "warning",
     "error",
     "light",
-    "dark",
     "text",
     "grey-100",
     "grey-200",
@@ -74,7 +72,7 @@ export default styled(Box)(({ theme, ownerState }) => {
   if (variant === "gradient") {
     backgroundValue = validGradients.find((el) => el === bgColor)
       ? linearGradient(gradients[bgColor].main, gradients[bgColor].state)
-      : white.main;
+      : '#ffffff';
   } else if (validColors.find((el) => el === bgColor)) {
     backgroundValue = palette[bgColor]
       ? palette[bgColor].main

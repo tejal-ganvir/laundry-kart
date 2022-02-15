@@ -14,12 +14,12 @@ Coded by www.creative-tim.com
 */
 
 // Material Dashboard 2 PRO React base styles
-import typography from "assets/theme/base/typography";
-import borders from "assets/theme/base/borders";
-import colors from "assets/theme/base/colors";
+import typography from "../../base/typography";
+import borders from "../../base/borders";
+import colors from "../../base/colors";
 
 // Material Dashboard 2 PRO React helper functions
-import pxToRem from "assets/theme/functions/pxToRem";
+import pxToRem from "../../functions/pxToRem";
 
 const { size, fontWeightRegular } = typography;
 const { borderRadius } = borders;
@@ -42,7 +42,7 @@ export default {
       lineHeight: "inherit",
       padding: pxToRem(4),
       borderRadius: borderRadius.lg,
-      color: `${dark.main} !important`,
+      color: `#000000 !important`,
       opacity: "1 !important",
 
       "& .material-icons, .material-icons-round": {
