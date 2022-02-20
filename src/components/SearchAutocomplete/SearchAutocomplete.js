@@ -5,7 +5,7 @@ import { Box } from '@mui/system';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { fetchJSON, postJSON } from '../../services/axiosConfig/api';
 import { MAPBOX_TOKEN } from '../../constants/constant';
-import { useDispatch } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { setLocationData } from '../../store/actions/locationActions';
 
 const SearchAutocomplete = (props) => {
@@ -16,6 +16,7 @@ const SearchAutocomplete = (props) => {
     const [isValueSelected, setIsValueSelected] = useState(false);
     const {featureData, setFeatureData} = props.featureFunc;
     const {setCurrLat,setCurrLong} = props.latLng;
+    const userId = props && props.currentUser && props.currentUser.objectId ? props.currentUser.objectId : '';
 
     const fetchLocation = (value) => {
         let string = encodeURIComponent(value.trim())
@@ -53,7 +54,7 @@ const SearchAutocomplete = (props) => {
             pin: location.context[1].short_code,
             state: location.context[1].text,
             country: location.context[2].text,
-            userId: '6jq76obiZM',
+            userId: userId,
         };
         let response = postJSON('functions/saveLocationDetails', options);
         response.then(data => {
@@ -95,4 +96,9 @@ const SearchAutocomplete = (props) => {
   );
 };
 
-export default SearchAutocomplete;
+const mapStateToProps = state => {
+    const {currentUser} = state.login;
+    return {currentUser};
+};
+  
+export default connect(mapStateToProps, null)(SearchAutocomplete);

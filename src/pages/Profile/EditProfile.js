@@ -12,26 +12,32 @@ const EditProfile = () => {
     const profileRef = useRef();
 
     const onSelectFile = (e) => {
+        
+        console.log(e.target.files);
         if (e.target.files && e.target.files.length > 0) {
             /*Maximum allowed size in bytes
             20MB Example
             Change first operand(multiplier) for your needs*/
-            const maxAllowedSize = 20 * 1024 * 1024;
-            if (e.target.files[0].size > maxAllowedSize) {
-                // Here you can ask your users to load correct file
-                console.log('File Size too Large');
-            } else {
-                const reader = new FileReader();
-                reader.addEventListener('load', () => {
-                    setImgUrl(reader.result);
-                });
-                reader.readAsDataURL(e.target.files[0]);
-            }
+            //const maxAllowedSize = 20 * 1024 * 1024;
+            // if (e.target.files[0].size > maxAllowedSize) {
+            //     // Here you can ask your users to load correct file
+            //     console.log('File Size too Large');
+            // } else {
+                
+            // }
+            const reader = new FileReader();
+            reader.addEventListener('load', () => {
+                console.log(reader);
+                setImgUrl(reader.result);
+            });
+            reader.readAsDataURL(e.target.files[0]);
         }
     };
 
     const handleSubmit = () => {
-        const res = postJSON('functions/saveProfileDetails', {name: 'tejal'})
+        // const option = { "__type": "File", "name": "resume.txt" };
+        //console.log(imgUrl);
+        const res = postJSON('functions/saveProfileDetails', {profileImg: imgUrl})
         console.log(res);
     }
 

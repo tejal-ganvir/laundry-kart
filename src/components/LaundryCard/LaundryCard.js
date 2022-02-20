@@ -25,7 +25,7 @@ const LaundryCard = ({laundryId, name, bannerImg, avgRating}) => {
                     <Rating name="half-rating-read" defaultValue={avgRating} precision={0.5} size="small" readOnly />
                 </div>
             </Stack>
-            <Divider />
+            <Divider sx={{margin: 0}} />
             <Typography className={`${styles.pro_name } pinkColor`}>3 km away</Typography>
         </div>
     </div>

@@ -3,7 +3,7 @@ import { Box } from '@mui/system';
 import React, { useEffect } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import LaundryCard from '../../components/LaundryCard/LaundryCard';
-import { postJSON } from '../../services/axiosConfig/api';
+import LoaderBackdrop from '../../components/LoaderBackdrop/LoaderBackdrop';
 import { getLaundryList } from '../../store/actions/laundryActions';
 
 const SearchLaundry = ({data, loading, error}) => {
@@ -35,7 +35,7 @@ const SearchLaundry = ({data, loading, error}) => {
             </Box> */}
             <Box className='container' sx={{minHeight: 400}}>
                 <Grid container direction="row" spacing={2}>
-                    { loading ? 'loading...' :
+                    { loading ? <LoaderBackdrop open={loading} />  :
                         data.length > 0 ? 
                         data.map((item, idx) => (
                             <Grid key={`laundry-list-item-${idx}`} item xs={12} sm={6} md={3}>

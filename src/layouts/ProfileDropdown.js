@@ -7,24 +7,28 @@ import IconButton from '@mui/material/IconButton';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import Logout from '@mui/icons-material/Logout';
 import { Divider, Typography } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { customerProfileMenu } from '../utilis/profileDropdownMenu';
 
-const ProfileDropdown = () => {
+const ProfileDropdown = ({user}) => {
     const [anchorEl, setAnchorEl] = useState(null);
     const profileMenu = customerProfileMenu;
     const open = Boolean(anchorEl);
+    const {isLogin, currentUser} = user;
+    const navigate = useNavigate();
+
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
     const handleClose = () => {
         setAnchorEl(null);
     };
+
   return (
     <React.Fragment>
       <IconButton
-        onClick={handleClick}
+        onClick={isLogin ? handleClick : () => navigate('login')}
         size="small"
         sx={{ ml: 2, borderRadius: 0 }}
         aria-controls={open ? 'account-menu' : undefined}
@@ -32,9 +36,11 @@ const ProfileDropdown = () => {
         aria-expanded={open ? 'true' : undefined}
         >
             <Avatar sx={{ width: 40, height: 40 }} />
-            <Typography sx={{fontSize: 13, fontWeight: 'bold', mx: 1 }}>
-                Tejal Ganvir &nbsp;<KeyboardArrowDownIcon sx={{height: 15, width: 15}} />
-            </Typography>
+            {isLogin &&
+                <Typography sx={{fontSize: 13, fontWeight: 'bold', mx: 1 }}>
+                    {currentUser.username} &nbsp;<KeyboardArrowDownIcon sx={{height: 15, width: 15}} />
+                </Typography>
+            }
         </IconButton>
 
         <Menu

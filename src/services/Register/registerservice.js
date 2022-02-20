@@ -1,9 +1,11 @@
 import axios from "axios";
-import { baseURL, headers } from "../constants";
+import { postJSON } from "../axiosConfig/api";
 
 export const setUserRegistration = async (data) => {
-  const response = await axios.post(`${baseURL}users`, data, {
-    headers,
-  });
-  return response;
+  try {
+    const response = await postJSON(`users`, data);
+    return response;
+  } catch (error) {
+    throw error.response;
+  }
 };
