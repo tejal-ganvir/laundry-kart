@@ -8,11 +8,13 @@ import { connect, useDispatch } from 'react-redux';
 import { postJSON } from '../services/axiosConfig/api';
 import { setLocationData } from '../store/actions/locationActions';
 import { useNavigate } from 'react-router-dom';
+import { isObjEmpty } from '../utilis/functions';
 
 const LocationSetter = (props) => {
 
     const [dialogOpen, setDialogOpen] = useState(false);
     const [locatonText, setLocatonText] = useState('Laundries Near Me');
+    const [isFirstLocation, setFirstLocation] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const userId = props && props.currentUser && props.currentUser.objectId ? props.currentUser.objectId : '';
@@ -20,6 +22,11 @@ const LocationSetter = (props) => {
     useEffect(() => {
         const response = postJSON(`functions/getCustomerLocation?userId=${userId}`, {userId : userId});
         response.then(data => {
+            if(isObjEmpty(data))
+                setFirstLocation(true)
+            else
+                setFirstLocation(false)
+
             dispatch(setLocationData(data.result));
         })
     },[])
@@ -61,6 +68,7 @@ const LocationSetter = (props) => {
             open={dialogOpen}
             hide={() => setDialogOpen(false)}
             setText={setLocatonText}
+            firstTimeLocation={isFirstLocation}
          />
      </Box>
   );

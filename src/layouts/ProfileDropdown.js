@@ -4,8 +4,6 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import IconButton from '@mui/material/IconButton';
-import DashboardIcon from '@mui/icons-material/Dashboard';
-import Logout from '@mui/icons-material/Logout';
 import { Divider, Typography } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
@@ -38,7 +36,12 @@ const ProfileDropdown = ({user}) => {
             <Avatar sx={{ width: 40, height: 40 }} />
             {isLogin &&
                 <Typography sx={{fontSize: 13, fontWeight: 'bold', mx: 1 }}>
-                    {currentUser.username} &nbsp;<KeyboardArrowDownIcon sx={{height: 15, width: 15}} />
+                    {
+                        (currentUser.firstName && currentUser.lastName) ?
+                        `${currentUser.firstName} ${currentUser.lastName}` :
+                        currentUser.username
+                    } 
+                    &nbsp;<KeyboardArrowDownIcon sx={{height: 15, width: 15}} />
                 </Typography>
             }
         </IconButton>

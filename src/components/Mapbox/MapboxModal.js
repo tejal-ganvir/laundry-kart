@@ -1,21 +1,59 @@
-import React, { useRef, useState } from 'react';
-import Map, {Marker} from 'react-map-gl';
+import React, { useEffect, useRef, useState } from 'react';
+import Map, { Marker} from 'react-map-gl';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import SearchAutocomplete from '../SearchAutocomplete/SearchAutocomplete';
-import { fetchJSON } from '../../services/axiosConfig/api';
+import { fetchJSON, postJSON } from '../../services/axiosConfig/api';
 import { MAPBOX_TOKEN } from '../../constants/constant';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
+import { setLocationData } from '../../store/actions/locationActions';
 
 const MapboxModal = (props) => {
 
     const mapRef = useRef();
     const [currlong, setCurrLong] = useState(78.9629);
     const [currlat, setCurrLat] = useState(20.5937);
+    const [zoom, setZoom] = useState(3.5);
     const [autoOpen, setAutoOpen] = useState(false);
     const [options, setOptions] = useState([]);
     const [featureData, setFeatureData] = useState();
+    const dispatch = useDispatch();
+    const userId = props && props.currentUser && props.currentUser.objectId ? props.currentUser.objectId : '';
+    const addressObjectId = props && props.data && props.data.objectId ? props.data.objectId : '';
+
+    useEffect(() => {
+        if(props.firstTimeLocation){
+            if ("geolocation" in navigator) { 
+                navigator.geolocation.getCurrentPosition(position => {
+                    const response = fetchJSON(`https://api.mapbox.com/geocoding/v5/mapbox.places/${position.coords.longitude},${position.coords.latitude}.json?access_token=${MAPBOX_TOKEN}`, 'map')
+                    response.then((data) => {
+                        let nowFeature = data.features[2];
+                        const options = {
+                            long: nowFeature.center[0],
+                            lat: nowFeature.center[1],
+                            name: nowFeature.place_name,
+                            address: nowFeature.place_name,
+                            city: nowFeature.context[0].text,
+                            pin: nowFeature.context[1].short_code,
+                            state: nowFeature.context[1].text,
+                            country: nowFeature.context[2].text,
+                            userId: userId,
+                            objectId: addressObjectId,
+                        };
+                        let response = postJSON('functions/saveLocationDetails', options);
+                        response.then(({result})=> {
+                            props.setText(nowFeature.place_name);
+                            dispatch(setLocationData({...options, objectId: result.objectId}));
+                        })
+                        setCurrLong(position.coords.longitude);
+                        setCurrLat(position.coords.latitude);
+                        setZoom(10);
+                    })
+                });
+            }
+        }
+    },[props.firstTimeLocation])
 
     const onMarkerDragEnd = ({lngLat}) => {
         const {lat, lng} = lngLat;
@@ -46,7 +84,7 @@ const MapboxModal = (props) => {
                     initialViewState={{
                         longitude: currlong,
                         latitude: currlat,
-                        zoom: 3.5,
+                        zoom: zoom,
                         bearing: 0,
                         pitch: 0
                     }}
@@ -73,6 +111,8 @@ const MapboxModal = (props) => {
                     latLng={{setCurrLat,setCurrLong}}
                     setLocationText={props.setText}
                     hideModal={props.hide}
+                    currLocData={props.data}
+                    currentUser={props.currentUser}
                 />
             </DialogContent>
         </Dialog>
@@ -81,7 +121,8 @@ const MapboxModal = (props) => {
 
 const mapStateToProps = state => {
     const {data} = state.Location;
-    return {data};
+    const {currentUser} = state.login;
+    return {data, currentUser};
 };
   
 export default connect(mapStateToProps, null)(MapboxModal);

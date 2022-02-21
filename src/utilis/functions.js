@@ -24,4 +24,18 @@ function randomCode(length) {
    return parseInt(result);
 }
 
-export {formatDate, randomCode}
+function isObjEmpty(obj) {
+    for(var prop in obj) {
+      if(Object.prototype.hasOwnProperty.call(obj, prop)) {
+        return false;
+      }
+    }
+  
+    return JSON.stringify(obj) === JSON.stringify({});
+}
+
+function ucFirst(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+export {formatDate, randomCode, isObjEmpty, ucFirst}

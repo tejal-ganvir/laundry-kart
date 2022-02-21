@@ -17,6 +17,7 @@ const SearchAutocomplete = (props) => {
     const {featureData, setFeatureData} = props.featureFunc;
     const {setCurrLat,setCurrLong} = props.latLng;
     const userId = props && props.currentUser && props.currentUser.objectId ? props.currentUser.objectId : '';
+    const addressObjectId = props && props.currLocData && props.currLocData.objectId ? props.currLocData.objectId : '';
 
     const fetchLocation = (value) => {
         let string = encodeURIComponent(value.trim())
@@ -55,13 +56,14 @@ const SearchAutocomplete = (props) => {
             state: location.context[1].text,
             country: location.context[2].text,
             userId: userId,
+            objectId: addressObjectId,
         };
         let response = postJSON('functions/saveLocationDetails', options);
-        response.then(data => {
+        response.then(({result}) => {
             setLoading(false);
             props.setLocationText(location.place_name);
             props.hideModal();
-            dispatch(setLocationData(options));
+            dispatch(setLocationData({...options, objectId: result.objectId}));
         })
     }
 
@@ -95,10 +97,5 @@ const SearchAutocomplete = (props) => {
     </Box>
   );
 };
-
-const mapStateToProps = state => {
-    const {currentUser} = state.login;
-    return {currentUser};
-};
   
-export default connect(mapStateToProps, null)(SearchAutocomplete);
+export default SearchAutocomplete;

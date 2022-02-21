@@ -22,7 +22,6 @@ const LocationAutocomplete = (props) => {
 
     const onValueChange = (value) => {
         setAddress(featureData[value.id]);
-        console.log(featureData[value.id]);
     }
 
   return (
@@ -38,7 +37,7 @@ const LocationAutocomplete = (props) => {
             }}
             sx={{mb:1}}
             options={options}
-            renderInput={(params) => <TextField {...params} size='small' label="Enter Location" />}
+            renderInput={(params) => <TextField {...params} size='small' label="Enter Location (optional)" />}
         />
   )
 }

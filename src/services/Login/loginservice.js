@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BASE_API_URL } from "../../constants/constant";
+import { APPLICATION_ID, BASE_API_URL, REST_API_KEY } from "../../constants/constant";
 import { fetchJSON } from "../axiosConfig/api";
 
 export const getLoginUser = async (data) => {
@@ -15,8 +15,8 @@ export const getUserByToken = async (token) => {
   try {
     const response = axios.get(`${BASE_API_URL}users/me`, {
       headers: {
-        'X-Parse-Application-Id': 'RoARvQa9MJl5MitnLouBsGo85mVoFbTvWX42mr7M',
-        'X-Parse-REST-API-Key': '0alnWeCtqSMYmLpp8aBzL1V6ppdHbFglPhEYPZ98',
+        'X-Parse-Application-Id': APPLICATION_ID,
+        'X-Parse-REST-API-Key': REST_API_KEY,
         'Content-Type': 'application/json',
         'X-Parse-Session-Token': token
       }

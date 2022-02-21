@@ -34,4 +34,17 @@ const postJSON = (url, options = {}, type = '') => {
         
 };
 
-export { fetchJSON, postJSON };
+const putJSON = (url, options = {}) => {
+    
+    return axiosConfig.put(url, options)
+        .then(response => response.data)
+        .then(data => {
+            return data;
+        })
+        .catch(error => {
+            throw error;
+        });
+        
+};
+
+export { fetchJSON, postJSON, putJSON };

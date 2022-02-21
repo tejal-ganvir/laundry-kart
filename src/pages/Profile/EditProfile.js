@@ -1,15 +1,22 @@
 import React, { useRef, useState }  from 'react';
 import Box from '@mui/material/Box';
-import { TextField } from '@mui/material';
-import Button from '@mui/material/Button';
+import { Button, TextField } from '@mui/material';
 import AvatarEditor from 'react-avatar-editor';
-import userImg from '../../assets/img/user-1.jpg'
+import userImg from '../../assets/img/user-1.png'
 import { postJSON } from '../../services/axiosConfig/api';
+import { useDispatch } from 'react-redux';
+import LoadingButton from '@mui/lab/LoadingButton';
+import { LoginSuccess } from '../../store/actions/loginActions';
+import { ucFirst } from '../../utilis/functions';
 
-const EditProfile = () => {
+const EditProfile = ({profFirstName, profLastName, profileImg, userObjectId, hide}) => {
 
-    const [imgUrl , setImgUrl] = useState(userImg);
+    const [imgUrl , setImgUrl] = useState(profileImg || userImg);
+    const [firstName , setFirstName] = useState(profFirstName);
+    const [lastName , setLastName] = useState(profLastName);
+    const [loading, setLoading] = useState(false);
     const profileRef = useRef();
+    const dispatch = useDispatch();
 
     const onSelectFile = (e) => {
         
@@ -35,10 +42,20 @@ const EditProfile = () => {
     };
 
     const handleSubmit = () => {
+        // console.log(firstName);
+        // console.log(lastName);
+        setLoading(true);
+        const saveUser = postJSON('functions/updateProfileDetails', {objectId: userObjectId, firstName: ucFirst(firstName), lastName: ucFirst(lastName)});
+        saveUser.then(data => {
+            console.log(data);
+            dispatch(LoginSuccess(data.result));
+            hide();
+            setLoading(false);
+        });
         // const option = { "__type": "File", "name": "resume.txt" };
         //console.log(imgUrl);
-        const res = postJSON('functions/saveProfileDetails', {profileImg: imgUrl})
-        console.log(res);
+        // const res = postJSON('functions/saveProfileDetails', {profileImg: imgUrl})
+        // console.log(res);
     }
 
   return (
@@ -50,7 +67,8 @@ const EditProfile = () => {
                     label="First Name"
                     type="text"
                     size="small"
-                    value="Angelina"
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
                     fullWidth
                 />
             </div>
@@ -60,7 +78,8 @@ const EditProfile = () => {
                     label="Last Name"
                     type="text"
                     size="small"
-                    value="Jolie"
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
                     fullWidth
                 />
             </div>
@@ -90,12 +109,13 @@ const EditProfile = () => {
                 </Box>
             </div>
             <div className='form-control-area text-center'>
-                <Button 
+                <LoadingButton 
+                    loading={loading}
                     align="center" 
                     variant='contained'
                     sx={{borderRadius: 4, px: 3}}
                     onClick={() => handleSubmit()}
-                >Save</Button>
+                >Save</LoadingButton>
             </div>
         </Box>
     </React.Fragment>

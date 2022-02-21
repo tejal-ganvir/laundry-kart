@@ -58,3 +58,8 @@
 .cust_card_table tr td:last-child{
     font-weight: bold;
 }
+
+input:-webkit-autofill {
+    box-shadow: transparent;
+    -webkit-text-fill-color: #000;
+}

@@ -27,10 +27,11 @@ import { createStructuredSelector } from "reselect";
 import { selectCurrentUser } from "../store/selector/login.selectors";
 import { connect, useDispatch } from "react-redux";
 import { userMeRequestAction } from "../store/actions/loginActions";
+import LoaderBackdrop from "../components/LoaderBackdrop/LoaderBackdrop";
 
 const VendorRoutes = ({ role }) => {
   return (
-    <Layout>
+    <Layout role={role}>
       <Switch>
         <Route path="/" exact element={<Landing />} />
         <Route path="/laundry" exact element={<SearchLaundry />} />
@@ -52,7 +53,7 @@ const VendorRoutes = ({ role }) => {
 
 const RiderRoutes = ({ role }) => {
   return (
-    <Layout>
+    <Layout role={role}>
       <Switch>
         <Route path="/" exact element={<Landing />} />
         <Route path="/laundry" exact element={<SearchLaundry />} />
@@ -72,7 +73,7 @@ const RiderRoutes = ({ role }) => {
 
 const CustomerRoutes = ({ role }) => {
   return (
-    <Layout>
+    <Layout role={role}>
       <Switch>
         <Route path="/" exact element={<Landing />} />
         <Route path="/laundry" exact element={<SearchLaundry />} />
@@ -111,45 +112,20 @@ const Routes = ({loginstatus}) => {
     const {isLogin, role, sessionToken} = loginstatus;
     const dispatch = useDispatch();
 
-    // useEffect(() => {
-    //   dispatch(userMeRequestAction('sdfghjksdfghjk'));
-    // },[])
-
     if(isLogin){
       if(role === 'user') return <CustomerRoutes isLogin={isLogin} role={role} />
       else if(role === 'laundry') return <VendorRoutes isLogin={isLogin} role={role} />
       else return <RiderRoutes isLogin={isLogin} role={role} />
     }
     else{
-      return <PublicRoutes />
+      if (!sessionToken) {
+        return <PublicRoutes />;
+      } else {
+        dispatch(userMeRequestAction(sessionToken));
+        //return <LoaderBackdrop />;
+      }
     }
 }
-
-// function Routes() {
-//   const dispatch = useDispatch();
-
-//   const auth = useSelector((state) => state.auth);
-//   const { currentUser, loginLoading } = auth;
-//   if (loginLoading) {
-//     return <Loader />;
-//   } else if (!isEmpty(currentUser)) {
-//     if (currentUser.role === "customer") {
-//       return <CustomerRoutes auth={auth} />;
-//     } else if(currentUser.role === "vendor"){
-//       return <VendorRoutes auth={auth} />;
-//     }else{
-//       return <RiderRoutes auth={auth} />;
-//     }
-//   } else {
-//     const token = localStorage.getItem("token");
-//     if (isEmpty(token)) {
-//       return <PublicRoutes />;
-//     } else {
-//       dispatch(userMeRequestAction(token));
-//       return <Loader />;
-//     }
-//   }
-// }
 
 const userdetails = createStructuredSelector({
   loginstatus: selectCurrentUser

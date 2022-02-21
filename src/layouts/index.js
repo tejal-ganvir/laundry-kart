@@ -4,15 +4,16 @@ import TopNavbar from './TopNavbar';
 import Footer from "./Footer"
 import Sidebar from './Sidebar';
 import LocationSetter from './LocationSetter';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { setOpenSidebar } from '../store/actions/layoutActions';
 import { useDispatch } from 'react-redux';
 import { connect } from 'react-redux';
 
-const Layout = ({children, openSidebar, isAuthLayout}) => {
+const Layout = ({children, openSidebar, isAuthLayout, role}) => {
 
   const location = useLocation();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     let locationArray = location.pathname.split("/");
@@ -24,6 +25,18 @@ const Layout = ({children, openSidebar, isAuthLayout}) => {
     )
       dispatch(setOpenSidebar(true));
     else dispatch(setOpenSidebar(false));
+
+    if(role){
+      if((role === 'user') && (locationArray[1] === "vendor" || locationArray[1] === "rider")){
+        navigate("/login")
+      }
+      if((role === 'laundry') && (locationArray[1] === "account" || locationArray[1] === "rider")){
+        navigate("/login")
+      }
+      if((role === 'rider') && (locationArray[1] === "account" || locationArray[1] === "vendor")){
+        navigate("/login")
+      }
+    }
 
     return () => dispatch(setOpenSidebar(false));
   }, [location.pathname]);

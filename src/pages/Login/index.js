@@ -3,7 +3,6 @@ import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import { TextField } from "@mui/material";
-import Button from "@mui/material/Button";
 import { Link, useNavigate } from "react-router-dom";
 import { connect, useDispatch, useSelector } from "react-redux";
 import { setAuthLayout } from "../../store/actions/layoutActions";
@@ -12,6 +11,7 @@ import * as yup from "yup";
 import { createStructuredSelector } from "reselect";
 import { LoginStart } from "../../store/actions/loginActions";
 import { selectCurrentUser } from "../../store/selector/login.selectors";
+import LoadingButton from "@mui/lab/LoadingButton";
 
 const Login = ({ loginstatus }) => {
   const navigate = useNavigate();
@@ -120,14 +120,15 @@ const Login = ({ loginstatus }) => {
                   </Link>
                 </div>
                 <div className='form-control-area text-center'>
-                  <Button
+                  <LoadingButton
+                    loading={loginstatus.isLoading}
                     align='center'
                     variant='contained'
                     sx={{ borderRadius: 4, px: 3 }}
                     type="submit"
                   >
                     Login
-                  </Button>
+                  </LoadingButton>
                 </div>
                 <div className='form-control-area'>
                   <Typography>
