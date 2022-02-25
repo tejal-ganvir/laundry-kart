@@ -38,4 +38,28 @@ function ucFirst(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-export {formatDate, randomCode, isObjEmpty, ucFirst}
+function distanceFormula( a, b ) {
+  if ( a.distance < b.distance ){
+    return -1;
+  }
+  if ( a.distance > b.distance ){
+    return 1;
+  }
+  return 0;
+}
+
+function loadScript(src) {
+	return new Promise((resolve) => {
+		const script = document.createElement('script')
+		script.src = src
+		script.onload = () => {
+			resolve(true)
+		}
+		script.onerror = () => {
+			resolve(false)
+		}
+		document.body.appendChild(script)
+	})
+}
+
+export {formatDate, randomCode, isObjEmpty, ucFirst, distanceFormula, loadScript}

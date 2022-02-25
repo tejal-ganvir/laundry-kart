@@ -23,6 +23,8 @@ const ProfileDropdown = ({user}) => {
         setAnchorEl(null);
     };
 
+    const setProfileImg = currentUser && currentUser.profileImg && currentUser.profileImg.url ? currentUser.profileImg.url : '';
+
   return (
     <React.Fragment>
       <IconButton
@@ -33,7 +35,7 @@ const ProfileDropdown = ({user}) => {
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
         >
-            <Avatar sx={{ width: 40, height: 40 }} />
+            <Avatar sx={{ width: 40, height: 40 }} src={setProfileImg} />
             {isLogin &&
                 <Typography sx={{fontSize: 13, fontWeight: 'bold', mx: 1 }}>
                     {
@@ -56,6 +58,7 @@ const ProfileDropdown = ({user}) => {
                 elevation: 0,
                 sx: {
                 overflow: 'visible',
+                py: 1,
                 filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
                 mt: 1.5,
                 '& .MuiAvatar-root': {

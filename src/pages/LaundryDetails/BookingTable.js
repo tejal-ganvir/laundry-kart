@@ -20,15 +20,18 @@ import { connect } from 'react-redux';
 import { formatDate, randomCode } from '../../utilis/functions';
 import { postJSON } from '../../services/axiosConfig/api';
 import { useLocation, useNavigate } from 'react-router-dom';
+import DoRazorpay from './DoRazorpay';
+import { RAZORPAY_KEY } from '../../constants/constant';
 
 const BookingTable = (props) => {
 
+    const userDetails = props.currentUser;
     const [postData, setPostData] = useState([]);
     const [grandTotal, setGrandTotal] = useState(0);
     const [rows, setRows] = useState([]);
     const [trigger, setTrigger] = useState(0);
-    const [pickUpDate, setPickUpDate] = useState(new Date());
-    const [deliveryDate, setDeliveryDate] = useState(new Date(new Date().getTime()+(3*24*60*60*1000)));
+    const [pickUpDate, setPickUpDate] = useState(new Date(new Date().getTime()+(3*24*60*60*1000))); /*** 3 days from today ***/
+    const [deliveryDate, setDeliveryDate] = useState(new Date(new Date().getTime()+(6*24*60*60*1000))); /*** 3 days from pickupdate ***/
     const [loading, setLoading] = useState(false);
     const landmark = useRef();
     const navigate = useNavigate();
@@ -76,6 +79,31 @@ const BookingTable = (props) => {
       })
     }
 
+    const saveOrder = ( paymentId ) => {
+        const options = {
+          address: props.data.name,
+          landmark: landmark.current.value,
+          pickupDate: formatDate(pickUpDate),
+          deliveryDate: formatDate(deliveryDate),
+          services: postData,
+          userId: userDetails.objectId,
+          laundryId: props.laundryId,
+          orderStatus: 0,
+          pickupCode: randomCode(5),
+          deliveryCode: randomCode(5),
+          isPaid: paymentId ? true : false,
+          grandTotal: grandTotal,
+          laundryInfoId: props.laundryRef,
+          paymentId: paymentId
+        }
+        setLoading(true);
+        const response = postJSON('functions/saveOrderDetails', options)
+        response.then((data) => {
+          setLoading(false)
+          navigate("/account/orders");
+        })
+    }
+
     const handelBookingOrder = () => {
 
       if(!props.isLogin){
@@ -99,27 +127,34 @@ const BookingTable = (props) => {
         toast('Please enter landmark');
         return;
       }
-      const options = {
-        address: props.data.name,
-        landmark: landmark.current.value,
-        pickupDate: formatDate(pickUpDate),
-        deliveryDate: formatDate(deliveryDate),
-        services: postData,
-        userId: props.data.userId,
-        laundryId: props.laundryId,
-        orderStatus: 0,
-        pickupCode: randomCode(5),
-        deliveryCode: randomCode(5),
-        isPaid: false,
-        grandTotal: grandTotal,
-        laundryInfoId: props.laundryRef,
-      }
-      setLoading(true);
-      const response = postJSON('functions/saveOrderDetails', options)
-      response.then((data) => {
-        setLoading(false)
-        navigate("/account/orders");
-      })
+
+      var razorpayOptions = {
+        "key": RAZORPAY_KEY, // Enter the Key ID generated from the Dashboard
+        "amount": grandTotal * 100, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+        "currency": "INR",
+        "name": "LaundryKart",
+        "description": "Laundry Service Order",
+        //"order_id": "order_IzLmH5SzX5XM6l", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+        "handler": function (response){
+            saveOrder(response.razorpay_payment_id);
+            // alert(response.razorpay_payment_id);
+            // alert(response.razorpay_order_id);
+            // alert(response.razorpay_signature)
+        },
+        "prefill": {
+            "name": `${userDetails.firstName} ${userDetails.lastName}`,
+            "email": userDetails.email,
+            "contact": userDetails.mobile || '',
+        },
+        "notes": {
+            "address": props.data.name
+        },
+        "remember_customer": false,
+      };
+
+      const rzp1 = new window.Razorpay(razorpayOptions);
+      
+      rzp1.open()
 
     }
 
@@ -217,8 +252,8 @@ const BookingTable = (props) => {
 
 const mapStateToProps = state => {
   const {data} = state.Location;
-  const {isLogin, role} = state.login;
-  return {data, isLogin, role};
+  const {isLogin, role, currentUser} = state.login;
+  return {data, isLogin, role, currentUser};
 };
 
 export default connect(mapStateToProps, null)(BookingTable);

@@ -35,6 +35,11 @@
     border-bottom: 2px solid #ec0883;
 }
 
+.MuiAvatar-img{
+    object-fit: cover !important;
+    height: 100% !important;
+}
+
 .cust_edit_icon{
     position: absolute;
     color: #525252;

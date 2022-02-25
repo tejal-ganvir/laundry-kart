@@ -27,7 +27,6 @@ import { createStructuredSelector } from "reselect";
 import { selectCurrentUser } from "../store/selector/login.selectors";
 import { connect, useDispatch } from "react-redux";
 import { userMeRequestAction } from "../store/actions/loginActions";
-import LoaderBackdrop from "../components/LoaderBackdrop/LoaderBackdrop";
 
 const VendorRoutes = ({ role }) => {
   return (
@@ -42,6 +41,7 @@ const VendorRoutes = ({ role }) => {
         <Route path="/account/logout" exact element={<Logout />} />
 
         <Route path='/vendor/dashboard' element={<VendorDashboard />} />
+        <Route path="/vendor/profile" element={<Profile />} />
         <Route path='/vendor/services' element={<VendorServices />} />
         <Route path='/vendor/riders' element={<RiderDetails />} />
         <Route path='/vendor/orders' element={<OrderDetails />} />

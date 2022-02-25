@@ -8,20 +8,27 @@ import { useDispatch } from 'react-redux';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { LoginSuccess } from '../../store/actions/loginActions';
 import { ucFirst } from '../../utilis/functions';
+import { APPLICATION_ID, REST_API_KEY } from '../../constants/constant';
+import axios from 'axios';
 
 const EditProfile = ({profFirstName, profLastName, profileImg, userObjectId, hide}) => {
 
     const [imgUrl , setImgUrl] = useState(profileImg || userImg);
     const [firstName , setFirstName] = useState(profFirstName);
     const [lastName , setLastName] = useState(profLastName);
+    const [imageData , setImageData] = useState();
     const [loading, setLoading] = useState(false);
     const profileRef = useRef();
     const dispatch = useDispatch();
+    let newProfileImg;
 
     const onSelectFile = (e) => {
         
-        console.log(e.target.files);
         if (e.target.files && e.target.files.length > 0) {
+            const file = e.target.files[0];
+            const name = file.name;
+            setImageData(e.target.files[0])
+            
             /*Maximum allowed size in bytes
             20MB Example
             Change first operand(multiplier) for your needs*/
@@ -34,28 +41,57 @@ const EditProfile = ({profFirstName, profLastName, profileImg, userObjectId, hid
             // }
             const reader = new FileReader();
             reader.addEventListener('load', () => {
-                console.log(reader);
                 setImgUrl(reader.result);
             });
             reader.readAsDataURL(e.target.files[0]);
+            
         }
     };
 
-    const handleSubmit = () => {
-        // console.log(firstName);
-        // console.log(lastName);
+    const handleSubmit = async () => {
         setLoading(true);
-        const saveUser = postJSON('functions/updateProfileDetails', {objectId: userObjectId, firstName: ucFirst(firstName), lastName: ucFirst(lastName)});
+        
+        if(imageData){
+            await axios({
+                method: 'post',
+                url: 'https://parseapi.back4app.com/files/a.jpeg',
+                data: imageData,
+                headers: {
+                  'X-Parse-Application-Id': APPLICATION_ID,
+                  'X-Parse-REST-API-Key': REST_API_KEY,
+                  'Content-Type': 'image/jpeg', 
+                }
+            })
+            .then((response)=>{
+                newProfileImg = {
+                    "name": response.data.name,
+                    "url": response.data.url,
+                    "__type": "File"
+                };
+                const saveImg = postJSON('functions/updateProfileDetails', 
+                {   
+                    objectId: userObjectId,
+                    profileImg: newProfileImg,
+                });
+                saveImg.then(data => {
+                    //console.log(data);
+                    dispatch(LoginSuccess(data.result));
+                });
+                //console.log(newProfileImg);
+            })
+        }
+        const saveUser = postJSON('functions/updateProfileDetails', 
+        {   
+            objectId: userObjectId, 
+            firstName: ucFirst(firstName), 
+            lastName: ucFirst(lastName),
+        });
         saveUser.then(data => {
-            console.log(data);
             dispatch(LoginSuccess(data.result));
             hide();
             setLoading(false);
         });
-        // const option = { "__type": "File", "name": "resume.txt" };
-        //console.log(imgUrl);
-        // const res = postJSON('functions/saveProfileDetails', {profileImg: imgUrl})
-        // console.log(res);
+        
     }
 
   return (

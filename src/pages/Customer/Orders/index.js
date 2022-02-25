@@ -20,6 +20,7 @@ const Orders = ({loginstatus}) => {
       setOrders(data.result);
       setLoading(false);
     })
+    
   },[])
 
   return (
@@ -27,7 +28,7 @@ const Orders = ({loginstatus}) => {
         { loading ? <LoaderBackdrop open={loading} /> :
           orders.length > 0 ?
           orders.map((item, idx) => (
-            <OrdersCard key={`order-card-${idx}`} {...item} />
+            <OrdersCard key={`order-card-${idx}`} {...item} isCompleted={true}  />
           ))
           :
           'No Orders Yet'

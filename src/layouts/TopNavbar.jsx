@@ -87,6 +87,7 @@ const TopNavbar = ({loginstatus}) => {
             </li> */}
             <li className="semiBold font15 pointer flexCenter">
               { loginstatus.isLogin ?
+                (loginstatus.role === 'user') &&
                 <IconButton color="primary" aria-label="Wallet">
                   <AccountBalanceWalletIcon fontSize="large" />
                 </IconButton>

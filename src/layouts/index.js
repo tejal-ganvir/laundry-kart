@@ -49,8 +49,8 @@ const Layout = ({children, openSidebar, isAuthLayout, role}) => {
             component="div" 
             pt={10}
           >
-            {!isAuthLayout && <LocationSetter />}
-            <Grid container direction="row">
+            {!isAuthLayout && (role === 'user') && <LocationSetter />}
+            <Grid container direction="row" sx={{mt: role && (role !== 'user') ? 3 : 1}}>
               { openSidebar &&
                 <Grid item xs={12} md={3} sx={{pl:3}}>
                   <Sidebar />

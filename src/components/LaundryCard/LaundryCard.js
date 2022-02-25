@@ -2,9 +2,8 @@ import React from 'react';
 import styles from '../components.module.css'
 import { Divider, Rating, Stack, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
-import firstImg from '../../assets/img/contact-3.jpg'
 
-const LaundryCard = ({laundryId, name, bannerImg, avgRating}) => {
+const LaundryCard = ({laundryId, name, bannerImg, avgRating, distance, address}) => {
   return (
     <div className={styles.image_element_class}>
         <div className={styles.tiles}>
@@ -14,7 +13,7 @@ const LaundryCard = ({laundryId, name, bannerImg, avgRating}) => {
                 </span>
                 <div className={styles.details}>
                     <span className={styles.title}>{name}</span>
-                    <span className={styles.info}>Washing</span>
+                    <span className={styles.info}>{address}</span>
                 </div>
             </Link>
         </div>
@@ -26,7 +25,7 @@ const LaundryCard = ({laundryId, name, bannerImg, avgRating}) => {
                 </div>
             </Stack>
             <Divider sx={{margin: 0}} />
-            <Typography className={`${styles.pro_name } pinkColor`}>3 km away</Typography>
+            <Typography className={`${styles.pro_name } pinkColor`}>{distance} km away</Typography>
         </div>
     </div>
   );

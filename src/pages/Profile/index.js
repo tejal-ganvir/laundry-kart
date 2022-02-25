@@ -17,6 +17,7 @@ const Profile = ({loginstatus, data}) => {
     const address = data && data.address ? data.address : '';
     const addressObjectId = data && data.objectId ? data.objectId : '';
     const userObjectId = currentUser && currentUser.objectId ? currentUser.objectId : '';
+    const setProfileImg = currentUser && currentUser.profileImg && currentUser.profileImg.url ? currentUser.profileImg.url : '';
 
     return (
         <React.Fragment>
@@ -25,7 +26,7 @@ const Profile = ({loginstatus, data}) => {
                     <EditIcon action={() => {setDialogOpen(true); setDialogType(1)}} />
                     <Avatar
                         alt={currentUser.username}
-                        src={currentUser.profileImg || ''}
+                        src={setProfileImg}
                         sx={{ width: 150, height: 150, mx:'auto' }}
                     />
                     <Typography variant='h5' sx={{fontWeight:'bold', my: 1}} >
@@ -49,10 +50,12 @@ const Profile = ({loginstatus, data}) => {
                                 <td>Date Of Birth</td>
                                 <td>{currentUser.dob || <Chip label="Click edit to add!" /> }</td>
                             </tr>
-                            <tr>
-                                <td>Address</td>
-                                <td>{address || <Chip label="Click edit to add!" /> }</td>
-                            </tr>
+                            {   (loginstatus.role === 'user') &&
+                                <tr>
+                                    <td>Address</td>
+                                    <td>{address || <Chip label="Click edit to add!" /> }</td>
+                                </tr>
+                            }
                         </tbody>
                     </table>
                 </Box>
@@ -66,7 +69,7 @@ const Profile = ({loginstatus, data}) => {
                     <EditProfile 
                         profFirstName={currentUser.firstName || ''} 
                         profLastName={currentUser.lastName || ''} 
-                        profileImg={currentUser.profileImg || ''}
+                        profileImg={setProfileImg}
                         userObjectId={userObjectId} 
                         hide={() => setDialogOpen(false)}
                     /> : 
@@ -79,6 +82,7 @@ const Profile = ({loginstatus, data}) => {
                         currAddress={address || ''} 
                         addressObjectId={addressObjectId}
                         hide={() => setDialogOpen(false)}
+                        role={loginstatus.role}
                     /> : 
                     'N/A'}
             />

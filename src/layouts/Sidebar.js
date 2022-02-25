@@ -10,9 +10,14 @@ import { customerMenu, riderMenu, vendorMenu } from "../utilis/sidebarMenu";
 import { Link } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import userImg from "../assets/img/user-1.jpg";
+import { createStructuredSelector } from "reselect";
+import { selectCurrentUser } from "../store/selector/login.selectors";
+import { connect } from "react-redux";
 
-const Sidebar = (props) => {
+const Sidebar = ({loginstatus}) => {
   const [menuSelected, setMenuSelected] = useState("Dashboard");
+  const {currentUser} = loginstatus;
+  const setProfileImg = currentUser && currentUser.profileImg && currentUser.profileImg.url ? currentUser.profileImg.url : '';
   return (
     <Paper
       className={styles.sidebar_container}
@@ -24,13 +29,21 @@ const Sidebar = (props) => {
             onClick={() => setMenuSelected("Dashboard")}>
             <ListItemIcon>
               <Avatar
-                alt='Angelina Jolie'
-                src={userImg}
+                alt={(currentUser.firstName && currentUser.lastName) ?
+                  `${currentUser.firstName} ${currentUser.lastName}` :
+                  currentUser.username}
+                src={setProfileImg}
                 sx={{ height: 100, width: 100 }}
               />
             </ListItemIcon>
             <ListItemText>
-              <h3>Angelina Jolie</h3>
+              <h3>
+                {
+                  (currentUser.firstName && currentUser.lastName) ?
+                  `${currentUser.firstName} ${currentUser.lastName}` :
+                  currentUser.username
+                }
+              </h3>
             </ListItemText>
           </MenuItem>
         </Link>
@@ -54,4 +67,8 @@ const Sidebar = (props) => {
   );
 };
 
-export default Sidebar;
+const userdetails = createStructuredSelector({
+  loginstatus: selectCurrentUser,
+});
+
+export default connect(userdetails)(Sidebar);

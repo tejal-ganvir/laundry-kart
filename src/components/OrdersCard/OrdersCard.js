@@ -1,11 +1,26 @@
-import React from 'react';
-import { Button, Card, CardContent, Grid, Typography } from '@mui/material';
+import React, { useState } from 'react';
+import { Button, Card, CardContent, Grid, Rating, Stack, Typography } from '@mui/material';
 import styles from '../components.module.css';
 import OrderATS from './OrderATS';
+import { postJSON } from '../../services/axiosConfig/api';
+import { toast } from 'react-toastify';
 
 const OrdersCard = (props) => {
+    const [rate, setRate] = useState();
     const {isCompleted} = props;
     const services = props && props.services ? props.services : [];
+    const userRating = props && props.laundryInfoRef && props.laundryInfoRef.avgRating ? props.laundryInfoRef.avgRating : 0;
+    const laundryObjectId = props && props.laundryInfoRef && props.laundryInfoRef.objectId ? props.laundryInfoRef.objectId : '';
+    
+    const addRating = () => {
+        let avgRating = (userRating === 0) ? rate : (userRating + rate / 2);
+        const response = postJSON('functions/updateLaundryInfo', {laundryObjectId, avgRating});
+        response.then(data => {
+            console.log(data);
+            toast('Review successfully added');
+        })
+    }
+
     return (
         <Card sx={{mb:3}}>
             <CardContent>
@@ -39,14 +54,28 @@ const OrdersCard = (props) => {
                                     <td>Adderess</td>
                                     <td>{props.address}</td>
                                 </tr>
-                                <tr>
-                                    <td>Pickup Date</td>
-                                    <td>{props.pickupDate}</td>
-                                </tr>
-                                <tr>
-                                    <td>Pickup Code</td>
-                                    <td style={{fontWeight:'bold', color:'#ec0883'}}>{props.pickupCode}</td>
-                                </tr>
+                                { (props.orderStatus < 3) ?
+                                    <tr>
+                                        <td>Pickup Date</td>
+                                        <td>{props.pickupDate}</td>
+                                    </tr>
+                                    :
+                                    <tr>
+                                        <td>Delivery Date</td>
+                                        <td>{props.deliveryDate}</td>
+                                    </tr>
+                                }
+                                { (props.orderStatus < 3) ?
+                                    <tr>
+                                        <td>Pickup Code</td>
+                                        <td style={{fontWeight:'bold', color:'#ec0883'}}>{props.pickupCode}</td>
+                                    </tr>
+                                    :
+                                    <tr>
+                                        <td>Delivery Code</td>
+                                        <td style={{fontWeight:'bold', color:'#ec0883'}}>{props.deliveryCode}</td>
+                                    </tr>
+                                }
                             </tbody>
                         </table>
                     </Grid>
@@ -54,15 +83,25 @@ const OrdersCard = (props) => {
                         <Typography variant='p' sx={{fontWeight:'bold', color: '#8055f5'}}>Status</Typography>
                         <OrderATS isCompleted={isCompleted} statusCode={props.orderStatus} />
                         { isCompleted &&
-                            <Button
-                                align="center" 
-                                variant='outlined'
-                                color='secondary'
-                                sx={{borderRadius: 4, px: 3, mt: 3}}
-                                size="small"
-                            >
-                                Add Review
-                            </Button>
+                            <Stack direction="row" spacing={2} justifyContent="center" alignItems="center" mt={1}>
+                                <Rating
+                                    name="simple-controlled"
+                                    value={rate || userRating}
+                                    onChange={(event, newValue) => {
+                                        setRate(newValue);
+                                    }}
+                                />
+                                <Button
+                                    align="center" 
+                                    variant='outlined'
+                                    color='secondary'
+                                    sx={{borderRadius: 4, px: 3, mt: 3}}
+                                    size="small"
+                                    onClick={() => addRating()}
+                                >
+                                    Add Review
+                                </Button>
+                            </Stack>
                         }
                     </Grid>
                 </Grid>
