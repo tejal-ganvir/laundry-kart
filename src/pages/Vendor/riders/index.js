@@ -1,18 +1,27 @@
-import ServiceTable from "../../../components/Vendor/ServiceTable";
 import Container from "@mui/material/Container";
-import Breadcrumbs from "@mui/material/Breadcrumbs";
 import * as React from "react";
-import Link from "@mui/material/Link";
 import AppBreadcrumb from "../../../components/Vendor/Breadcrumbs";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
-import RiderModal from "./AddRider";
 import RiderTable from "../../../components/Vendor/RiderTable";
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { RiderStart } from "../../../store/actions/vendorRidersActions";
+import { postJSON } from "../../../services/axiosConfig/api";
 
 const RiderDetails = () => {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    const response = postJSON("functions/getAllRidersDetails", {});
+    response.then((data) => setData(data.result));
+    // dispatch(RiderStart());
+  }, []);
+
+  const riderlist = data;
   return (
     <>
       <Container maxWidth='xl'>
@@ -26,12 +35,11 @@ const RiderDetails = () => {
             variant='outlined'
             color='primary'
             margin='normal'
-            onClick={handleOpen}>
+            onClick={() => navigate("/vendor/create/riders")}>
             Add Rider
           </Button>
         </Stack>
-        <RiderTable />
-        <RiderModal open={open} close={handleClose} />
+        <RiderTable data={riderlist} />
       </Container>
     </>
   );

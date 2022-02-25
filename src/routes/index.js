@@ -21,7 +21,9 @@ import HistoryDetails from "../pages/Vendor/history";
 import OrderDetails from "../pages/Vendor/orders";
 import RiderDetails from "../pages/Vendor/riders";
 import VendorServices from "../pages/Vendor/services";
-import LaundryDetails from '../pages/LaundryDetails';
+import LaundryDetails from "../pages/LaundryDetails";
+import AddRaider from "../pages/Vendor/riders/AddRider";
+import AddService from "../pages/Vendor/services/Addservice";
 
 import { createStructuredSelector } from "reselect";
 import { selectCurrentUser } from "../store/selector/login.selectors";
@@ -43,7 +45,9 @@ const VendorRoutes = ({ role }) => {
         <Route path='/vendor/dashboard' element={<VendorDashboard />} />
         <Route path="/vendor/profile" element={<Profile />} />
         <Route path='/vendor/services' element={<VendorServices />} />
+        <Route path='/vendor/create/services' element={<AddService />} />
         <Route path='/vendor/riders' element={<RiderDetails />} />
+        <Route path='/vendor/create/riders' element={<AddRaider />} />
         <Route path='/vendor/orders' element={<OrderDetails />} />
         <Route path='/vendor/history' element={<HistoryDetails />} />
       </Switch>

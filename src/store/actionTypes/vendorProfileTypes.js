@@ -1,0 +1,8 @@
+const vendorProfileTypes = {
+  PROFILE_START: "PROFILE_START",
+  PROFILE_SUCCESS: "PROFILE_SUCCESS",
+  PROFILE_ERROR: "PROFILE_ERROR",
+  PROFILE_CREATE: "PROFILE_CREATE",
+};
+
+export default vendorProfileTypes;

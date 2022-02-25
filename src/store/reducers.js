@@ -7,6 +7,10 @@ import { persistReducer } from "redux-persist";
 
 import { LoginReducer } from "./reducers/loginReducers";
 import { RegisterReducer } from "./reducers/registerReducers";
+import { VendorProfileReducer } from "./reducers/vendorprofileReducers";
+import { VendorHistoryReducer } from "./reducers/vendorHistoryReducer";
+import { VendorRiderReducer } from "./reducers/vendorRiderReducers";
+import { VendorServiceReducer } from "./reducers/vendorServiceReducers";
 
 const persistConfig = {
   key: "root",
@@ -20,5 +24,9 @@ const rootReducer = combineReducers({
   Laundry: LaundryReducers,
   login: LoginReducer,
   register: RegisterReducer,
+  profile: VendorProfileReducer,
+  vendorHistory: VendorHistoryReducer,
+  vendorRiders: VendorRiderReducer,
+  vendorServices: VendorServiceReducer,
 });
 export default persistReducer(persistConfig, rootReducer);

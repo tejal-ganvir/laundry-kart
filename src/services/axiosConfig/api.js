@@ -33,7 +33,6 @@ const postJSON = (url, options = {}, type = '') => {
         .catch(error => {
             throw error;
         });
-        
 };
 
 const putJSON = (url, options = {}) => {

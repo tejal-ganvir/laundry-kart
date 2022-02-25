@@ -37,12 +37,7 @@ function createData(name, price, unit, date, status) {
   return { name, price, unit, date, status };
 }
 
-const rows = [
-  createData("shirt", 20, "Dry cleaning", "27-01-2022", "Active"),
-  createData("t-shirt", 25, "Laundry service", "27-01-2022", "Active"),
-  createData("shirt", 8, "Laundry service", "27-01-2022", "Active"),
-  createData("t-shirt", 10, "Dry cleaning", "27-01-2022", "Active"),
-];
+const rows = [];
 
 const ServiceTable = () => {
   const [page, setPage] = React.useState(0);

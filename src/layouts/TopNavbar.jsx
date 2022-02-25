@@ -80,12 +80,7 @@ const TopNavbar = ({loginstatus}) => {
             </li> */}
           </UlWrapper>
           <UlWrapperRight className="flexNullCenter">
-            {/* <li className="semiBold font15 pointer">
-              <Link to="/login" style={{ padding: "10px 30px 10px 0" }}>
-                Log in
-              </Link>
-            </li> */}
-            <li className="semiBold font15 pointer flexCenter">
+            {/* <li className="semiBold font15 pointer flexCenter">
               { loginstatus.isLogin ?
                 (loginstatus.role === 'user') &&
                 <IconButton color="primary" aria-label="Wallet">
@@ -100,7 +95,18 @@ const TopNavbar = ({loginstatus}) => {
                   Schedule a Pickup
                 </Button>
               }
-            </li>
+            </li> */}
+            { !loginstatus.isLogin &&
+              <li className="semiBold font15 pointer flexCenter">
+                <Button 
+                  sx={{borderRadius: 4, px: 3}}
+                  variant="outlined" 
+                  component={Link} 
+                  to="/login" >
+                  Schedule a Pickup
+                </Button>
+              </li>
+            }
             <li className="semiBold font15 pointer">
               <ProfileDropdown user={loginstatus} />
             </li>

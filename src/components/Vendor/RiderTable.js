@@ -12,6 +12,8 @@ import Chip from "@mui/material/Chip";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -37,42 +39,10 @@ function createData(name, phone, address, vehicle, date, status) {
   return { name, phone, address, vehicle, date, status };
 }
 
-const rows = [
-  createData(
-    "Rider 1",
-    "+00 0000000000",
-    "India",
-    "KA 01,SN 0987",
-    "27-01-2022",
-    "Active",
-  ),
-  createData(
-    "Rider 2",
-    "+00 0000000000",
-    "India",
-    "KA 01,SN 0987",
-    "27-01-2022",
-    "Active",
-  ),
-  createData(
-    "Rider 3",
-    "+00 0000000000",
-    "India",
-    "KA 01,SN 0987",
-    "27-01-2022",
-    "Active",
-  ),
-  createData(
-    "Rider 4",
-    "+00 0000000000",
-    "India",
-    "KA 01,SN 0987",
-    "27-01-2022",
-    "Active",
-  ),
-];
+const RiderTable = (props) => {
+  const rowvalue = props.data;
 
-const RiderTable = () => {
+  console.log(rowvalue);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
@@ -92,37 +62,43 @@ const RiderTable = () => {
           <TableHead>
             <TableRow>
               <StyledTableCell>Rider Name</StyledTableCell>
+              <StyledTableCell align='right'>Last Name</StyledTableCell>
               <StyledTableCell align='right'>Phone</StyledTableCell>
-              <StyledTableCell align='right'>Address</StyledTableCell>
-              <StyledTableCell align='right'>vehicle Number</StyledTableCell>
-              <StyledTableCell align='right'>Joined On</StyledTableCell>
+              <StyledTableCell align='right'>Joined Date</StyledTableCell>
+              <StyledTableCell align='right'>Email</StyledTableCell>
               <StyledTableCell align='right'>Status</StyledTableCell>
-              <StyledTableCell align='center'>Action</StyledTableCell>
+              {/* <StyledTableCell align='center'>Action</StyledTableCell> */}
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows
+            {rowvalue
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => (
-                <StyledTableRow key={row.name}>
+                <StyledTableRow key={row.objectId}>
                   <StyledTableCell component='th' scope='row'>
-                    {row.name}
+                    {row.firstName}
                   </StyledTableCell>
-                  <StyledTableCell align='right'>{row.phone}</StyledTableCell>
-                  <StyledTableCell align='right'>{row.address}</StyledTableCell>
-                  <StyledTableCell align='right'>{row.vehicle}</StyledTableCell>
-                  <StyledTableCell align='right'>{row.date}</StyledTableCell>
                   <StyledTableCell align='right'>
-                    <Chip label={row.status} color='success' />
+                    {row.lastName}
                   </StyledTableCell>
-                  <StyledTableCell align='center'>
+                  <StyledTableCell align='right'>{row.mobile}</StyledTableCell>
+                  <StyledTableCell align='right'>
+                    {row.createdAt}
+                  </StyledTableCell>
+                  <StyledTableCell align='right'>
+                    {row.username}
+                  </StyledTableCell>
+                  <StyledTableCell align='right'>
+                    <Chip label='Active' color='success' />
+                  </StyledTableCell>
+                  {/* <StyledTableCell align='center'>
                     <IconButton aria-label='save'>
                       <EditIcon color='primary' />
                     </IconButton>
                     <IconButton aria-label='delete'>
                       <DeleteIcon color='error' />
                     </IconButton>
-                  </StyledTableCell>
+                  </StyledTableCell> */}
                 </StyledTableRow>
               ))}
           </TableBody>
@@ -131,7 +107,7 @@ const RiderTable = () => {
       <TablePagination
         rowsPerPageOptions={[5, 10, 100]}
         component='div'
-        count={rows.length}
+        count={rowvalue.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}
