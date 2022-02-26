@@ -2,6 +2,7 @@ import { all, call, put, takeEvery, takeLatest } from "redux-saga/effects";
 import {
   getVendorServiceCreatedetails,
   getVendorServiceDetails,
+  setVendorServiceDetails,
 } from "../services/VendorService/vendorServiceService";
 import {
   ServiceCreateFailed,
@@ -29,9 +30,9 @@ export function* VendorServiceCreateStart() {
 
 export function* VendorServiceAsync(action) {
   try {
-    const services = yield getVendorServiceDetails(action.payload);
-    console.log(services);
-    // yield put(ServiceStart(services.result));
+    const services = yield setVendorServiceDetails(action.payload);
+    // console.log(services);
+    yield put(ServiceStart());
   } catch (error) {
     yield put(ServiceFailed(error.message));
   }

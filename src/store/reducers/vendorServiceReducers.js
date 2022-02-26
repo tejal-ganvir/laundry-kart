@@ -33,7 +33,11 @@ export const VendorServiceReducer = (
     case VendorServiceActionTypes.SERVICE_START:
       return { ...state, isLoading: true, isSaved: false, laundryId: payload };
     case VendorServiceActionTypes.SERVICE_SUCCESS:
-      return { ...state, isLoading: false, serviceDetails: payload };
+      return {
+        ...state,
+        isLoading: false,
+        isSaved: true,
+      };
     case VendorServiceActionTypes.SERVICE_FAILED:
       return { ...state, isLoading: false, errorMessage: payload };
     default:

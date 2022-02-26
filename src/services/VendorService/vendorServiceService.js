@@ -10,11 +10,11 @@ export const getVendorServiceCreatedetails = async (data) => {
   return response;
 };
 
-export const getVendorServiceDetails = async (data) => {
+export const setVendorServiceDetails = async (data) => {
   const response = await postJSON(
-    `${BASE_API_URL}functions/getAllServicesDetails`,
+    `${BASE_API_URL}functions/setServicesDetails`,
     data,
   );
+  console.log(response);
   return response;
-  //   console.log(data);
 };

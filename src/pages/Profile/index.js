@@ -59,6 +59,7 @@ const Profile = ({loginstatus, data}) => {
                         </tbody>
                     </table>
                 </Box>
+                
             </Container>
             <EditDailouge
                 size="sm"

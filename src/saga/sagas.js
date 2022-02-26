@@ -2,6 +2,7 @@ import { all, call } from "redux-saga/effects";
 import laundrySaga from "./laundrySaga";
 import { LoginSaga } from "./login.saga";
 import { RegisterSaga } from "./register.saga";
+import { VendorOrderSaga } from "./vendorOrder.saga";
 import { VendorProfileSaga } from "./vendorProfileSaga";
 import { VendorRiderSaga } from "./vendorRider.saga";
 import { VendorServiceSaga } from "./vendorService.saga";
@@ -15,5 +16,6 @@ export default function* rootSaga(getState) {
     call(VendorProfileSaga),
     call(VendorRiderSaga),
     call(VendorServiceSaga),
+    call(VendorOrderSaga),
   ]);
 }

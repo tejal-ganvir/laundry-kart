@@ -7,15 +7,18 @@ import { Container, Stack } from "@mui/material";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { RiderCreateStart } from "../../../store/actions/vendorRidersActions";
-import { useDispatch, useSelector } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { createStructuredSelector } from "reselect";
+import { selectCurrentUser } from "../../../store/selector/login.selectors";
 
-const AddRaider = () => {
+const AddRaider = (laundryDetails) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const laundryId = laundryDetails.laundryDetails.currentUser.objectId;
 
   const isSaved = useSelector((state) => state.vendorRiders.isSaved);
-  
+
   const validationSchema = yup.object({
     email: yup
       .string("Enter your email")
@@ -43,7 +46,11 @@ const AddRaider = () => {
 
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      const data = { ...values, username: formik.values.email };
+      const data = {
+        ...values,
+        username: formik.values.email,
+        parentId: laundryId,
+      };
       dispatch(RiderCreateStart(data));
     },
   });
@@ -139,5 +146,7 @@ const AddRaider = () => {
     </div>
   );
 };
-
-export default AddRaider;
+const laundryDetails = createStructuredSelector({
+  laundryDetails: selectCurrentUser,
+});
+export default connect(laundryDetails)(AddRaider);

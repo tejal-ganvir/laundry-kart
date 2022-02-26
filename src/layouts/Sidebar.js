@@ -48,20 +48,37 @@ const Sidebar = ({loginstatus}) => {
           </MenuItem>
         </Link>
         <Divider />
-        {vendorMenu.map((item, idx) => (
-          <Link
-            key={`menu-item${idx}`}
-            to={item.link}
-            className={`${styles.sidebar_menu_item} ${styles.active}`}>
-            <MenuItem
-              sx={{ p: 2 }}
-              selected={menuSelected === item.label}
-              onClick={() => setMenuSelected(item.label)}>
-              <ListItemIcon>{item.icon}</ListItemIcon>
-              <ListItemText>{item.label}</ListItemText>
-            </MenuItem>
-          </Link>
-        ))}
+
+        {role == "rider" &&
+          riderMenu.map((item, idx) => (
+            <Link
+              key={`menu-item${idx}`}
+              to={item.link}
+              className={`${styles.sidebar_menu_item} ${styles.active}`}>
+              <MenuItem
+                sx={{ p: 2 }}
+                selected={menuSelected === item.label}
+                onClick={() => setMenuSelected(item.label)}>
+                <ListItemIcon>{item.icon}</ListItemIcon>
+                <ListItemText>{item.label}</ListItemText>
+              </MenuItem>
+            </Link>
+          ))}
+        {role == "laundry" &&
+          vendorMenu.map((item, idx) => (
+            <Link
+              key={`menu-item${idx}`}
+              to={item.link}
+              className={`${styles.sidebar_menu_item} ${styles.active}`}>
+              <MenuItem
+                sx={{ p: 2 }}
+                selected={menuSelected === item.label}
+                onClick={() => setMenuSelected(item.label)}>
+                <ListItemIcon>{item.icon}</ListItemIcon>
+                <ListItemText>{item.label}</ListItemText>
+              </MenuItem>
+            </Link>
+          ))}
       </MenuList>
     </Paper>
   );

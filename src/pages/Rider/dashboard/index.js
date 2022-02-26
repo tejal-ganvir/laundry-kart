@@ -10,13 +10,13 @@ import { selectCurrentUser } from "../../../store/selector/login.selectors";
 import { ProfileStart } from "../../../store/actions/vendorProfileActions";
 import FullScreenDialog from "../../../components/Vendor/Profilepopup";
 
-const VendorDashboard = (vendordetails) => {
+const RiderDashboard = (vendordetails) => {
   const dispatch = useDispatch();
   const laundryId = vendordetails.vendordetails.currentUser.objectId;
   const profile = useSelector((state) => state.profile);
   console.log(profile.profileDetails);
   useEffect(() => {
-    dispatch(ProfileStart(laundryId));
+    // dispatch(ProfileStart(laundryId));
   }, []);
 
   return (
@@ -39,7 +39,7 @@ const VendorDashboard = (vendordetails) => {
                 <WidgetCard
                   color='primary'
                   icon='weekend'
-                  title='upcoming orders'
+                  title='All Orders'
                   count={281}
                   percentage={{
                     color: "primary",
@@ -53,58 +53,12 @@ const VendorDashboard = (vendordetails) => {
               <MDBox mb={1.5}>
                 <WidgetCard
                   icon='leaderboard'
-                  title='schedule pickup'
+                  title='Current Orders'
                   count='2,300'
                   percentage={{
                     color: "success",
                     amount: "+3%",
                     label: "than last month",
-                  }}
-                />
-              </MDBox>
-            </Grid>
-            <Grid item xs={12} md={6} lg={4}>
-              <MDBox mb={1.5}>
-                <WidgetCard
-                  color='success'
-                  icon='store'
-                  title='laundry inprogress'
-                  count='34k'
-                  percentage={{
-                    color: "success",
-                    amount: "+1%",
-                    label: "than yesterday",
-                  }}
-                />
-              </MDBox>
-            </Grid>
-            <Grid item xs={12} md={6} lg={4}>
-              <MDBox mb={1.5}>
-                <WidgetCard
-                  color='primary'
-                  icon='person_add'
-                  title='schedule delivery'
-                  count='+91'
-                  percentage={{
-                    color: "success",
-                    amount: "",
-                    label: "Just updated",
-                  }}
-                />
-              </MDBox>
-            </Grid>
-
-            <Grid item xs={12} md={6} lg={4}>
-              <MDBox mb={1.5}>
-                <WidgetCard
-                  color='primary'
-                  icon='person_add'
-                  title='completed orders'
-                  count='+91'
-                  percentage={{
-                    color: "success",
-                    amount: "",
-                    label: "Just updated",
                   }}
                 />
               </MDBox>
@@ -121,4 +75,4 @@ const Profiledetails = createStructuredSelector({
   vendordetails: selectCurrentUser,
 });
 
-export default connect(Profiledetails)(VendorDashboard);
+export default connect(Profiledetails)(RiderDashboard);

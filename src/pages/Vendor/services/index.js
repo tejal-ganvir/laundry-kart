@@ -11,6 +11,8 @@ import { selectCurrentUser } from "../../../store/selector/login.selectors";
 import { connect, useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { ServiceStart } from "../../../store/actions/vendorServiceActions";
+import { postJSON } from "../../../services/axiosConfig/api";
+import { useState } from "react";
 
 const VendorServices = (vendordetails) => {
   const navigate = useNavigate();
@@ -18,13 +20,20 @@ const VendorServices = (vendordetails) => {
   const dispatch = useDispatch();
 
   const laundryId = vendordetails.vendordetails.currentUser.objectId;
-  const value = useSelector((state) => state.vendorServices.serviceDetails);
+  // const value = useSelector((state) => state.vendorServices.serviceDetails);
 
-  console.log(value);
+  // console.log(value);
+  const [data, setData] = useState([]);
   useEffect(() => {
-    console.log("effect");
-    dispatch(ServiceStart({ laundryId: laundryId }));
+    // console.log("effect");
+    // dispatch(ServiceStart({ laundryId: laundryId }));
+    const response = postJSON("functions/getAllServicesDetails", {
+      laundryId: laundryId,
+    });
+    response.then((data) => setData(data.result));
   }, []);
+
+  const serviceList = data;
 
   return (
     <>
@@ -44,7 +53,7 @@ const VendorServices = (vendordetails) => {
             Add Service
           </Button>
         </Stack>
-        <ServiceTable />
+        <ServiceTable data={serviceList} />
       </Container>
     </>
   );

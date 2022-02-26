@@ -9,10 +9,8 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import TablePagination from "@mui/material/TablePagination";
 import Chip from "@mui/material/Chip";
-import IconButton from "@mui/material/IconButton";
-import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
 import OrderModal from "../../pages/Vendor/orders/AssignOrder";
+import { useNavigate } from "react-router-dom";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -47,50 +45,7 @@ function createData(
   return { sno, order_id, cust_name, phone, address, price, date, status };
 }
 
-const rows = [
-  createData(
-    1,
-    "ord_001",
-    "customer 1",
-    "+00 0000000000",
-    "India",
-    "250",
-    "27-01-2022",
-    "Not Assigned",
-  ),
-  createData(
-    2,
-    "ord_002",
-    "customer 2",
-    "+00 0000000000",
-    "India",
-    "250",
-    "27-01-2022",
-    "Not Assigned",
-  ),
-  createData(
-    3,
-    "ord_003",
-    "customer 3",
-    "+00 0000000000",
-    "India",
-    "250",
-    "27-01-2022",
-    "Not Assigned",
-  ),
-  createData(
-    4,
-    "ord_004",
-    "customer 4",
-    "+00 0000000000",
-    "India",
-    "250",
-    "27-01-2022",
-    "Not Assigned",
-  ),
-];
-
-const OrderTable = () => {
+const OrderTable = (props) => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -102,24 +57,25 @@ const OrderTable = () => {
     setPage(newPage);
   };
 
+  console.log(props.data);
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
+  const rows = props.data;
 
+  const navigate = useNavigate();
   return (
     <Paper sx={{ width: "100%", overflow: "hidden", mt: 5 }}>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 700 }} aria-label='customized table'>
           <TableHead>
             <TableRow>
-              <StyledTableCell>S.No</StyledTableCell>
               <StyledTableCell>Order Id</StyledTableCell>
-              <StyledTableCell align='right'>Customer Name</StyledTableCell>
-              <StyledTableCell align='right'>Phone</StyledTableCell>
-              <StyledTableCell align='right'>Address</StyledTableCell>
-              <StyledTableCell align='right'>Price</StyledTableCell>
-              <StyledTableCell align='right'>Date</StyledTableCell>
+              <StyledTableCell align='center'>Address</StyledTableCell>
+              <StyledTableCell align='center'>Price</StyledTableCell>
+              <StyledTableCell align='center'>Order Date</StyledTableCell>
+              <StyledTableCell align='center'>Landmark</StyledTableCell>
               <StyledTableCell align='center'>Status</StyledTableCell>
             </TableRow>
           </TableHead>
@@ -127,32 +83,93 @@ const OrderTable = () => {
             {rows
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => (
-                <StyledTableRow key={row.sno}>
+                <StyledTableRow key={row.objectId}>
                   <StyledTableCell component='th' scope='row'>
-                    {row.sno}
+                    {row.objectId}
                   </StyledTableCell>
-                  <StyledTableCell component='th' scope='row'>
-                    {row.order_id}
+
+                  <StyledTableCell align='center'>
+                    {row.address}
                   </StyledTableCell>
-                  <StyledTableCell align='right' component='th' scope='row'>
-                    {row.cust_name}
+                  <StyledTableCell align='center'>
+                    {row.grandTotal}
                   </StyledTableCell>
-                  <StyledTableCell align='right'>{row.phone}</StyledTableCell>
-                  <StyledTableCell align='right'>{row.address}</StyledTableCell>
-                  <StyledTableCell align='right'>{row.price}</StyledTableCell>
-                  <StyledTableCell align='right'>{row.date}</StyledTableCell>
-                  <StyledTableCell align='right'>
-                    <Chip
-                      label={row.status}
-                      color='success'
-                      onClick={handleOpen}
-                    />
+                  <StyledTableCell align='center'>
+                    {row.pickupDate}
+                  </StyledTableCell>
+                  <StyledTableCell align='center'>
+                    {row.landmark}
+                  </StyledTableCell>
+
+                  <StyledTableCell align='center'>
+                    {row.orderStatus == 0 && (
+                      <Chip
+                        label='order Placed'
+                        color='info'
+                        onClick={() =>
+                          navigate(`/vendor/orders/${row.objectId}`)
+                        }
+                      />
+                    )}
+                    {row.orderStatus == 1 && (
+                      <Chip
+                        label='Rider Assigned'
+                        color='primary'
+                        onClick={() =>
+                          navigate(`/vendor/orders/${row.objectId}`)
+                        }
+                      />
+                    )}
+                    {row.orderStatus == 2 && (
+                      <Chip
+                        label='Laundry Picked up'
+                        color='secondary'
+                        onClick={() =>
+                          navigate(`/vendor/orders/${row.objectId}`)
+                        }
+                      />
+                    )}
+                    {row.orderStatus == 3 && (
+                      <Chip
+                        label='In Laundry'
+                        color='info'
+                        onClick={() =>
+                          navigate(`/vendor/orders/${row.objectId}`)
+                        }
+                      />
+                    )}
+                    {row.orderStatus == 4 && (
+                      <Chip
+                        label='Out for Delivery'
+                        color='warning'
+                        onClick={() =>
+                          navigate(`/vendor/orders/${row.objectId}`)
+                        }
+                      />
+                    )}
+                    {row.orderStatus == 5 && (
+                      <Chip
+                        label='Delivered'
+                        color='success'
+                        onClick={() =>
+                          navigate(`/vendor/orders/${row.objectId}`)
+                        }
+                      />
+                    )}
+                    {row.orderStatus == 6 && (
+                      <Chip
+                        label='Rejected'
+                        color='error'
+                        onClick={() =>
+                          navigate(`/vendor/orders/${row.objectId}`)
+                        }
+                      />
+                    )}
                   </StyledTableCell>
                 </StyledTableRow>
               ))}
           </TableBody>
         </Table>
-        <OrderModal open={open} close={handleClose} />
       </TableContainer>
       <TablePagination
         rowsPerPageOptions={[5, 10, 100]}

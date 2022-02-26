@@ -1,0 +1,7 @@
+const VendorOrdersActionTypes = {
+  ORDER_STATUS_START: "ORDER_STATUS_START",
+  ORDER_STATUS_SUCCESS: "ORDER_STATUS_SUCCESS",
+  ORDER_STATUS_FAILED: "ORDER_STATUS_FAILED",
+};
+
+export default VendorOrdersActionTypes;

@@ -20,9 +20,8 @@ export const ServiceStart = (data) => ({
   payload: data,
 });
 
-export const ServiceSuccess = (data) => ({
+export const ServiceSuccess = () => ({
   type: VendorServiceActionTypes.SERVICE_SUCCESS,
-  payload: data,
 });
 
 export const ServiceFailed = (errorMessage) => ({
