@@ -10,7 +10,7 @@
 ## Introduction      
 LaundryKart is committed to offering our customers the highest quality dry cleaning and laundry services at fair prices. Our goal is to deliver a convenient and easy to use solution while providing excellent customer service.
 
--Live demo [_here_](https://workshala.netlify.app/).
+-Live demo [_here_](https://laundrykart02.netlify.app/).
 
 Frontend is hosted on Netlify.
 Backend is deployed to Parse API.
