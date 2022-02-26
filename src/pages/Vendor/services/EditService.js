@@ -52,13 +52,45 @@ const EditService = (vendordetails) => {
     setLaundryPrice(event.target.value);
   };
 
-  console.log(data.itemName);
+  //console.log(data.itemName);
+
+  const validationSchema = yup.object({
+    itemName: yup
+      .string("Enter the item name")
+      .required("Item Name is required"),
+    laundryPrice: yup
+      .string("Enter the laundryPrice")
+      .required("Laundry Price is required"),
+    dryCleanPrice: yup
+      .string("Enter the dryclean price")
+      .required("dry clean price is required"),
+    pressPrice: yup
+      .string("Enter the Press price")
+      .required("press price is required"),
+  });
+
+  const formik = useFormik({
+    initialValues: {
+      itemName: service && service.itemName ? service.itemName : '',
+      laundryPrice: service && service.laundryPrice ? service.laundryPrice : '',
+      dryCleanPrice: service && service.dryCleanPrice ? service.dryCleanPrice : '',
+      pressPrice: service && service.pressPrice ? service.pressPrice : '',
+    },
+    enableReinitialize: true,
+    validationSchema: validationSchema,
+    onSubmit: (values) => {
+      console.log(values);
+      // const data = { ...values, laundryId: laundryId };
+      // console.log(data);
+      // dispatch(ServiceCreateStart(data));
+    },
+  });
 
   return (
     <div>
       {!isSaved && (
         <Container maxWidth='xl'>
-          <Box>
+          <Box component="div" className='whiteBg' sx={{boxShadow: 2, p:2, mx:3, position: 'relative', minWidth:120 }}>
             <Typography
               id='modal-modal-title'
               variant='h6'
@@ -67,39 +99,63 @@ const EditService = (vendordetails) => {
               Edit Service
             </Typography>
             <Stack spacing={2}>
-              <TextField
+            <TextField
                 fullWidth
                 id='service-name'
+                label='Item Name'
                 variant='outlined'
-                value={data.itemName}
-                helperText={"Enter Item Name"}
-                onChange={itemnameHandler}
+                value={formik.values.itemName}
+                onChange={formik.handleChange("itemName")}
+                error={
+                  formik.touched.itemName && Boolean(formik.errors.itemName)
+                }
+                helperText={formik.touched.itemName && formik.errors.itemName}
               />
 
               <TextField
                 fullWidth
                 id='price'
+                label='Press Price'
                 variant='outlined'
-                value={pressPrice}
-                onChange={pressPriceHandler}
-                helperText={"Enter Press Price"}
+                value={formik.values.pressPrice}
+                onChange={formik.handleChange("pressPrice")}
+                error={
+                  formik.touched.pressPrice && Boolean(formik.errors.pressPrice)
+                }
+                helperText={
+                  formik.touched.pressPrice && formik.errors.pressPrice
+                }
               />
               <TextField
                 fullWidth
                 id='price'
+                label='dryclean Price'
                 variant='outlined'
-                value={dryCleanPrice}
-                onChange={dryCleanPriceHandler}
-                helperText={"Enter Dry Clean Price"}
+                value={formik.values.dryCleanPrice}
+                onChange={formik.handleChange("dryCleanPrice")}
+                error={
+                  formik.touched.dryCleanPrice &&
+                  Boolean(formik.errors.dryCleanPrice)
+                }
+                helperText={
+                  formik.touched.dryCleanPrice && formik.errors.dryCleanPrice
+                }
               />
 
               <TextField
                 fullWidth
                 id='price'
+                label='laundry Price'
                 variant='outlined'
-                value={laundryPrice}
-                onChange={laundryPriceHandler}
-                helperText={"Enter Laundry Price"}
+                value={formik.values.laundryPrice}
+                onChange={formik.handleChange("laundryPrice")}
+                error={
+                  formik.touched.laundryPrice &&
+                  Boolean(formik.errors.laundryPrice)
+                }
+                helperText={
+                  formik.touched.laundryPrice && formik.errors.laundryPrice
+                }
               />
 
               <Stack
@@ -112,7 +168,7 @@ const EditService = (vendordetails) => {
                   onClick={() => navigate("/vendor/services")}>
                   Cancel
                 </Button>
-                <Button variant='contained'>Save</Button>
+                <Button variant='contained' onClick={formik.handleSubmit}>Save</Button>
               </Stack>
             </Stack>
           </Box>

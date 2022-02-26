@@ -27,7 +27,6 @@ const LocationAutocomplete = (props) => {
 
   const onValueChange = (value) => {
     setAddress(featureData[value.id]);
-    console.log(featureData[value.id]);
   };
 
   return (

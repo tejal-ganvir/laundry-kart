@@ -41,7 +41,6 @@ function createData(name, price, unit, date, status) {
 const ServiceTable = (props) => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  console.log(props.data);
   const rows = props.data;
   const navigate = useNavigate();
 

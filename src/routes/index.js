@@ -39,18 +39,13 @@ const VendorRoutes = ({ role }) => {
   return (
     <Layout role={role}>
       <Switch>
-        <Route path='/' exact element={<Landing />} />
-        <Route path='/laundry' exact element={<SearchLaundry />} />
-        <Route path='/login' exact element={<Login />} />
-        <Route path='/register' exact element={<Register />} />
-        <Route path='/forgot-password' exact element={<ForgotPassword />} />
-        <Route path='/account/logout' exact element={<Logout />} />
-        <Route path='/account/dashboard' element={<Dashboard />} />
-        <Route path='/account/nearest-laundry' element={<NearestLaundry />} />
-        <Route path='/account/orders' element={<Orders />} />
-        <Route path='/account/history' element={<OrdersHistory />} />
-        <Route path='/account/profile' element={<Profile />} />
-        <Route path='/laundry/details' element={<LaundryDetails />} />
+        <Route path="/" exact element={<Landing />} />
+        <Route path="/laundry" exact element={<SearchLaundry />} />
+        <Route path="/login" exact element={<Login />} />
+        <Route path="/register" exact element={<Register />} />
+        <Route path="/forgot-password" exact element={<ForgotPassword />} />
+        <Route path="/laundry/details" element={<LaundryDetails />} />
+        <Route path="/account/logout" exact element={<Logout />} />
 
         <Route path='/vendor/dashboard' element={<VendorDashboard />} />
         <Route path="/vendor/profile" element={<Profile />} />
@@ -63,8 +58,26 @@ const VendorRoutes = ({ role }) => {
         <Route path='/vendor/orders' element={<OrderDetails />} />
         <Route path='/vendor/orders/:orderId' element={<AssignOrders />} />
         <Route path='/vendor/history' element={<HistoryDetails />} />
+      </Switch>
+    </Layout>
+  );
+};
+
+const RiderRoutes = ({ role }) => {
+  return (
+    <Layout role={role}>
+      <Switch>
+        <Route path="/" exact element={<Landing />} />
+        <Route path="/laundry" exact element={<SearchLaundry />} />
+        <Route path="/login" exact element={<Login />} />
+        <Route path="/register" exact element={<Register />} />
+        <Route path="/forgot-password" exact element={<ForgotPassword />} />
+        <Route path="/laundry/details" element={<LaundryDetails />} />
+        <Route path="/account/logout" exact element={<Logout />} />
+
+        <Route path="/rider/profile" element={<Profile />} />
         <Route path='/rider/dashboard' element={<RiderDashboard />} />
-        <Route path='/rider/profile' element={<RiderProfile />} />
+        {/* <Route path='/rider/rider-profile' element={<RiderProfile />} /> */}
         <Route path='/rider/history' element={<RiderHistoryDetails />} />
         <Route path='/rider/orders' element={<RiderOrderDetails />} />
         <Route path='/rider/orders/:orderId' element={<PickupDetails />} />

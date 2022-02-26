@@ -18,6 +18,7 @@ const Sidebar = ({loginstatus}) => {
   const [menuSelected, setMenuSelected] = useState("Dashboard");
   const {currentUser} = loginstatus;
   const setProfileImg = currentUser && currentUser.profileImg && currentUser.profileImg.url ? currentUser.profileImg.url : '';
+  const role = loginstatus.role;
   return (
     <Paper
       className={styles.sidebar_container}
