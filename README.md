@@ -1,70 +1,108 @@
-# Getting Started with Create React App
+  ![alt text](https://github.com/pesto-students/laundrykart-fe-n13-beta-1/blob/dev-env/src/assets/logo/logo.png)
+ ## Table of contents
+ - [Introduction](#intro)
+ - [Technologies](#technologies)
+ - [Setup](#setup)
+ - [Features](#features)
+ - [Contributors](#contributors)
+ - [Community](#Community)
+ 
+## Introduction      
+LaundryKart is committed to offering our customers the highest quality dry cleaning and laundry services at fair prices. Our goal is to deliver a convenient and easy to use solution while providing excellent customer service.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+-Live demo [_here_](https://workshala.netlify.app/).
 
-## Available Scripts
+Frontend is hosted on Netlify.
+Backend is deployed to Parse API.
 
-In the project directory, you can run:
+# High level overview of Application
+User can login on bais of role (user/vendor.rider), and create an account, login session would be persistent. 
 
-### `npm start`
+### User can peform following operations: ###
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+* View Laundry as per User location
+* Can book a laundry
+* Add reviews when service is completed
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Vendor can peform following operations: ###
 
-### `npm test`
+* Add his/her laundry
+* Recives order
+* Assign a rider
+* Do laundry service as per users booking details
+* Deliver clean clothe to user
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Rider can peform following operations: ###
 
-### `npm run build`
+* Rider pickup the order (Verification done by pickup code)
+* Rider Delivers the order (Verification done by delivery code)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Technologies used to build this project
+![Node.js **v14.15.0**](https://img.shields.io/badge/Netlify-00C7B7?style=for-the-badge&logo=netlify&logoColor=white)\
+ ![React JS](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)\
+ ![Redux](https://img.shields.io/badge/Redux-593D88?style=for-the-badge&logo=redux&logoColor=white)\
+ ![Parse Platform and Cloud Functions](https://img.shields.io/badge/Parse--Platform--and--Cloud--Functions-0081AA?style=for-the-badge&logo=Formik&logoColor=white)\
+ ![Mongo](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)
+ 
+ ## Other Libraries Used
+![Material UI](https://img.shields.io/badge/Material--UI-0081CB?style=for-the-badge&logo=material-ui&logoColor=white)\
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Setup
+Requires [Node.js](https://nodejs.org/) to run (v14.15.0+).
 
-### `npm run eject`
+Install the dependencies and open the terminal and then run the following command one by one.
+```sh
+ $ git https://github.com/pesto-students/laundrykart-fe-n13-beta-1.git
+ $ cd laundrykart-fe-n13-beta-1
+ $ npm install
+ $ npm run start
+ ```
+ Verify by navigating to below address in your preferred browser.
+```sh
+ localhost:[3000] or running port
+ ```
+You should be able to see the landing page.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Features
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+ 
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- Website developed using React, React-hooks, Redux, Material-Ui and other useful resources mentioned above.
+- Fully responsive
+- Secured using parse authentication
 
-## Learn More
+ 
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+# Demo Logins
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+#### User ####
+- Username: tejal@gmail.com
+- Password: tejal@123
 
-### Code Splitting
+#### Vendor ####
+- Username: vendor1@gmail.com
+- Password: vendor1@321
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+#### Rider ####
+- Username: rider@gmail.com
+- Password: rider@321
 
-### Analyzing the Bundle Size
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Resources
+<a href="https://drive.google.com/file/d/1zIAiwGaX6VMfqh2dJhESIQD-2tZwyyH8/view?usp=sharing">High Level Design</a>\
+ <a href="https://drive.google.com/file/d/12LusAhwaLn8II0gMFUmM4YwU1KuOXxuV/view?usp=sharing"> PRD </a>\
+ <a href="https://www.figma.com/file/NlvJxeE7PsqtInvZFoHfEg/Pesto?node-id=50%3A34255"> Wireframes</a>
+ 
+## Contributors ✨
 
-### Making a Progressive Web App
+ 
+<a href="https://www.linkedin.com/in/tejal-ganvir-ba4340163/"><img src="" width="100px;" alt=""/>Tejal Ganvir</a>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+<a href="https://www.linkedin.com/in/gopi-m-3112ba115/"><img src="" width="100px;" alt=""/>Gopi Kannan</a>
 
-### Advanced Configuration
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
 
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Community
+Thanks to the people who directly and indirectly supported me to accomplish this project.
