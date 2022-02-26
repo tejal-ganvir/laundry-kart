@@ -1,4 +1,4 @@
-  ![alt text](https://github.com/pesto-students/laundrykart-fe-n13-beta-1/blob/dev-env/src/assets/logo/logo.png)
+  ![alt text](https://github.com/pesto-students/laundrykart-fe-n13-beta-1/blob/dev-env/src/assets/logo/readmelogo.png)
  ## Table of contents
  - [Introduction](#intro)
  - [Technologies](#technologies)
