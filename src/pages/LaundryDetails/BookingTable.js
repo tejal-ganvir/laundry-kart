@@ -93,7 +93,9 @@ const BookingTable = (props) => {
           isPaid: paymentId ? true : false,
           grandTotal: grandTotal,
           laundryInfoId: props.laundryRef,
-          paymentId: paymentId
+          paymentId: paymentId,
+          userName: `${userDetails.firstName} ${userDetails.lastName}`,
+          userMobile: userDetails.mobile,
         }
         setLoading(true);
         const response = postJSON('functions/saveOrderDetails', options)
@@ -158,7 +160,7 @@ const BookingTable = (props) => {
     }
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} sx={{display: (props.role !== 'user') ? 'none' : 'block'}}>
       <Table sx={{ minWidth: 720 }} aria-label="simple table">
         <TableHead>
           <TableRow>

@@ -67,6 +67,7 @@ const RiderRoutes = ({ role }) => {
         <Route path="/laundry/details" element={<LaundryDetails />} />
         <Route path="/account/logout" exact element={<Logout />} />
 
+        <Route path="/rider/profile" element={<Profile />} />
         <Route path='/rider/history' element={<RiderHistoryDetails />} />
         <Route path='/rider/orders' element={<RiderOrderDetails />} />
         <Route path='/rider/pickup' element={<PickupDetails />} />

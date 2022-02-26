@@ -113,6 +113,7 @@ const VendorDashboard = (vendordetails) => {
         </Container>
       )}
       {profile.profileDetails === {} && <FullScreenDialog />}
+      
     </>
   );
 };
