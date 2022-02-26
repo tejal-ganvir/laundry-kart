@@ -59,7 +59,7 @@ const AddRaider = (laundryDetails) => {
     <div>
       {!isSaved && (
         <Container maxWidth='xl'>
-          <Box>
+          <Box component="div" className='whiteBg' sx={{boxShadow: 2, p:2, mx:3, position: 'relative', minWidth:120 }}>
             <Typography
               id='modal-modal-title'
               variant='h6'
