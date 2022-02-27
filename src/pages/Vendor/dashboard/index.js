@@ -24,15 +24,7 @@ const VendorDashboard = (vendordetails) => {
     <>
       {/* {JSON.stringify(profile)} */}
       {profile.profileDetails !== {} && (
-        <Container maxWidth='xl'>
-          <Stack
-            sx={{ mb: 6 }}
-            direction='row'
-            justifyContent='space-between'
-            alignItems='flex-start'
-            spacing={0}>
-            <AppBreadcrumb />
-          </Stack>
+        <Container maxWidth='xl' sx={{mt:2}}>
 
           <Grid container spacing={4}>
             <Grid item xs={12} md={6} lg={4}>
@@ -41,10 +33,10 @@ const VendorDashboard = (vendordetails) => {
                   color='primary'
                   icon='weekend'
                   title='upcoming orders'
-                  count={281}
+                  count="-"
                   percentage={{
                     color: "primary",
-                    amount: "+55%",
+                    amount: "-",
                     label: "than lask week",
                   }}
                 />
@@ -55,10 +47,10 @@ const VendorDashboard = (vendordetails) => {
                 <WidgetCard
                   icon='leaderboard'
                   title='schedule pickup'
-                  count='2,300'
+                  count='-'
                   percentage={{
                     color: "success",
-                    amount: "+3%",
+                    amount: "-",
                     label: "than last month",
                   }}
                 />
@@ -70,10 +62,10 @@ const VendorDashboard = (vendordetails) => {
                   color='success'
                   icon='store'
                   title='laundry inprogress'
-                  count='34k'
+                  count='-'
                   percentage={{
                     color: "success",
-                    amount: "+1%",
+                    amount: "-",
                     label: "than yesterday",
                   }}
                 />
@@ -85,7 +77,7 @@ const VendorDashboard = (vendordetails) => {
                   color='primary'
                   icon='person_add'
                   title='schedule delivery'
-                  count='+91'
+                  count='-'
                   percentage={{
                     color: "success",
                     amount: "",
@@ -101,7 +93,7 @@ const VendorDashboard = (vendordetails) => {
                   color='primary'
                   icon='person_add'
                   title='completed orders'
-                  count='+91'
+                  count='-'
                   percentage={{
                     color: "success",
                     amount: "",

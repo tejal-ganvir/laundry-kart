@@ -17,8 +17,6 @@ const AddRaider = (laundryDetails) => {
   const navigate = useNavigate();
   const laundryId = laundryDetails.laundryDetails.currentUser.objectId;
 
-  const isSaved = useSelector((state) => state.vendorRiders.isSaved);
-
   const validationSchema = yup.object({
     email: yup
       .string("Enter your email")
@@ -51,13 +49,12 @@ const AddRaider = (laundryDetails) => {
         username: formik.values.email,
         parentId: laundryId,
       };
-      dispatch(RiderCreateStart(data));
+      dispatch(RiderCreateStart({ data, navigate }));
     },
   });
 
   return (
     <div>
-      {!isSaved && (
         <Container maxWidth='xl'>
           <Box component="div" className='whiteBg' sx={{boxShadow: 2, p:2, mx:3, position: 'relative', minWidth:120 }}>
             <Typography
@@ -141,8 +138,6 @@ const AddRaider = (laundryDetails) => {
             </Stack>
           </Box>
         </Container>
-      )}
-      {isSaved && navigate("/vendor/riders")}
     </div>
   );
 };

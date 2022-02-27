@@ -13,8 +13,9 @@ import VendorRiderActionTypes from "../store/actionTypes/vendorRiderActionsTypes
 
 export function* VendorRiderCreateAsync(action) {
   try {
-    const rider = yield getVendorRiderCreatedetails(action.payload);
+    const rider = yield getVendorRiderCreatedetails(action.payload.data);
     yield put(RiderCreateSuccess(rider));
+    action.payload.navigate('/vendor/riders');
   } catch (error) {
     yield put(RiderCreateFailed(error.message));
   }

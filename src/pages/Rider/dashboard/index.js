@@ -23,15 +23,7 @@ const RiderDashboard = (vendordetails) => {
     <>
       {/* {JSON.stringify(profile)} */}
       {profile.profileDetails !== {} && (
-        <Container maxWidth='xl'>
-          <Stack
-            sx={{ mb: 6 }}
-            direction='row'
-            justifyContent='space-between'
-            alignItems='flex-start'
-            spacing={0}>
-            <AppBreadcrumb />
-          </Stack>
+        <Container maxWidth='xl' sx={{mt:2}}>
 
           <Grid container spacing={4}>
             <Grid item xs={12} md={6} lg={4}>
@@ -40,10 +32,10 @@ const RiderDashboard = (vendordetails) => {
                   color='primary'
                   icon='weekend'
                   title='All Orders'
-                  count={281}
+                  count="-"
                   percentage={{
                     color: "primary",
-                    amount: "+55%",
+                    amount: "",
                     label: "than lask week",
                   }}
                 />
@@ -54,10 +46,10 @@ const RiderDashboard = (vendordetails) => {
                 <WidgetCard
                   icon='leaderboard'
                   title='Current Orders'
-                  count='2,300'
+                  count='-'
                   percentage={{
                     color: "success",
-                    amount: "+3%",
+                    amount: "-",
                     label: "than last month",
                   }}
                 />
