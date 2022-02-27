@@ -17,17 +17,14 @@ const AddService = (vendordetails) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const isSaved = useSelector((state) => state.vendorServices.isSaved);
-
-  console.log(isSaved);
-
   const validationSchema = yup.object({
     itemName: yup
       .string("Enter the item name")
       .required("Item Name is required"),
-    laundryPrice: yup
-      .string("Enter the laundryPrice")
-      .required("Laundry Price is required"),
+    laundryPrice: yup.addMethod(yup.string, 'integer', function () {
+      return this.matches(/^\d+$/, 'The field should have digits only')
+    }),
+
     dryCleanPrice: yup
       .string("Enter the dryclean price")
       .required("dry clean price is required"),
@@ -49,102 +46,103 @@ const AddService = (vendordetails) => {
     validationSchema: validationSchema,
     onSubmit: (values) => {
       const data = { ...values, laundryId: laundryId };
-      console.log(data);
-      dispatch(ServiceCreateStart(data));
+      dispatch(ServiceCreateStart({ data, navigate }));
     },
   });
 
   return (
     <div>
-      {!isSaved && (
-        <Container maxWidth='xl'>
-          <Box component="div" className='whiteBg' sx={{boxShadow: 2, p:2, mx:3, position: 'relative', minWidth:120 }}>
-            <Typography
-              id='modal-modal-title'
-              variant='h6'
-              component='h2'
-              sx={{ mb: 3 }}>
-              Add a new Service
-            </Typography>
-            <Stack spacing={2}>
-              <TextField
-                fullWidth
-                id='service-name'
-                label='Item Name'
-                variant='outlined'
-                value={formik.values.itemName}
-                onChange={formik.handleChange("itemName")}
-                error={
-                  formik.touched.itemName && Boolean(formik.errors.itemName)
-                }
-                helperText={formik.touched.itemName && formik.errors.itemName}
-              />
+      <Container maxWidth='xl'>
+        <Box
+          component='div'
+          className='whiteBg'
+          sx={{
+            boxShadow: 2,
+            p: 2,
+            mx: 3,
+            position: "relative",
+            minWidth: 120,
+          }}>
+          <Typography
+            id='modal-modal-title'
+            variant='h6'
+            component='h2'
+            sx={{ mb: 3 }}>
+            Add a new Service
+          </Typography>
+          <Stack spacing={2}>
+            <TextField
+              fullWidth
+              id='service-name'
+              label='Item Name'
+              variant='outlined'
+              value={formik.values.itemName}
+              onChange={formik.handleChange("itemName")}
+              error={formik.touched.itemName && Boolean(formik.errors.itemName)}
+              helperText={formik.touched.itemName && formik.errors.itemName}
+            />
 
-              <TextField
-                fullWidth
-                id='price'
-                label='Press Price'
-                variant='outlined'
-                value={formik.values.pressPrice}
-                onChange={formik.handleChange("pressPrice")}
-                error={
-                  formik.touched.pressPrice && Boolean(formik.errors.pressPrice)
-                }
-                helperText={
-                  formik.touched.pressPrice && formik.errors.pressPrice
-                }
-              />
-              <TextField
-                fullWidth
-                id='price'
-                label='dryclean Price'
-                variant='outlined'
-                value={formik.values.dryCleanPrice}
-                onChange={formik.handleChange("dryCleanPrice")}
-                error={
-                  formik.touched.dryCleanPrice &&
-                  Boolean(formik.errors.dryCleanPrice)
-                }
-                helperText={
-                  formik.touched.dryCleanPrice && formik.errors.dryCleanPrice
-                }
-              />
+            <TextField
+              fullWidth
+              id='price'
+              label='Press Price'
+              variant='outlined'
+              value={formik.values.pressPrice}
+              onChange={formik.handleChange("pressPrice")}
+              error={
+                formik.touched.pressPrice && Boolean(formik.errors.pressPrice)
+              }
+              helperText={formik.touched.pressPrice && formik.errors.pressPrice}
+            />
+            <TextField
+              fullWidth
+              id='price'
+              label='dryclean Price'
+              variant='outlined'
+              value={formik.values.dryCleanPrice}
+              onChange={formik.handleChange("dryCleanPrice")}
+              error={
+                formik.touched.dryCleanPrice &&
+                Boolean(formik.errors.dryCleanPrice)
+              }
+              helperText={
+                formik.touched.dryCleanPrice && formik.errors.dryCleanPrice
+              }
+            />
 
-              <TextField
-                fullWidth
-                id='price'
-                label='laundry Price'
-                variant='outlined'
-                value={formik.values.laundryPrice}
-                onChange={formik.handleChange("laundryPrice")}
-                error={
-                  formik.touched.laundryPrice &&
-                  Boolean(formik.errors.laundryPrice)
-                }
-                helperText={
-                  formik.touched.laundryPrice && formik.errors.laundryPrice
-                }
-              />
+            <TextField
+              fullWidth
+              id='price'
+              label='laundry Price'
+              variant='outlined'
+              value={formik.values.laundryPrice}
+              onChange={formik.handleChange("laundryPrice")}
+              error={
+                formik.touched.laundryPrice &&
+                Boolean(formik.errors.laundryPrice)
+              }
+              helperText={
+                formik.touched.laundryPrice && formik.errors.laundryPrice
+              }
+            />
 
-              <Stack
-                direction='row'
-                justifyContent='flex-end'
-                alignItems='flex-start'
-                spacing={2}>
-                <Button
-                  variant='text'
-                  onClick={() => navigate("/vendor/services")}>
-                  Cancel
-                </Button>
-                <Button variant='contained' onClick={formik.handleSubmit}>
-                  Save
-                </Button>
-              </Stack>
+            <Stack
+              direction='row'
+              justifyContent='flex-end'
+              alignItems='flex-start'
+              spacing={2}>
+              <Button
+                variant='text'
+                onClick={() => navigate("/vendor/services")}>
+                Cancel
+              </Button>
+              <Button variant='contained' onClick={formik.handleSubmit}>
+                Save
+              </Button>
             </Stack>
-          </Box>
-        </Container>
-      )}
-      {isSaved && navigate("/vendor/services")}
+          </Stack>
+        </Box>
+      </Container>
     </div>
   );
 };

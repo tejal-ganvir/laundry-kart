@@ -14,6 +14,7 @@ import { ServiceCreateStart } from "../../../store/actions/vendorServiceActions"
 import { useEffect } from "react";
 import { postJSON } from "../../../services/axiosConfig/api";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 const EditService = (vendordetails) => {
   const navigate = useNavigate();
@@ -71,18 +72,20 @@ const EditService = (vendordetails) => {
 
   const formik = useFormik({
     initialValues: {
-      itemName: service && service.itemName ? service.itemName : '',
-      laundryPrice: service && service.laundryPrice ? service.laundryPrice : '',
-      dryCleanPrice: service && service.dryCleanPrice ? service.dryCleanPrice : '',
-      pressPrice: service && service.pressPrice ? service.pressPrice : '',
+      itemName: service && service.itemName ? service.itemName : "",
+      laundryPrice: service && service.laundryPrice ? service.laundryPrice : "",
+      dryCleanPrice:
+        service && service.dryCleanPrice ? service.dryCleanPrice : "",
+      pressPrice: service && service.pressPrice ? service.pressPrice : "",
     },
     enableReinitialize: true,
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      console.log(values);
-      // const data = { ...values, laundryId: laundryId };
-      // console.log(data);
-      // dispatch(ServiceCreateStart(data));
+      let data = { ...values, serviceId: serviceId };
+      var response = postJSON("/functions/setServicesDetails", data);
+      response
+        .then((res) => toast("Service Updated Successfully"))
+        .catch((err) => toast("Error in the service update"));
     },
   });
 
@@ -90,7 +93,16 @@ const EditService = (vendordetails) => {
     <div>
       {!isSaved && (
         <Container maxWidth='xl'>
-          <Box component="div" className='whiteBg' sx={{boxShadow: 2, p:2, mx:3, position: 'relative', minWidth:120 }}>
+          <Box
+            component='div'
+            className='whiteBg'
+            sx={{
+              boxShadow: 2,
+              p: 2,
+              mx: 3,
+              position: "relative",
+              minWidth: 120,
+            }}>
             <Typography
               id='modal-modal-title'
               variant='h6'
@@ -99,7 +111,7 @@ const EditService = (vendordetails) => {
               Edit Service
             </Typography>
             <Stack spacing={2}>
-            <TextField
+              <TextField
                 fullWidth
                 id='service-name'
                 label='Item Name'
@@ -168,7 +180,9 @@ const EditService = (vendordetails) => {
                   onClick={() => navigate("/vendor/services")}>
                   Cancel
                 </Button>
-                <Button variant='contained' onClick={formik.handleSubmit}>Save</Button>
+                <Button variant='contained' onClick={formik.handleSubmit}>
+                  Save
+                </Button>
               </Stack>
             </Stack>
           </Box>

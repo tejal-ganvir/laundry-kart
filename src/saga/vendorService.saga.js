@@ -14,7 +14,8 @@ import VendorServiceActionTypes from "../store/actionTypes/vendorServiceActionTy
 
 export function* VendorServiceCreateAsync(action) {
   try {
-    const service = yield getVendorServiceCreatedetails(action.payload);
+    const service = yield getVendorServiceCreatedetails(action.payload.data);
+    action.payload.navigate("/vendor/services");
     yield put(ServiceCreateSuccess(service));
   } catch (error) {
     yield put(ServiceCreateFailed(error.message));

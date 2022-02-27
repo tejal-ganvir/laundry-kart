@@ -10,7 +10,7 @@ import { createStructuredSelector } from "reselect";
 import { selectCurrentUser } from "../../../store/selector/login.selectors";
 import { connect } from "react-redux";
 
-const RiderOrderDetails = (riderDetails) => {
+const RiderDeliveryDetails = (riderDetails) => {
   const [order, setOrder] = useState([]);
   const riderId = riderDetails.riderDetails.currentUser.objectId;
 
@@ -18,12 +18,8 @@ const RiderOrderDetails = (riderDetails) => {
     const response = postJSON("functions/getRidersOrders", {
       riderId: riderId,
     });
-    response.then((order) =>
-      setOrder([...order.result[0], ...order.result[1]]),
-    );
+    response.then((order) => setOrder(order.result));
   }, []);
-
-  console.log(order);
 
   const orderlist = order;
   console.log(orderlist);
@@ -45,4 +41,4 @@ const RiderOrderDetails = (riderDetails) => {
 const riderDetails = createStructuredSelector({
   riderDetails: selectCurrentUser,
 });
-export default connect(riderDetails)(RiderOrderDetails);
+export default connect(riderDetails)(RiderDeliveryDetails);

@@ -13,6 +13,9 @@ import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { useNavigate } from "react-router-dom";
+import { postJSON } from "../../services/axiosConfig/api";
+import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -43,6 +46,7 @@ const ServiceTable = (props) => {
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const rows = props.data;
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -51,6 +55,13 @@ const ServiceTable = (props) => {
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
+  };
+
+  const handleDelete = (serviceId) => {
+    const response = postJSON("/functions/deleteService", {
+      serviceId: serviceId,
+    });
+    response.then((res) => toast("service has been deleted"));
   };
 
   return (
@@ -95,7 +106,9 @@ const ServiceTable = (props) => {
                       }>
                       <EditIcon color='primary' />
                     </IconButton>
-                    <IconButton aria-label='delete'>
+                    <IconButton
+                      aria-label='delete'
+                      onClick={() => handleDelete(row.objectId)}>
                       <DeleteIcon color='error' />
                     </IconButton>
                   </StyledTableCell>

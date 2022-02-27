@@ -17,13 +17,9 @@ import { useState } from "react";
 const VendorServices = (vendordetails) => {
 
   const laundryId = vendordetails.vendordetails.currentUser.objectId;
-  // const value = useSelector((state) => state.vendorServices.serviceDetails);
 
-  // console.log(value);
   const [data, setData] = useState([]);
   useEffect(() => {
-    // console.log("effect");
-    // dispatch(ServiceStart({ laundryId: laundryId }));
     const response = postJSON("functions/getAllServicesDetails", {
       laundryId: laundryId,
     });
@@ -51,7 +47,7 @@ const VendorServices = (vendordetails) => {
             Add Service
           </Button>
         </Stack>
-        <ServiceTable data={serviceList} />
+        <ServiceTable setData={setData} data={serviceList} />
       </Container>
     </>
   );

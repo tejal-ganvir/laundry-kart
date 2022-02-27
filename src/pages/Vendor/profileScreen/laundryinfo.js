@@ -13,20 +13,20 @@ import { connect, useDispatch } from "react-redux";
 import { setLaundryInfoSuccess } from "../../../store/actions/laundryActions";
 import { useNavigate } from "react-router-dom";
 
-const LaundryInfo = ({currentUser, vendorLaundry}) => {
+const LaundryInfo = ({ currentUser, vendorLaundry }) => {
   const [open, setOpen] = useState(false);
   const laundryId = currentUser.objectId;
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
-
-    const response = postJSON('functions/getLaundryById', {laundryId: laundryId});
+    const response = postJSON("functions/getLaundryById", {
+      laundryId: laundryId,
+    });
     response.then((data) => {
       dispatch(setLaundryInfoSuccess(data.result[0][0]));
-    })
-
-  },[laundryId])
+    });
+  }, [laundryId]);
 
   const [bannerImgUrl, setBannerImgUrl] = useState();
   const [bannerImg, setBannerImg] = useState();
@@ -96,70 +96,132 @@ const LaundryInfo = ({currentUser, vendorLaundry}) => {
 
   const [dialogOpen, setDialogOpen] = useState(false);
   const [address, setAddress] = useState();
-
-  const vendorBanner = vendorLaundry && vendorLaundry.bannerImg && vendorLaundry.bannerImg ? vendorLaundry.bannerImg.url : '';
-  const vendorImg1 = vendorLaundry && vendorLaundry.galleryImg1 && vendorLaundry.galleryImg1 ? vendorLaundry.galleryImg1.url : '';
-  const vendorImg2 = vendorLaundry && vendorLaundry.galleryImg2 && vendorLaundry.galleryImg2 ? vendorLaundry.galleryImg2.url : '';
-  const vendorImg3 = vendorLaundry && vendorLaundry.galleryImg3 && vendorLaundry.galleryImg3 ? vendorLaundry.galleryImg3.url : '';
-  const vendorAddress = vendorLaundry && vendorLaundry.address ? vendorLaundry.address : '';
-  const laundryObjectId = vendorLaundry && vendorLaundry.objectId ? vendorLaundry.objectId : '';
-
+  console.log(vendorLaundry);
+  const vendorBanner =
+    vendorLaundry && vendorLaundry.bannerImg && vendorLaundry.bannerImg
+      ? vendorLaundry.bannerImg.url
+      : "";
+  const vendorImg1 =
+    vendorLaundry && vendorLaundry.galleryImg1 && vendorLaundry.galleryImg1
+      ? vendorLaundry.galleryImg1.url
+      : "";
+  const vendorImg2 =
+    vendorLaundry && vendorLaundry.galleryImg2 && vendorLaundry.galleryImg2
+      ? vendorLaundry.galleryImg2.url
+      : "";
+  const vendorImg3 =
+    vendorLaundry && vendorLaundry.galleryImg3 && vendorLaundry.galleryImg3
+      ? vendorLaundry.galleryImg3.url
+      : "";
+  const vendorAddress =
+    vendorLaundry && vendorLaundry.address ? vendorLaundry.address : "";
+  const vendorLat =
+    vendorLaundry && vendorLaundry.long ? vendorLaundry.long : "";
+  const vendorLong =
+    vendorLaundry && vendorLaundry.lat ? vendorLaundry.lat : "";
+  const laundryObjectId =
+    vendorLaundry && vendorLaundry.objectId ? vendorLaundry.objectId : "";
   const validationSchema = yup.object({
     name: yup.string("Enter your name").required("name is required"),
     about: yup.string("enter your about").required("About is required"),
   });
-
   const formik = useFormik({
     initialValues: {
-      name: vendorLaundry && vendorLaundry.name ? vendorLaundry.name : '',
-      about: vendorLaundry && vendorLaundry.about ? vendorLaundry.about : '',
+      name: vendorLaundry && vendorLaundry.name ? vendorLaundry.name : "",
+      about: vendorLaundry && vendorLaundry.about ? vendorLaundry.about : "",
     },
     enableReinitialize: true,
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      if (!bannerImg) {
+      if (!bannerImg && !vendorBanner) {
         toast("Please select banner image.");
         return;
       }
 
-      if (!img1) {
+      if (!img1 && !vendorImg1) {
         toast("Please select img1 image");
         return;
       }
-      if (!img2) {
+      if (!img2 && !vendorImg2) {
         toast("Please select img2 image");
         return;
       }
-      if (!img3) {
+      if (!img3 && !vendorImg3) {
         toast("Please select img3 image");
         return;
       }
 
-      if (!address) {
+      if (!address && !vendorAddress) {
         toast("Please add address");
         return;
       }
+      let laundrylong;
+      let laundrylat;
 
-      let long = address.center[0];
-      let lat = address.center[1];
+      if (address && address.center[0]) {
+        laundrylong = address.center[0];
+      } else {
+        laundrylong = vendorLong;
+      }
+      if (address && address.center[1]) {
+        laundrylat = address.center[1];
+      } else {
+        laundrylat = vendorLat;
+      }
+      let laundryBanner;
+      if (bannerImg) {
+        laundryBanner = bannerImg;
+      } else {
+        laundryBanner = vendorLaundry.bannerImg;
+      }
+      let laundryimg1;
+      if (img1) {
+        laundryimg1 = img1;
+      } else {
+        laundryimg1 = vendorLaundry.galleryImg1;
+      }
+      let laundryimg2;
+      if (img2) {
+        laundryimg2 = img2;
+      } else {
+        laundryimg2 = vendorLaundry.galleryImg2;
+      }
+      let laundryimg3;
+      if (img3) {
+        laundryimg3 = img3;
+      } else {
+        laundryimg3 = vendorLaundry.galleryImg3;
+      }
+
+      let laundryAddress;
+      if (address && address.place_name) {
+        laundryAddress = address.place_name;
+      } else {
+        laundryAddress = vendorAddress;
+      }
+
       let data = {
         ...values,
-        long: long,
-        lat: lat,
-        bannerImg: bannerImg,
-        galleryImg1: img1,
-        galleryImg2: img2,
-        galleryImg3: img3,
-        address: address.place_name,
+        long: laundrylong,
+        lat: laundrylat,
+        bannerImg: laundryBanner,
+        galleryImg1: laundryimg1,
+        galleryImg2: laundryimg2,
+        galleryImg3: laundryimg3,
+        address: laundryAddress,
         laundryId: laundryId,
       };
-      const response = postJSON("/functions/setLaundryInfo", data);
-      response.then((res) => {
-        dispatch(setLaundryInfoSuccess(res.result));
-        toast('Laudndry added please add services');
-        navigate('/vendor/services');
-      })
-      .catch((err) => console.log(err));
+      if (laundryObjectId) {
+        const response = postJSON("/functions/UpdateLaundryInfo", data);
+        response
+          .then((res) => toast("Profile Updated Successfully"))
+          .catch((err) => toast("failed in profile update"));
+      } else {
+        const response = postJSON("/functions/setLaundryInfo", data);
+        response
+          .then((res) => toast("Profile added successfully"))
+          .catch((err) => toast("Error in profile creation"));
+      }
     },
   });
 
@@ -190,7 +252,11 @@ const LaundryInfo = ({currentUser, vendorLaundry}) => {
               />
             </LoadingButton>
             {(bannerImgUrl || vendorBanner) && (
-              <img src={bannerImgUrl || vendorBanner} height={100} width={100} />
+              <img
+                src={bannerImgUrl || vendorBanner}
+                height={100}
+                width={100}
+              />
             )}
           </Stack>
 
@@ -208,7 +274,9 @@ const LaundryInfo = ({currentUser, vendorLaundry}) => {
                 hidden
               />
             </LoadingButton>
-            {(img1Url || vendorImg1) && <img src={img1Url || vendorImg1} height={100} width={100} />}
+            {(img1Url || vendorImg1) && (
+              <img src={img1Url || vendorImg1} height={100} width={100} />
+            )}
           </Stack>
           <Stack>
             <LoadingButton
@@ -224,7 +292,9 @@ const LaundryInfo = ({currentUser, vendorLaundry}) => {
                 hidden
               />
             </LoadingButton>
-            {(img2Url || vendorImg2) && <img src={img2Url || vendorImg2} height={100} width={100} />}
+            {(img2Url || vendorImg2) && (
+              <img src={img2Url || vendorImg2} height={100} width={100} />
+            )}
           </Stack>
           <Stack>
             <LoadingButton
@@ -240,7 +310,9 @@ const LaundryInfo = ({currentUser, vendorLaundry}) => {
                 hidden
               />
             </LoadingButton>
-            {(img3Url || vendorImg3) && <img src={img3Url || vendorImg3} height={100} width={100} />}
+            {(img3Url || vendorImg3) && (
+              <img src={img3Url || vendorImg3} height={100} width={100} />
+            )}
           </Stack>
         </Stack>
 
@@ -257,7 +329,10 @@ const LaundryInfo = ({currentUser, vendorLaundry}) => {
           />
         </div>
         <div className='form-control-area'>
-          <LocationAutocomplete value={vendorAddress} addressFunc={{ address, setAddress }} />
+          <LocationAutocomplete
+            value={vendorAddress}
+            addressFunc={{ address, setAddress }}
+          />
         </div>
         <div className='form-control-area'>
           <TextField
@@ -306,10 +381,10 @@ const LaundryInfo = ({currentUser, vendorLaundry}) => {
   );
 };
 
-const mapStateToProps = state => {
-  const {vendorLaundry} = state.Laundry;
-  const {currentUser} = state.login;
-  return {currentUser, vendorLaundry};
+const mapStateToProps = (state) => {
+  const { vendorLaundry } = state.Laundry;
+  const { currentUser } = state.login;
+  return { currentUser, vendorLaundry };
 };
 
 export default connect(mapStateToProps, null)(LaundryInfo);
