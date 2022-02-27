@@ -20,4 +20,22 @@ const customerProfileMenu = [
     }
 ];
 
-export { customerProfileMenu };
+const customerVendorMenu = [
+    {
+        label: 'Profile',
+        link: '/vendor/profile',
+        icon: <AccountCircleIcon fontSize="small" />
+    },
+    {
+        label: 'Add Laundry',
+        link: '/vendor/laundryInfo',
+        icon: <ReorderIcon fontSize="small" />
+    },
+    {
+        label: 'Logout',
+        link: '/account/logout',
+        icon: <ExitToAppIcon fontSize="small" />
+    }
+];
+
+export { customerProfileMenu, customerVendorMenu };

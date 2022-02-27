@@ -11,11 +11,13 @@ import { toast } from "react-toastify";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { connect, useDispatch } from "react-redux";
 import { setLaundryInfoSuccess } from "../../../store/actions/laundryActions";
+import { useNavigate } from "react-router-dom";
 
 const LaundryInfo = ({currentUser, vendorLaundry}) => {
   const [open, setOpen] = useState(false);
   const laundryId = currentUser.objectId;
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
 
@@ -154,6 +156,8 @@ const LaundryInfo = ({currentUser, vendorLaundry}) => {
       const response = postJSON("/functions/setLaundryInfo", data);
       response.then((res) => {
         dispatch(setLaundryInfoSuccess(res.result));
+        toast('Laudndry added please add services');
+        navigate('/vendor/services');
       })
       .catch((err) => console.log(err));
     },

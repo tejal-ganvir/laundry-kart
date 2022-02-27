@@ -5,7 +5,7 @@ import * as React from "react";
 import AppBreadcrumb from "../../../components/Vendor/Breadcrumbs";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { createStructuredSelector } from "reselect";
 import { selectCurrentUser } from "../../../store/selector/login.selectors";
 import { connect, useDispatch, useSelector } from "react-redux";
@@ -15,9 +15,6 @@ import { postJSON } from "../../../services/axiosConfig/api";
 import { useState } from "react";
 
 const VendorServices = (vendordetails) => {
-  const navigate = useNavigate();
-
-  const dispatch = useDispatch();
 
   const laundryId = vendordetails.vendordetails.currentUser.objectId;
   // const value = useSelector((state) => state.vendorServices.serviceDetails);
@@ -48,7 +45,8 @@ const VendorServices = (vendordetails) => {
             variant='outlined'
             color='primary'
             margin='normal'
-            onClick={() => navigate("/vendor/create/services")}
+            component={Link} 
+            to={'/vendor/create/services'}
             sx={{ borderRadius: 4 }}>
             Add Service
           </Button>

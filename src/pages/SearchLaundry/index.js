@@ -17,8 +17,8 @@ const SearchLaundry = ({data, loading, error, locData}) => {
         dispatch(getLaundryList());
     },[])
 
-    const userLat = locData.lat || 20.5937;
-    const userLong = locData.long || 78.9629;
+    const userLat = locData ? locData.lat : 20.5937;
+    const userLong = locData ? locData.long : 78.9629;
 
     data && data.forEach((val) => {
         var from = turf.point([userLong, userLat]);
@@ -47,7 +47,7 @@ const SearchLaundry = ({data, loading, error, locData}) => {
                     </Paper>
                 </Container>
             </Box> */}
-            <Box className='container' sx={{minHeight: 440}}>
+            <Box className='container' sx={{minHeight: 440, mb: 3}}>
                 <Grid container direction="row" spacing={2}>
                     { loading ? <LoaderBackdrop open={loading} />  :
                         renderData.length > 0 ? 

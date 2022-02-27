@@ -1,4 +1,3 @@
-import axios from "axios";
 import { postJSON } from "../axiosConfig/api";
 
 export const setUserRegistration = async (data) => {

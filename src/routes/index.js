@@ -133,14 +133,16 @@ const Routes = ({ loginstatus }) => {
       return <CustomerRoutes isLogin={isLogin} role={role} />;
     else if (role === "laundry")
       return <VendorRoutes isLogin={isLogin} role={role} />;
-    else return <RiderRoutes isLogin={isLogin} role={role} />;
+    else 
+      return <RiderRoutes isLogin={isLogin} role={role} />;
   } else {
-    if (!sessionToken) {
-      return <PublicRoutes />;
-    } else {
-      dispatch(userMeRequestAction(sessionToken));
-      //return <LoaderBackdrop />;
-    }
+    return <PublicRoutes />;
+    // if (!sessionToken) {
+     
+    // } else {
+    //   dispatch(userMeRequestAction(sessionToken));
+    //   //return <LoaderBackdrop />;
+    // }
   }
 };
 

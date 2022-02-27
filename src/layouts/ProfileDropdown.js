@@ -7,7 +7,7 @@ import IconButton from '@mui/material/IconButton';
 import { Divider, Typography } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { customerProfileMenu } from '../utilis/profileDropdownMenu';
+import { customerProfileMenu, customerVendorMenu } from '../utilis/profileDropdownMenu';
 
 const ProfileDropdown = ({user}) => {
     const [anchorEl, setAnchorEl] = useState(null);
@@ -24,6 +24,9 @@ const ProfileDropdown = ({user}) => {
     };
 
     const setProfileImg = currentUser && currentUser.profileImg && currentUser.profileImg.url ? currentUser.profileImg.url : '';
+    const role = currentUser && currentUser.role ? currentUser.role : '';
+
+    const dropdownMenu = (role === 'laundry') ? customerVendorMenu : customerProfileMenu;
 
   return (
     <React.Fragment>
@@ -85,7 +88,7 @@ const ProfileDropdown = ({user}) => {
             anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
         >
             {
-                profileMenu.map((menu, idx) => (
+                dropdownMenu.map((menu, idx) => (
                     <div key={`profile-dropdown-${menu.label}`}>
                         <MenuItem component={Link} to={menu.link} sx={{minWidth: 150, textAlign: 'center'}} >
                             <ListItemIcon>
@@ -93,7 +96,7 @@ const ProfileDropdown = ({user}) => {
                             </ListItemIcon>
                             {menu.label}
                         </MenuItem>
-                        {(profileMenu.length - 1 > idx) && <Divider />}
+                        {(dropdownMenu.length - 1 > idx) && <Divider />}
                     </div>
                 ))
             }

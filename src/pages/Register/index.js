@@ -17,20 +17,33 @@ import { setAuthLayout } from "../../store/actions/layoutActions";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { RegisterStart } from "../../store/actions/registerActions";
-import { useSelector } from "react-redux";
 import LoadingButton from "@mui/lab/LoadingButton";
 
-const Register = ({isLoading}) => {
+const Register = ({isLoading, loginstatus}) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(setAuthLayout(true));
 
-    return () => dispatch(setAuthLayout(false));
-  }, []);
+    switch (loginstatus.role) {
+      case "laundry":
+        navigate("/vendor/dashboard");
+        break;
+      case "user":
+        navigate("/account/profile");
+        break;
+      case "rider":
+        navigate("/rider/dashboard");
+        break;
+      default:
+        break;
+    }
 
-  const isRegister = useSelector((state) => state.register.isRegister);
+    return () => dispatch(setAuthLayout(false));
+
+  }, [loginstatus]);
+
   const validationSchema = yup.object({
     firstName: yup
       .string("Enter your First Name")
@@ -59,14 +72,15 @@ const Register = ({isLoading}) => {
     validationSchema: validationSchema,
     onSubmit: (values) => {
       let value = { ...values, email: values.username };
-      dispatch(RegisterStart(value));
+      dispatch(RegisterStart( {
+            value,
+            navigate, // here we pass reference of history object
+      }));
     },
   });
 
   return (
     <React.Fragment>
-      {isRegister && navigate("/login")}
-      {!isRegister && (
         <Container maxWidth='sm'>
           <Box
             component='div'
@@ -193,14 +207,14 @@ const Register = ({isLoading}) => {
             </form>
           </Box>
         </Container>
-      )}
     </React.Fragment>
   );
 };
 
 const mapStateToProps = state => {
   const {isLoading} = state.register;
-  return {isLoading};
+  const loginstatus = state.login;
+  return {isLoading, loginstatus};
 };
 
 export default connect(mapStateToProps, null)(Register);
