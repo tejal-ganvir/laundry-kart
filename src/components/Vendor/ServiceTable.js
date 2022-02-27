@@ -12,6 +12,7 @@ import Chip from "@mui/material/Chip";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
+import { useNavigate } from "react-router-dom";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -37,16 +38,11 @@ function createData(name, price, unit, date, status) {
   return { name, price, unit, date, status };
 }
 
-const rows = [
-  createData("shirt", 20, "Dry cleaning", "27-01-2022", "Active"),
-  createData("t-shirt", 25, "Laundry service", "27-01-2022", "Active"),
-  createData("shirt", 8, "Laundry service", "27-01-2022", "Active"),
-  createData("t-shirt", 10, "Dry cleaning", "27-01-2022", "Active"),
-];
-
-const ServiceTable = () => {
+const ServiceTable = (props) => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const rows = props.data;
+  const navigate = useNavigate();
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -64,9 +60,9 @@ const ServiceTable = () => {
           <TableHead>
             <TableRow>
               <StyledTableCell>Item Name</StyledTableCell>
-              <StyledTableCell align='right'>Service Type</StyledTableCell>
-              <StyledTableCell align='right'>Price</StyledTableCell>
-              <StyledTableCell align='right'>Date</StyledTableCell>
+              <StyledTableCell align='right'>Laundry Price</StyledTableCell>
+              <StyledTableCell align='right'>Press Price</StyledTableCell>
+              <StyledTableCell align='right'>Dryclean Price</StyledTableCell>
               <StyledTableCell align='right'>Status</StyledTableCell>
               <StyledTableCell align='center'>Action</StyledTableCell>
             </TableRow>
@@ -75,18 +71,28 @@ const ServiceTable = () => {
             {rows
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => (
-                <StyledTableRow key={row.name}>
+                <StyledTableRow key={row.objectId}>
                   <StyledTableCell component='th' scope='row'>
-                    {row.name}
+                    {row.itemName}
                   </StyledTableCell>
-                  <StyledTableCell align='right'>{row.unit}</StyledTableCell>
-                  <StyledTableCell align='right'>{row.price}</StyledTableCell>
-                  <StyledTableCell align='right'>{row.date}</StyledTableCell>
                   <StyledTableCell align='right'>
-                    <Chip label={row.status} color='success' />
+                    {row.laundryPrice}
+                  </StyledTableCell>
+                  <StyledTableCell align='right'>
+                    {row.pressPrice}
+                  </StyledTableCell>
+                  <StyledTableCell align='right'>
+                    {row.dryCleanPrice}
+                  </StyledTableCell>
+                  <StyledTableCell align='right'>
+                    <Chip label='Active' color='success' />
                   </StyledTableCell>
                   <StyledTableCell align='center'>
-                    <IconButton aria-label='save'>
+                    <IconButton
+                      aria-label='save'
+                      onClick={() =>
+                        navigate(`/vendor/services/${row.objectId}`)
+                      }>
                       <EditIcon color='primary' />
                     </IconButton>
                     <IconButton aria-label='delete'>

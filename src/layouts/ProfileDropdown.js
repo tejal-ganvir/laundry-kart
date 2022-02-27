@@ -4,37 +4,48 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import IconButton from '@mui/material/IconButton';
-import DashboardIcon from '@mui/icons-material/Dashboard';
-import Logout from '@mui/icons-material/Logout';
 import { Divider, Typography } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { customerProfileMenu } from '../utilis/profileDropdownMenu';
 
-const ProfileDropdown = () => {
+const ProfileDropdown = ({user}) => {
     const [anchorEl, setAnchorEl] = useState(null);
     const profileMenu = customerProfileMenu;
     const open = Boolean(anchorEl);
+    const {isLogin, currentUser} = user;
+    const navigate = useNavigate();
+
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
     const handleClose = () => {
         setAnchorEl(null);
     };
+
+    const setProfileImg = currentUser && currentUser.profileImg && currentUser.profileImg.url ? currentUser.profileImg.url : '';
+
   return (
     <React.Fragment>
       <IconButton
-        onClick={handleClick}
+        onClick={isLogin ? handleClick : () => navigate('login')}
         size="small"
         sx={{ ml: 2, borderRadius: 0 }}
         aria-controls={open ? 'account-menu' : undefined}
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
         >
-            <Avatar sx={{ width: 40, height: 40 }} />
-            <Typography sx={{fontSize: 13, fontWeight: 'bold', mx: 1 }}>
-                Tejal Ganvir &nbsp;<KeyboardArrowDownIcon sx={{height: 15, width: 15}} />
-            </Typography>
+            <Avatar sx={{ width: 40, height: 40 }} src={setProfileImg} />
+            {isLogin &&
+                <Typography sx={{fontSize: 13, fontWeight: 'bold', mx: 1 }}>
+                    {
+                        (currentUser.firstName && currentUser.lastName) ?
+                        `${currentUser.firstName} ${currentUser.lastName}` :
+                        currentUser.username
+                    } 
+                    &nbsp;<KeyboardArrowDownIcon sx={{height: 15, width: 15}} />
+                </Typography>
+            }
         </IconButton>
 
         <Menu
@@ -47,6 +58,7 @@ const ProfileDropdown = () => {
                 elevation: 0,
                 sx: {
                 overflow: 'visible',
+                py: 1,
                 filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
                 mt: 1.5,
                 '& .MuiAvatar-root': {

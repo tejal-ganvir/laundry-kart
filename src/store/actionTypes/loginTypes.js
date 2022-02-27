@@ -4,6 +4,7 @@ const LoginActionTypes = {
   LOGIN_FAILED: "LOGIN_FAILED",
   LOGOUT_START: "LOGOUT_START",
   LOGOUT_SUCCESS: "LOGOUT_SUCCESS",
+  USER_ME_REQUEST: "USER_ME_REQUEST",
 };
 
 export default LoginActionTypes;

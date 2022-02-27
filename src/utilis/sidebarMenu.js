@@ -7,36 +7,36 @@ import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import TwoWheelerIcon from "@mui/icons-material/TwoWheeler";
 
 const customerMenu = [
-    {
-        label: 'Dashboard',
-        link: '/account/dashboard',
-        icon: <DashboardIcon fontSize="small" />
-    },
-    {
-        label: 'Profile',
-        link: '/account/profile',
-        icon: <AccountCircleIcon fontSize="small" />
-    },
-    {
-        label: 'Nearest Lanudry',
-        link: '/account/nearest-laundry',
-        icon: <CheckroomIcon fontSize="small" />
-    },
-    {
-        label: 'Orders',
-        link: '/account/orders',
-        icon: <ReorderIcon fontSize="small" />
-    },
-    {
-        label: 'History',
-        link: '/account/history',
-        icon: <HistoryIcon fontSize="small" />
-    },
-    {
-        label: 'Logout',
-        link: '/account/logout',
-        icon: <ExitToAppIcon fontSize="small" />
-    }
+  {
+    label: "Dashboard",
+    link: "/account/dashboard",
+    icon: <DashboardIcon fontSize='small' />,
+  },
+  {
+    label: "Profile",
+    link: "/account/profile",
+    icon: <AccountCircleIcon fontSize='small' />,
+  },
+  {
+    label: "Nearest Lanudry",
+    link: "/account/nearest-laundry",
+    icon: <CheckroomIcon fontSize='small' />,
+  },
+  {
+    label: "Orders",
+    link: "/account/orders",
+    icon: <ReorderIcon fontSize='small' />,
+  },
+  {
+    label: "History",
+    link: "/account/history",
+    icon: <HistoryIcon fontSize='small' />,
+  },
+  {
+    label: "Logout",
+    link: "/account/logout",
+    icon: <ExitToAppIcon fontSize='small' />,
+  },
 ];
 
 const vendorMenu = [
@@ -48,6 +48,11 @@ const vendorMenu = [
   {
     label: "Profile",
     link: "/vendor/profile",
+    icon: <AccountCircleIcon fontSize='small' />,
+  },
+  {
+    label: "Laundry Info",
+    link: "/vendor/laundryInfo",
     icon: <AccountCircleIcon fontSize='small' />,
   },
   {

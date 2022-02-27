@@ -7,17 +7,27 @@ import MapboxModal from '../components/Mapbox/MapboxModal';
 import { connect, useDispatch } from 'react-redux';
 import { postJSON } from '../services/axiosConfig/api';
 import { setLocationData } from '../store/actions/locationActions';
+import { useNavigate } from 'react-router-dom';
+import { isObjEmpty } from '../utilis/functions';
 
 const LocationSetter = (props) => {
 
     const [dialogOpen, setDialogOpen] = useState(false);
     const [locatonText, setLocatonText] = useState('Laundries Near Me');
+    const [isFirstLocation, setFirstLocation] = useState(false);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const userId = props && props.currentUser && props.currentUser.objectId ? props.currentUser.objectId : '';
 
     useEffect(() => {
-        const response = postJSON(`functions/getCustomerLocation?userId=${'6jq76obiZM'}`, {userId : '6jq76obiZM'});
+        const response = postJSON(`functions/getCustomerLocation?userId=${userId}`, {userId : userId});
         response.then(data => {
-            dispatch(setLocationData(data.result[0]));
+            if(isObjEmpty(data))
+                setFirstLocation(true)
+            else
+                setFirstLocation(false)
+
+            dispatch(setLocationData(data.result));
         })
     },[])
 
@@ -34,7 +44,7 @@ const LocationSetter = (props) => {
                         {props.data && props.data.name ? props.data.name : 'Laundries Near Me'}
                     </Button>
                 </div>
-                <div>
+                {/* <div>
                     <Button sx={{
                         color: '#ffffff', 
                         fontWeight:'bold', 
@@ -43,10 +53,14 @@ const LocationSetter = (props) => {
                         '&:hover': {
                             borderColor: '#ffffff'
                          },
-                    }} variant='outlined' endIcon={<SearchIcon />}>
+                    }} 
+                    variant='outlined' 
+                    endIcon={<SearchIcon />}
+                    onClick={() => navigate('/laundry')}
+                    >
                         Search
                     </Button>
-                </div>
+                </div> */}
             </div>
          </div>
          <MapboxModal
@@ -54,6 +68,7 @@ const LocationSetter = (props) => {
             open={dialogOpen}
             hide={() => setDialogOpen(false)}
             setText={setLocatonText}
+            firstTimeLocation={isFirstLocation}
          />
      </Box>
   );
@@ -61,7 +76,8 @@ const LocationSetter = (props) => {
 
 const mapStateToProps = state => {
     const {data} = state.Location;
-    return {data};
+    const {currentUser} = state.login;
+    return {data, currentUser};
 };
   
 export default connect(mapStateToProps, null)(LocationSetter);

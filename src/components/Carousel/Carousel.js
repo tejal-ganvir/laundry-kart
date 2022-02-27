@@ -36,7 +36,7 @@ const images = [
 const Carousel = (props) => {
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
-  const maxSteps = images.length;
+  const maxSteps = props.images && props.images.length;
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -71,7 +71,7 @@ const Carousel = (props) => {
         onChangeIndex={handleStepChange}
         enableMouseEvents
       >
-        {images.map((step, index) => (
+        {props.images && props.images.map((step, index) => (
           <div key={`laundry-carousel-${index}`}>
             {Math.abs(activeStep - index) <= 2 ? (
               <Box

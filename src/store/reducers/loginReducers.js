@@ -24,7 +24,9 @@ export const LoginReducer = (state = intialState, { type, payload }) => {
         sessionToken: payload.sessionToken,
       };
     case LoginActionTypes.LOGIN_FAILED:
-      return { ...state, isLoading: false, errorMessage: payload };
+        return { ...state, isLoading: false, errorMessage: payload };
+    case LoginActionTypes.USER_ME_REQUEST:
+      return { ...state, isLoading: false, sessionToken: payload };
     case LoginActionTypes.LOGOUT_START:
       return {
         ...state,

@@ -1,5 +1,5 @@
-import React from "react";
-import { Routes as Switch, Route } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Routes as Switch, Route, Navigate } from "react-router-dom";
 import Layout from "../layouts";
 import Dashboard from "../pages/Customer/Dashboard";
 import NearestLaundry from "../pages/Customer/NearestLaundry/NearestLaundry";
@@ -21,39 +21,131 @@ import HistoryDetails from "../pages/Vendor/history";
 import OrderDetails from "../pages/Vendor/orders";
 import RiderDetails from "../pages/Vendor/riders";
 import VendorServices from "../pages/Vendor/services";
-import LaundryDetails from '../pages/LaundryDetails';
+import LaundryDetails from "../pages/LaundryDetails";
+import AddRaider from "../pages/Vendor/riders/AddRider";
+import AddService from "../pages/Vendor/services/Addservice";
+import EditService from "../pages/Vendor/services/EditService";
+import AssignOrders from "../pages/Vendor/orders/AssignOrder";
+import RiderDashboard from "../pages/Rider/dashboard";
+import RiderProfile from "../pages/Rider/profile";
+import LaundryInfo from "../pages/Vendor/profileScreen/laundryinfo";
 
-const Routes = () => {
+import { createStructuredSelector } from "reselect";
+import { selectCurrentUser } from "../store/selector/login.selectors";
+import { connect, useDispatch } from "react-redux";
+import { userMeRequestAction } from "../store/actions/loginActions";
+import EditLaundryInfo from "../pages/Vendor/profileScreen/editLaundryInfo";
+
+const VendorRoutes = ({ role }) => {
   return (
-    <Layout>
+    <Layout role={role}>
       <Switch>
-        <Route path="/" exact element={<Landing />} />
-        <Route path="/laundry" exact element={<SearchLaundry />} />
-        <Route path="/login" exact element={<Login />} />
-        <Route path="/register" exact element={<Register />} />
-        <Route path="/forgot-password" exact element={<ForgotPassword />} />
-        <Route path="/account/logout" exact element={<Logout />} />
-        <Route path="/account/dashboard" element={<Dashboard />} />
-        <Route path="/account/nearest-laundry" element={<NearestLaundry />} />
-        <Route path="/account/orders" element={<Orders />} />
-        <Route path="/account/history" element={<OrdersHistory />} />
-        <Route path="/account/profile" element={<Profile />} />
-        <Route path="/laundry/details" element={<LaundryDetails />} />
+        <Route path='/' exact element={<Landing />} />
+        <Route path='/laundry' exact element={<SearchLaundry />} />
+        <Route path='/login' exact element={<Login />} />
+        <Route path='/register' exact element={<Register />} />
+        <Route path='/forgot-password' exact element={<ForgotPassword />} />
+        <Route path='/laundry/details' element={<LaundryDetails />} />
+        <Route path='/account/logout' exact element={<Logout />} />
 
         <Route path='/vendor/dashboard' element={<VendorDashboard />} />
+        <Route path='/vendor/profile' element={<Profile />} />
         <Route path='/vendor/services' element={<VendorServices />} />
+        <Route path='/vendor/laundryinfo' element={<LaundryInfo />} />
+        <Route path='/vendor/editlaundryinfo' element={<EditLaundryInfo />} />
+        <Route path='/vendor/create/services' element={<AddService />} />
+        <Route path='/vendor/services/:serviceId' element={<EditService />} />
         <Route path='/vendor/riders' element={<RiderDetails />} />
+        <Route path='/vendor/create/riders' element={<AddRaider />} />
         <Route path='/vendor/orders' element={<OrderDetails />} />
+        <Route path='/vendor/orders/:orderId' element={<AssignOrders />} />
         <Route path='/vendor/history' element={<HistoryDetails />} />
-        <Route path='/rider/history' element={<RiderHistoryDetails />} />
-        <Route path='/rider/orders' element={<RiderOrderDetails />} />
-        <Route path='/rider/pickup' element={<PickupDetails />} />
-
-        {/* <Route path="/product/:id" element={<ProductDetails />} />
-                  <Route path="/product/cart" exact element={<Cart />} /> */}
       </Switch>
     </Layout>
   );
 };
 
-export default Routes;
+const RiderRoutes = ({ role }) => {
+  return (
+    <Layout role={role}>
+      <Switch>
+        <Route path='/' exact element={<Landing />} />
+        <Route path='/laundry' exact element={<SearchLaundry />} />
+        <Route path='/login' exact element={<Login />} />
+        <Route path='/register' exact element={<Register />} />
+        <Route path='/forgot-password' exact element={<ForgotPassword />} />
+        <Route path='/laundry/details' element={<LaundryDetails />} />
+        <Route path='/account/logout' exact element={<Logout />} />
+
+        <Route path='/rider/profile' element={<Profile />} />
+        <Route path='/rider/dashboard' element={<RiderDashboard />} />
+        {/* <Route path='/rider/rider-profile' element={<RiderProfile />} /> */}
+        <Route path='/rider/history' element={<RiderHistoryDetails />} />
+        <Route path='/rider/orders' element={<RiderOrderDetails />} />
+        <Route path='/rider/orders/:orderId' element={<PickupDetails />} />
+        <Route path='/rider/pickup' element={<PickupDetails />} />
+      </Switch>
+    </Layout>
+  );
+};
+
+const CustomerRoutes = ({ role }) => {
+  return (
+    <Layout role={role}>
+      <Switch>
+        <Route path='/' exact element={<Landing />} />
+        <Route path='/laundry' exact element={<SearchLaundry />} />
+        <Route path='/login' exact element={<Login />} />
+        <Route path='/register' exact element={<Register />} />
+        <Route path='/forgot-password' exact element={<ForgotPassword />} />
+        <Route path='/laundry/details' element={<LaundryDetails />} />
+        <Route path='/account/logout' exact element={<Logout />} />
+
+        <Route path='/account/orders' element={<Orders />} />
+        <Route path='/account/profile' element={<Profile />} />
+      </Switch>
+    </Layout>
+  );
+};
+
+const PublicRoutes = () => {
+  return (
+    <Layout>
+      <Switch>
+        <Route path='/' exact element={<Landing />} />
+        <Route path='/laundry' exact element={<SearchLaundry />} />
+        <Route path='/login' exact element={<Login />} />
+        <Route path='/register' exact element={<Register />} />
+        <Route path='/forgot-password' exact element={<ForgotPassword />} />
+        <Route path='/laundry/details' element={<LaundryDetails />} />
+        <Route path='/account/logout' exact element={<Logout />} />
+      </Switch>
+    </Layout>
+  );
+};
+
+const Routes = ({ loginstatus }) => {
+  const { isLogin, role, sessionToken } = loginstatus;
+  const dispatch = useDispatch();
+
+  if (isLogin) {
+    if (role === "user")
+      return <CustomerRoutes isLogin={isLogin} role={role} />;
+    else if (role === "laundry")
+      return <VendorRoutes isLogin={isLogin} role={role} />;
+    else return <RiderRoutes isLogin={isLogin} role={role} />;
+  } else {
+    if (!sessionToken) {
+      return <PublicRoutes />;
+    } else {
+      dispatch(userMeRequestAction(sessionToken));
+      //return <LoaderBackdrop />;
+    }
+  }
+};
+
+const userdetails = createStructuredSelector({
+  loginstatus: selectCurrentUser,
+});
+
+export default connect(userdetails)(Routes);

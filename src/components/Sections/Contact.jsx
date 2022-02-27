@@ -8,14 +8,14 @@ import ContactImg3 from "../../assets/img/contact-3.jpg";
 export default function Contact() {
   return (
     <Wrapper id="contact">
-      <div className="lightBg">
+      <div className="whiteBg">
         <div className="container">
           <HeaderInfo>
             <h1 className="font40 extraBold">Let's get in touch</h1>
             <p className="font13">
-              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
-              <br />
-              labore et dolore magna aliquyam erat, sed diam voluptua.
+              At LaundryKart, we work to provide one simple, consistent, 
+              <br/>
+              high-quality solution to take care of everything in your closet.
             </p>
           </HeaderInfo>
           <div className="row" style={{ paddingBottom: "30px" }}>

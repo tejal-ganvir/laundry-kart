@@ -8,10 +8,14 @@ import Backdrop from "../components/Elements/Backdrop";
 import BurgerIcon from "../assets/svg/BurgerIcon";
 import LogoIcon from "../components/LogoIcon";
 import { Link, NavLink } from "react-router-dom";
-import { Button } from "@mui/material";
+import { Button, IconButton } from "@mui/material";
 import ProfileDropdown from "./ProfileDropdown";
+import { createStructuredSelector } from "reselect";
+import { selectCurrentUser } from "../store/selector/login.selectors";
+import { connect } from "react-redux";
+import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 
-export default function TopNavbar() {
+const TopNavbar = ({loginstatus}) => {
   const [y, setY] = useState(window.scrollY);
   const [sidebarOpen, toggleSidebar] = useState(false);
 
@@ -76,22 +80,35 @@ export default function TopNavbar() {
             </li> */}
           </UlWrapper>
           <UlWrapperRight className="flexNullCenter">
-            {/* <li className="semiBold font15 pointer">
-              <Link to="/login" style={{ padding: "10px 30px 10px 0" }}>
-                Log in
-              </Link>
+            {/* <li className="semiBold font15 pointer flexCenter">
+              { loginstatus.isLogin ?
+                (loginstatus.role === 'user') &&
+                <IconButton color="primary" aria-label="Wallet">
+                  <AccountBalanceWalletIcon fontSize="large" />
+                </IconButton>
+                :
+                <Button 
+                  sx={{borderRadius: 4, px: 3}}
+                  variant="outlined" 
+                  component={Link} 
+                  to="/login" >
+                  Schedule a Pickup
+                </Button>
+              }
             </li> */}
-            <li className="semiBold font15 pointer flexCenter">
-              <Button 
-                sx={{borderRadius: 4, px: 3}}
-                variant="outlined" 
-                component={Link} 
-                to="/login" >
-                Schedule a Pickup
-              </Button>
-            </li>
+            { !loginstatus.isLogin &&
+              <li className="semiBold font15 pointer flexCenter">
+                <Button 
+                  sx={{borderRadius: 4, px: 3}}
+                  variant="outlined" 
+                  component={Link} 
+                  to="/login" >
+                  Schedule a Pickup
+                </Button>
+              </li>
+            }
             <li className="semiBold font15 pointer">
-              <ProfileDropdown />
+              <ProfileDropdown user={loginstatus} />
             </li>
           </UlWrapperRight>
         </NavInner>
@@ -99,6 +116,12 @@ export default function TopNavbar() {
     </>
   );
 }
+
+const userdetails = createStructuredSelector({
+  loginstatus: selectCurrentUser,
+});
+
+export default connect(userdetails)(TopNavbar);
 
 const Wrapper = styled.nav`
   width: 100%;

@@ -22,7 +22,7 @@ const Services = () => {
           <ClientSlider />
         </div>
       </div> */}
-      <div className="whiteBg" style={{ padding: "60px 0" }}>
+      <div className="whiteBg" style={{ paddingTop: "60px" }}>
         <div className="container">
           <HeaderInfo>
             <h1 className="font40 extraBold">How it Works?</h1>
@@ -133,7 +133,7 @@ const HeaderInfo = styled.div`
   }
 `;
 const Advertising = styled.div`
-  margin: 80px 0;
+  //margin: 80px 0;
   padding: 100px 0;
   position: relative;
   @media (max-width: 1160px) {

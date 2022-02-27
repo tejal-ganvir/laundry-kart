@@ -1,38 +1,97 @@
 import React, { useRef, useState }  from 'react';
 import Box from '@mui/material/Box';
-import { TextField } from '@mui/material';
-import Button from '@mui/material/Button';
+import { Button, TextField } from '@mui/material';
 import AvatarEditor from 'react-avatar-editor';
-import userImg from '../../assets/img/user-1.jpg'
+import userImg from '../../assets/img/user-1.png'
 import { postJSON } from '../../services/axiosConfig/api';
+import { useDispatch } from 'react-redux';
+import LoadingButton from '@mui/lab/LoadingButton';
+import { LoginSuccess } from '../../store/actions/loginActions';
+import { ucFirst } from '../../utilis/functions';
+import { APPLICATION_ID, REST_API_KEY } from '../../constants/constant';
+import axios from 'axios';
 
-const EditProfile = () => {
+const EditProfile = ({profFirstName, profLastName, profileImg, userObjectId, hide}) => {
 
-    const [imgUrl , setImgUrl] = useState(userImg);
+    const [imgUrl , setImgUrl] = useState(profileImg || userImg);
+    const [firstName , setFirstName] = useState(profFirstName);
+    const [lastName , setLastName] = useState(profLastName);
+    const [imageData , setImageData] = useState();
+    const [loading, setLoading] = useState(false);
     const profileRef = useRef();
+    const dispatch = useDispatch();
+    let newProfileImg;
 
     const onSelectFile = (e) => {
+        
         if (e.target.files && e.target.files.length > 0) {
+            const file = e.target.files[0];
+            const name = file.name;
+            setImageData(e.target.files[0])
+            
             /*Maximum allowed size in bytes
             20MB Example
             Change first operand(multiplier) for your needs*/
-            const maxAllowedSize = 20 * 1024 * 1024;
-            if (e.target.files[0].size > maxAllowedSize) {
-                // Here you can ask your users to load correct file
-                console.log('File Size too Large');
-            } else {
-                const reader = new FileReader();
-                reader.addEventListener('load', () => {
-                    setImgUrl(reader.result);
-                });
-                reader.readAsDataURL(e.target.files[0]);
-            }
+            //const maxAllowedSize = 20 * 1024 * 1024;
+            // if (e.target.files[0].size > maxAllowedSize) {
+            //     // Here you can ask your users to load correct file
+            //     console.log('File Size too Large');
+            // } else {
+                
+            // }
+            const reader = new FileReader();
+            reader.addEventListener('load', () => {
+                setImgUrl(reader.result);
+            });
+            reader.readAsDataURL(e.target.files[0]);
+            
         }
     };
 
-    const handleSubmit = () => {
-        const res = postJSON('functions/saveProfileDetails', {name: 'tejal'})
-        console.log(res);
+    const handleSubmit = async () => {
+        setLoading(true);
+        
+        if(imageData){
+            await axios({
+                method: 'post',
+                url: 'https://parseapi.back4app.com/files/a.jpeg',
+                data: imageData,
+                headers: {
+                  'X-Parse-Application-Id': APPLICATION_ID,
+                  'X-Parse-REST-API-Key': REST_API_KEY,
+                  'Content-Type': 'image/jpeg', 
+                }
+            })
+            .then((response)=>{
+                newProfileImg = {
+                    "name": response.data.name,
+                    "url": response.data.url,
+                    "__type": "File"
+                };
+                const saveImg = postJSON('functions/updateProfileDetails', 
+                {   
+                    objectId: userObjectId,
+                    profileImg: newProfileImg,
+                });
+                saveImg.then(data => {
+                    //console.log(data);
+                    dispatch(LoginSuccess(data.result));
+                });
+                //console.log(newProfileImg);
+            })
+        }
+        const saveUser = postJSON('functions/updateProfileDetails', 
+        {   
+            objectId: userObjectId, 
+            firstName: ucFirst(firstName), 
+            lastName: ucFirst(lastName),
+        });
+        saveUser.then(data => {
+            dispatch(LoginSuccess(data.result));
+            hide();
+            setLoading(false);
+        });
+        
     }
 
   return (
@@ -44,7 +103,8 @@ const EditProfile = () => {
                     label="First Name"
                     type="text"
                     size="small"
-                    value="Angelina"
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
                     fullWidth
                 />
             </div>
@@ -54,7 +114,8 @@ const EditProfile = () => {
                     label="Last Name"
                     type="text"
                     size="small"
-                    value="Jolie"
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
                     fullWidth
                 />
             </div>
@@ -84,12 +145,13 @@ const EditProfile = () => {
                 </Box>
             </div>
             <div className='form-control-area text-center'>
-                <Button 
+                <LoadingButton 
+                    loading={loading}
                     align="center" 
                     variant='contained'
                     sx={{borderRadius: 4, px: 3}}
                     onClick={() => handleSubmit()}
-                >Save</Button>
+                >Save</LoadingButton>
             </div>
         </Box>
     </React.Fragment>

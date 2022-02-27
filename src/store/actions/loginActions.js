@@ -18,3 +18,9 @@ export const LoginFailed = (errorMessage) => ({
 export const LogoutStart = () => ({
   type: LoginActionTypes.LOGOUT_START,
 });
+
+export const userMeRequestAction = (token) => ({
+  type: LoginActionTypes.USER_ME_REQUEST,
+  payload: token,
+});
+

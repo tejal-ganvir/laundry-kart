@@ -10,9 +10,15 @@ import { customerMenu, riderMenu, vendorMenu } from "../utilis/sidebarMenu";
 import { Link } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import userImg from "../assets/img/user-1.jpg";
+import { createStructuredSelector } from "reselect";
+import { selectCurrentUser } from "../store/selector/login.selectors";
+import { connect } from "react-redux";
 
-const Sidebar = (props) => {
+const Sidebar = ({loginstatus}) => {
   const [menuSelected, setMenuSelected] = useState("Dashboard");
+  const {currentUser} = loginstatus;
+  const setProfileImg = currentUser && currentUser.profileImg && currentUser.profileImg.url ? currentUser.profileImg.url : '';
+  const role = loginstatus.role;
   return (
     <Paper
       className={styles.sidebar_container}
@@ -24,34 +30,63 @@ const Sidebar = (props) => {
             onClick={() => setMenuSelected("Dashboard")}>
             <ListItemIcon>
               <Avatar
-                alt='Angelina Jolie'
-                src={userImg}
+                alt={(currentUser.firstName && currentUser.lastName) ?
+                  `${currentUser.firstName} ${currentUser.lastName}` :
+                  currentUser.username}
+                src={setProfileImg}
                 sx={{ height: 100, width: 100 }}
               />
             </ListItemIcon>
             <ListItemText>
-              <h3>Angelina Jolie</h3>
+              <h3>
+                {
+                  (currentUser.firstName && currentUser.lastName) ?
+                  `${currentUser.firstName} ${currentUser.lastName}` :
+                  currentUser.username
+                }
+              </h3>
             </ListItemText>
           </MenuItem>
         </Link>
         <Divider />
-        {vendorMenu.map((item, idx) => (
-          <Link
-            key={`menu-item${idx}`}
-            to={item.link}
-            className={`${styles.sidebar_menu_item} ${styles.active}`}>
-            <MenuItem
-              sx={{ p: 2 }}
-              selected={menuSelected === item.label}
-              onClick={() => setMenuSelected(item.label)}>
-              <ListItemIcon>{item.icon}</ListItemIcon>
-              <ListItemText>{item.label}</ListItemText>
-            </MenuItem>
-          </Link>
-        ))}
+
+        {role == "rider" &&
+          riderMenu.map((item, idx) => (
+            <Link
+              key={`menu-item${idx}`}
+              to={item.link}
+              className={`${styles.sidebar_menu_item} ${styles.active}`}>
+              <MenuItem
+                sx={{ p: 2 }}
+                selected={menuSelected === item.label}
+                onClick={() => setMenuSelected(item.label)}>
+                <ListItemIcon>{item.icon}</ListItemIcon>
+                <ListItemText>{item.label}</ListItemText>
+              </MenuItem>
+            </Link>
+          ))}
+        {role == "laundry" &&
+          vendorMenu.map((item, idx) => (
+            <Link
+              key={`menu-item${idx}`}
+              to={item.link}
+              className={`${styles.sidebar_menu_item} ${styles.active}`}>
+              <MenuItem
+                sx={{ p: 2 }}
+                selected={menuSelected === item.label}
+                onClick={() => setMenuSelected(item.label)}>
+                <ListItemIcon>{item.icon}</ListItemIcon>
+                <ListItemText>{item.label}</ListItemText>
+              </MenuItem>
+            </Link>
+          ))}
       </MenuList>
     </Paper>
   );
 };
 
-export default Sidebar;
+const userdetails = createStructuredSelector({
+  loginstatus: selectCurrentUser,
+});
+
+export default connect(userdetails)(Sidebar);

@@ -1,18 +1,32 @@
-import ServiceTable from "../../../components/Vendor/ServiceTable";
 import Container from "@mui/material/Container";
-import Breadcrumbs from "@mui/material/Breadcrumbs";
 import * as React from "react";
-import Link from "@mui/material/Link";
 import AppBreadcrumb from "../../../components/Vendor/Breadcrumbs";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
-import RiderModal from "./AddRider";
 import RiderTable from "../../../components/Vendor/RiderTable";
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { connect, useDispatch, useSelector } from "react-redux";
+import { RiderStart } from "../../../store/actions/vendorRidersActions";
+import { postJSON } from "../../../services/axiosConfig/api";
+import { createStructuredSelector } from "reselect";
+import { selectCurrentUser } from "../../../store/selector/login.selectors";
 
-const RiderDetails = () => {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+const RiderDetails = (vendordetails) => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const laundryId = vendordetails.vendordetails.currentUser.objectId;
+
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    const response = postJSON("functions/getAllRidersDetails", {
+      laundryId: laundryId,
+    });
+    response.then((data) => setData(data.result));
+  }, []);
+
+  const riderlist = data;
   return (
     <>
       <Container maxWidth='xl'>
@@ -26,15 +40,16 @@ const RiderDetails = () => {
             variant='outlined'
             color='primary'
             margin='normal'
-            onClick={handleOpen}>
+            onClick={() => navigate("/vendor/create/riders")}>
             Add Rider
           </Button>
         </Stack>
-        <RiderTable />
-        <RiderModal open={open} close={handleClose} />
+        <RiderTable data={riderlist} />
       </Container>
     </>
   );
 };
-
-export default RiderDetails;
+const laundrydetails = createStructuredSelector({
+  vendordetails: selectCurrentUser,
+});
+export default connect(laundrydetails)(RiderDetails);

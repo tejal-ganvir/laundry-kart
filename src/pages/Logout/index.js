@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { setLocationData } from "../../store/actions/locationActions";
 import { LogoutStart } from "../../store/actions/loginActions";
 
 const Logout = () => {
@@ -9,6 +10,7 @@ const Logout = () => {
 
   useEffect(() => {
     dispatch(LogoutStart());
+    dispatch(setLocationData(null));
     navigate("/login");
   }, []);
 

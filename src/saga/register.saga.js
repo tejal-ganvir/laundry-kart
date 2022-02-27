@@ -1,5 +1,7 @@
+import { toast } from "react-toastify";
 import { all, call, put, takeLatest } from "redux-saga/effects";
 import { setUserRegistration } from "../services/Register/registerservice";
+import { userMeRequestAction } from "../store/actions/loginActions";
 import {
   RegisterFailed,
   RegisterSuccess,
@@ -9,9 +11,11 @@ import RegisterActionTypes from "../store/actionTypes/registerTypes";
 export function* RegisterAsync(action) {
   try {
     const user = yield setUserRegistration(action.payload);
+    yield put(userMeRequestAction(user.sessionToken));
     yield put(RegisterSuccess());
   } catch (error) {
-    yield put(RegisterFailed(error.message));
+    toast(error.data.error);
+    yield put(RegisterFailed(error.data.error));
   }
 }
 

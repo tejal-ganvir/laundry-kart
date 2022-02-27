@@ -55,79 +55,31 @@ function createData(
   };
 }
 
-const rows = [
-  createData(
-    1,
-    "ord_001",
-    "customer 1",
-    "+00 0000000000",
-    "India",
-    "250",
-    "27-01-2022",
-    "Completed",
-    "Pending",
-  ),
-  createData(
-    2,
-    "ord_002",
-    "customer 2",
-    "+00 0000000000",
-    "India",
-    "250",
-    "27-01-2022",
-    "Completed",
-    "Paid",
-  ),
-  createData(
-    3,
-    "ord_003",
-    "customer 3",
-    "+00 0000000000",
-    "India",
-    "250",
-    "27-01-2022",
-    "Completed",
-    "Paid",
-  ),
-  createData(
-    4,
-    "ord_004",
-    "customer 4",
-    "+00 0000000000",
-    "India",
-    "250",
-    "27-01-2022",
-    "Completed",
-    "Pending",
-  ),
-];
-
-const HistoryTable = () => {
+const HistoryTable = (props) => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
+  const rows = props.data;
 
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-
+  console.log(props.data);
   return (
     <Paper sx={{ width: "100%", overflow: "hidden", mt: 5 }}>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 700 }} aria-label='customized table'>
           <TableHead>
             <TableRow>
-              <StyledTableCell>S.No</StyledTableCell>
               <StyledTableCell>Order Id</StyledTableCell>
-              <StyledTableCell align='right'>Customer Name</StyledTableCell>
-              <StyledTableCell align='right'>Phone</StyledTableCell>
-              <StyledTableCell align='right'>Address</StyledTableCell>
-              <StyledTableCell align='right'>Price</StyledTableCell>
-              <StyledTableCell align='right'>Date</StyledTableCell>
+              <StyledTableCell align='center'>Address</StyledTableCell>
+              <StyledTableCell align='center'>landmark</StyledTableCell>
+              <StyledTableCell align='center'>Price</StyledTableCell>
+              <StyledTableCell align='center'>Date</StyledTableCell>
               <StyledTableCell align='center'>Order Status</StyledTableCell>
             </TableRow>
           </TableHead>
@@ -135,22 +87,24 @@ const HistoryTable = () => {
             {rows
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => (
-                <StyledTableRow key={row.sno}>
+                <StyledTableRow key={row.objectId}>
                   <StyledTableCell component='th' scope='row'>
-                    {row.sno}
+                    {row.objectId}
                   </StyledTableCell>
-                  <StyledTableCell component='th' scope='row'>
-                    {row.order_id}
+                  <StyledTableCell align='center' component='th' scope='row'>
+                    {row.address}
                   </StyledTableCell>
-                  <StyledTableCell align='right' component='th' scope='row'>
-                    {row.cust_name}
+                  <StyledTableCell align='center'>
+                    {row.landmark}
                   </StyledTableCell>
-                  <StyledTableCell align='right'>{row.phone}</StyledTableCell>
-                  <StyledTableCell align='right'>{row.address}</StyledTableCell>
-                  <StyledTableCell align='right'>{row.price}</StyledTableCell>
-                  <StyledTableCell align='right'>{row.date}</StyledTableCell>
-                  <StyledTableCell align='right'>
-                    <Chip label={row.status} color='success' />
+                  <StyledTableCell align='center'>
+                    {row.grandTotal}
+                  </StyledTableCell>
+                  <StyledTableCell align='center'>
+                    {row.createdAt}
+                  </StyledTableCell>
+                  <StyledTableCell align='center'>
+                    <Chip label='Completed' color='success' />
                   </StyledTableCell>
                 </StyledTableRow>
               ))}
