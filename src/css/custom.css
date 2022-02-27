@@ -68,3 +68,7 @@ input:-webkit-autofill {
     box-shadow: transparent;
     -webkit-text-fill-color: #000;
 }
+
+.cust_assign_table tr td:first-child{
+    width: 50%;
+}

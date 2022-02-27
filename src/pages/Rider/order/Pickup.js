@@ -11,6 +11,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import TextField from "@mui/material/TextField";
 import { postJSON } from "../../../services/axiosConfig/api";
+import { toast } from "react-toastify";
 
 const PickupDetails = () => {
   const [data, setData] = useState([]);
@@ -39,7 +40,7 @@ const PickupDetails = () => {
     });
     otp
       .then((res) => navigate("/rider/orders"))
-      .catch((err) => console.log(err));
+      .catch((err) => toast('OTP entered is invalid'));
   };
 
   const deliveryotpHandler = () => {
@@ -50,7 +51,7 @@ const PickupDetails = () => {
     });
     otp
       .then((res) => navigate("/rider/orders"))
-      .catch((err) => console.log(err));
+      .catch((err) =>  toast('OTP entered is invalid'));
   };
 
   return (
@@ -94,12 +95,12 @@ const PickupDetails = () => {
           alignItems='flex-start'
           spacing={2}>
           {data.orderStatus == 1 && (
-            <Button variant='contained' onClick={pickupotpHandler}>
+            <Button variant='contained' sx={{mt: 2}} onClick={pickupotpHandler}>
               Verify
             </Button>
           )}
           {data.orderStatus == 4 && (
-            <Button variant='contained' onClick={deliveryotpHandler}>
+            <Button variant='contained' sx={{mt: 2}} onClick={deliveryotpHandler}>
               Verify
             </Button>
           )}

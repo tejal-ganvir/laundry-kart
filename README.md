@@ -10,13 +10,13 @@
 ## Introduction      
 LaundryKart is committed to offering our customers the highest quality dry cleaning and laundry services at fair prices. Our goal is to deliver a convenient and easy to use solution while providing excellent customer service.
 
--Live demo [_here_](https://workshala.netlify.app/).
+-Live demo [_here_](https://laundrykart02.netlify.app/).
 
 Frontend is hosted on Netlify.
 Backend is deployed to Parse API.
 
 # High level overview of Application
-User can login on bais of role (user/vendor.rider), and create an account, login session would be persistent. 
+User can login on bais of role (user/vendor/rider), and create an account, login session would be persistent. 
 
 ### User can peform following operations: ###
 
@@ -45,7 +45,7 @@ User can login on bais of role (user/vendor.rider), and create an account, login
  ![Mongo](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)
  
  ## Other Libraries Used
-![Material UI](https://img.shields.io/badge/Material--UI-0081CB?style=for-the-badge&logo=material-ui&logoColor=white)\
+![Material UI](https://img.shields.io/badge/Material--UI-0081CB?style=for-the-badge&logo=material-ui&logoColor=white)
 
 
 ## Setup
@@ -90,6 +90,11 @@ You should be able to see the landing page.
 - Password: rider@321
 
 
+## Testing Card Details
+- Mastercard : 5267 3181 8797 5449
+- CVV : Random CVV
+- Expiry Date: Any future date
+
 ## Resources
 <a href="https://drive.google.com/file/d/1zIAiwGaX6VMfqh2dJhESIQD-2tZwyyH8/view?usp=sharing">High Level Design</a>\
  <a href="https://drive.google.com/file/d/12LusAhwaLn8II0gMFUmM4YwU1KuOXxuV/view?usp=sharing"> PRD </a>\
@@ -98,9 +103,9 @@ You should be able to see the landing page.
 ## Contributors ✨
 
  
-<a href="https://www.linkedin.com/in/tejal-ganvir-ba4340163/"><img src="" width="100px;" alt=""/>Tejal Ganvir</a>
+<a href="https://www.linkedin.com/in/tejal-ganvir-ba4340163/">Tejal Ganvir</a>
 
-<a href="https://www.linkedin.com/in/gopi-m-3112ba115/"><img src="" width="100px;" alt=""/>Gopi Kannan</a>
+<a href="https://www.linkedin.com/in/gopi-m-3112ba115/">Gopi Kannan</a>
 
 
 
