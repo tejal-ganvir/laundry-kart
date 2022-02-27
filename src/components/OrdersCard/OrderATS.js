@@ -86,7 +86,7 @@ export default function OrderATS(props) {
   const {isCompleted, statusCode} = props;
   return (
     <Stack sx={{ width: '100%', mt: isCompleted ? 2 : 4 }} spacing={1}>
-      <Stepper alternativeLabel activeStep={isCompleted ? 4 : (statusCode - 1)} connector={<QontoConnector />}>
+      <Stepper alternativeLabel activeStep={isCompleted ? 4 : (statusCode < 2) ? statusCode : (statusCode - 1)} connector={<QontoConnector />}>
         {steps.map((label) => (
           <Step key={label}>
             <StepLabel StepIconComponent={QontoStepIcon}>{label}</StepLabel>

@@ -54,7 +54,7 @@ const OrdersCard = (props) => {
                                     <td>Adderess</td>
                                     <td>{props.address}</td>
                                 </tr>
-                                { (props.orderStatus < 3) ?
+                                { (props.orderStatus < 3 || props.orderStatus === 6) ?
                                     <tr>
                                         <td>Pickup Date</td>
                                         <td>{props.pickupDate}</td>
@@ -65,7 +65,7 @@ const OrdersCard = (props) => {
                                         <td>{props.deliveryDate}</td>
                                     </tr>
                                 }
-                                { (props.orderStatus < 3) ?
+                                { (props.orderStatus < 3 || props.orderStatus === 6) ?
                                     <tr>
                                         <td>Pickup Code</td>
                                         <td style={{fontWeight:'bold', color:'#ec0883'}}>{props.pickupCode}</td>
@@ -80,8 +80,20 @@ const OrdersCard = (props) => {
                         </table>
                     </Grid>
                     <Grid item xs={12} sm={6} sx={{textAlign:'center'}}>
-                        <Typography variant='p' sx={{fontWeight:'bold', color: '#8055f5'}}>Status</Typography>
-                        <OrderATS isCompleted={isCompleted} statusCode={props.orderStatus} />
+                        <Typography variant='p' sx={{fontWeight:'bold', color: '#8055f5', display:'block'}}>Status</Typography>
+                        {   (props.orderStatus === 6) ?
+                            <Button
+                                align='center'
+                                variant='contained'
+                                color='error'
+                                size='small'
+                                sx={{ borderRadius: 4, px: 3, mt: 5 }}
+                            >
+                                Order Rejected
+                            </Button>
+                            :
+                            <OrderATS isCompleted={isCompleted} statusCode={props.orderStatus} /> 
+                        }
                         { isCompleted &&
                             <Stack direction="row" spacing={2} justifyContent="center" alignItems="center" mt={1}>
                                 <Rating

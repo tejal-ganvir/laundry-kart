@@ -51,6 +51,11 @@ const vendorMenu = [
     icon: <AccountCircleIcon fontSize='small' />,
   },
   {
+    label: "Orders",
+    link: "/vendor/orders",
+    icon: <ReorderIcon fontSize='small' />,
+  },
+  {
     label: "Laundry Info",
     link: "/vendor/laundryInfo",
     icon: <AccountCircleIcon fontSize='small' />,
@@ -64,11 +69,6 @@ const vendorMenu = [
     label: "Riders",
     link: "/vendor/riders",
     icon: <TwoWheelerIcon fontSize='small' />,
-  },
-  {
-    label: "Orders",
-    link: "/vendor/orders",
-    icon: <ReorderIcon fontSize='small' />,
   },
   {
     label: "History",
