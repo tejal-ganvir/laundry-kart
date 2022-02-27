@@ -1,9 +1,10 @@
-import { GET_LAUNDRY_LIST, LAUNDRY_LIST_FAILED, LAUNDRY_LIST_SUCCESS } from "../actionTypes/laundryTypes";
+import { GET_LAUNDRY_LIST, LAUNDRY_INFO_SUCCESS, LAUNDRY_LIST_FAILED, LAUNDRY_LIST_SUCCESS } from "../actionTypes/laundryTypes";
 
 const INIT_STATE = {
     data: [],
     loading: false,
-    error: null
+    error: null,
+    vendorLaundry: [],
 };
 
 const LaundryReducers = (state = INIT_STATE, action) => {
@@ -14,6 +15,8 @@ const LaundryReducers = (state = INIT_STATE, action) => {
             return { ...state, data: action.payload, loading: false, error: null };
         case LAUNDRY_LIST_FAILED:
             return { ...state, error: action.payload, loading: false };
+        case LAUNDRY_INFO_SUCCESS:
+            return { ...state, vendorLaundry: action.payload };
         default:
             return { ...state };
     }

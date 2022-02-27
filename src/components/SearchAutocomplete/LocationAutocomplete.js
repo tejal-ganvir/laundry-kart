@@ -42,6 +42,7 @@ const LocationAutocomplete = (props) => {
       }}
       sx={{ mb: 1 }}
       options={options}
+      value={props.value ? props.value : ''}
       renderInput={(params) => (
         <TextField {...params} size='small' label='Enter Location' />
       )}

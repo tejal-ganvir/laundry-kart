@@ -17,7 +17,7 @@ import LoadingButton from '@mui/lab/LoadingButton';
 const EditProfileDetails = (props) => {
     const [address, setAddress] = useState({});
     const [loading, setLoading] = useState(false);
-    const {mobile, dob, addressObjectId, userObjectId, hide, role} = props;
+    const {mobile, dob, addressObjectId, userObjectId, hide, role, currAddress} = props;
     const dispatch = useDispatch();
     
       const formik = useFormik({
@@ -98,6 +98,7 @@ const EditProfileDetails = (props) => {
                 {   (role === 'user') &&
                     <div className='form-control-area'>
                         <LocationAutocomplete
+                            value={currAddress}
                             addressFunc={{address, setAddress}}
                         />
                     </div>

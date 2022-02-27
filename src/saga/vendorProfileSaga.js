@@ -12,8 +12,8 @@ import {
 export function* ProfileAsync(action) {
   try {
     const profile = yield getProfiledetails(action.payload);
-    console.log(profile);
     yield put(ProfileSuccess(profile));
+
   } catch (error) {
     yield put(ProfileError(error.message));
   }

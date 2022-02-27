@@ -2,19 +2,29 @@ import { Box, Button, Input, Stack, TextField } from "@mui/material";
 import MapboxModal from "../../../components/Mapbox/MapboxModal";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import LocationAutocomplete from "../../../components/SearchAutocomplete/LocationAutocomplete";
 import axios from "axios";
 import { postJSON } from "../../../services/axiosConfig/api";
 import { APPLICATION_ID, REST_API_KEY } from "../../../constants/constant";
 import { toast } from "react-toastify";
 import LoadingButton from "@mui/lab/LoadingButton";
-import { createStructuredSelector } from "reselect";
-import { selectCurrentUser } from "../../../store/selector/login.selectors";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
+import { setLaundryInfoSuccess } from "../../../store/actions/laundryActions";
 
-const LaundryInfo = (vendordetails) => {
+const LaundryInfo = ({currentUser, vendorLaundry}) => {
   const [open, setOpen] = useState(false);
+  const laundryId = currentUser.objectId;
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+
+    const response = postJSON('functions/getLaundryById', {laundryId: laundryId});
+    response.then((data) => {
+      dispatch(setLaundryInfoSuccess(data.result[0][0]));
+    })
+
+  },[laundryId])
 
   const [bannerImgUrl, setBannerImgUrl] = useState();
   const [bannerImg, setBannerImg] = useState();
@@ -31,7 +41,6 @@ const LaundryInfo = (vendordetails) => {
   const [img3, setImg3] = useState();
   const [img3Url, setImg3Url] = useState();
   const [img3Loading, setImg3Loading] = useState(false);
-  const laundryId = vendordetails.vendordetails.currentUser.objectId;
 
   const onSelectFile = async (e, type) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -86,6 +95,13 @@ const LaundryInfo = (vendordetails) => {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [address, setAddress] = useState();
 
+  const vendorBanner = vendorLaundry && vendorLaundry.bannerImg && vendorLaundry.bannerImg ? vendorLaundry.bannerImg.url : '';
+  const vendorImg1 = vendorLaundry && vendorLaundry.galleryImg1 && vendorLaundry.galleryImg1 ? vendorLaundry.galleryImg1.url : '';
+  const vendorImg2 = vendorLaundry && vendorLaundry.galleryImg2 && vendorLaundry.galleryImg2 ? vendorLaundry.galleryImg2.url : '';
+  const vendorImg3 = vendorLaundry && vendorLaundry.galleryImg3 && vendorLaundry.galleryImg3 ? vendorLaundry.galleryImg3.url : '';
+  const vendorAddress = vendorLaundry && vendorLaundry.address ? vendorLaundry.address : '';
+  const laundryObjectId = vendorLaundry && vendorLaundry.objectId ? vendorLaundry.objectId : '';
+
   const validationSchema = yup.object({
     name: yup.string("Enter your name").required("name is required"),
     about: yup.string("enter your about").required("About is required"),
@@ -93,9 +109,10 @@ const LaundryInfo = (vendordetails) => {
 
   const formik = useFormik({
     initialValues: {
-      name: "",
-      about: "",
+      name: vendorLaundry && vendorLaundry.name ? vendorLaundry.name : '',
+      about: vendorLaundry && vendorLaundry.about ? vendorLaundry.about : '',
     },
+    enableReinitialize: true,
     validationSchema: validationSchema,
     onSubmit: (values) => {
       if (!bannerImg) {
@@ -134,11 +151,11 @@ const LaundryInfo = (vendordetails) => {
         address: address.place_name,
         laundryId: laundryId,
       };
-      console.log(data);
       const response = postJSON("/functions/setLaundryInfo", data);
       response.then((res) => console.log(res)).catch((err) => console.log(err));
     },
   });
+
   return (
     <>
       <Box
@@ -165,8 +182,8 @@ const LaundryInfo = (vendordetails) => {
                 hidden
               />
             </LoadingButton>
-            {bannerImgUrl && (
-              <img src={bannerImgUrl} height={100} width={100} />
+            {(bannerImgUrl || vendorBanner) && (
+              <img src={bannerImgUrl || vendorBanner} height={100} width={100} />
             )}
           </Stack>
 
@@ -184,7 +201,7 @@ const LaundryInfo = (vendordetails) => {
                 hidden
               />
             </LoadingButton>
-            {img1Url && <img src={img1Url} height={100} width={100} />}
+            {(img1Url || vendorImg1) && <img src={img1Url || vendorImg1} height={100} width={100} />}
           </Stack>
           <Stack>
             <LoadingButton
@@ -200,7 +217,7 @@ const LaundryInfo = (vendordetails) => {
                 hidden
               />
             </LoadingButton>
-            {img2Url && <img src={img2Url} height={100} width={100} />}
+            {(img2Url || vendorImg2) && <img src={img2Url || vendorImg2} height={100} width={100} />}
           </Stack>
           <Stack>
             <LoadingButton
@@ -216,7 +233,7 @@ const LaundryInfo = (vendordetails) => {
                 hidden
               />
             </LoadingButton>
-            {img3Url && <img src={img3Url} height={100} width={100} />}
+            {(img3Url || vendorImg3) && <img src={img3Url || vendorImg3} height={100} width={100} />}
           </Stack>
         </Stack>
 
@@ -233,7 +250,7 @@ const LaundryInfo = (vendordetails) => {
           />
         </div>
         <div className='form-control-area'>
-          <LocationAutocomplete addressFunc={{ address, setAddress }} />
+          <LocationAutocomplete value={vendorAddress} addressFunc={{ address, setAddress }} />
         </div>
         <div className='form-control-area'>
           <TextField
@@ -282,8 +299,10 @@ const LaundryInfo = (vendordetails) => {
   );
 };
 
-const laundrydetails = createStructuredSelector({
-  vendordetails: selectCurrentUser,
-});
+const mapStateToProps = state => {
+  const {vendorLaundry} = state.Laundry;
+  const {currentUser} = state.login;
+  return {currentUser, vendorLaundry};
+};
 
-export default connect(laundrydetails)(LaundryInfo);
+export default connect(mapStateToProps, null)(LaundryInfo);
