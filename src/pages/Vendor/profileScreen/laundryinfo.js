@@ -152,7 +152,10 @@ const LaundryInfo = ({currentUser, vendorLaundry}) => {
         laundryId: laundryId,
       };
       const response = postJSON("/functions/setLaundryInfo", data);
-      response.then((res) => console.log(res)).catch((err) => console.log(err));
+      response.then((res) => {
+        dispatch(setLaundryInfoSuccess(res.result));
+      })
+      .catch((err) => console.log(err));
     },
   });
 
