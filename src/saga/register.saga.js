@@ -1,7 +1,7 @@
 import { toast } from "react-toastify";
 import { all, call, put, takeLatest } from "redux-saga/effects";
 import { setUserRegistration } from "../services/Register/registerservice";
-import { LoginSuccess, userMeRequestAction } from "../store/actions/loginActions";
+import { userMeRequestAction } from "../store/actions/loginActions";
 import {
   RegisterFailed,
   RegisterSuccess,

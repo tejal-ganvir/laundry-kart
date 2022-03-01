@@ -105,9 +105,6 @@ You should be able to see the landing page.
  
 <a href="https://www.linkedin.com/in/tejal-ganvir-ba4340163/">Tejal Ganvir</a>
 
-<a href="https://www.linkedin.com/in/gopi-m-3112ba115/">Gopi Kannan</a>
-
-
 
 ## Community
 Thanks to the people who directly and indirectly supported me to accomplish this project.
